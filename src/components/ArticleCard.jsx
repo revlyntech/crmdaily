@@ -24,10 +24,10 @@ export default function ArticleCard({ article, index = 0 }) {
 
       {/* Image */}
       <div style={{ height: 200, overflow: "hidden", position: "relative" }}>
-        <img src={images[article.color]} alt={article.title}
+        <img src={images[article.color] || images.blue} alt={article.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.82)", transition: "transform 0.5s ease, filter 0.3s ease" }}
-          onMouseEnter={e => { e.target.style.transform="scale(1.05)"; e.target.style.filter="brightness(0.95)"; }}
-          onMouseLeave={e => { e.target.style.transform="scale(1)"; e.target.style.filter="brightness(0.82)"; }} />
+          onMouseEnter={e => { e.target.style.transform = "scale(1.05)"; e.target.style.filter = "brightness(0.95)"; }}
+          onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.filter = "brightness(0.82)"; }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 60%)" }} />
         <div style={{ position: "absolute", bottom: 12, right: 12, background: "rgba(0,0,0,0.7)", padding: "3px 10px" }}>
           <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#fff", letterSpacing: "0.1em" }}>{article.readTime.toUpperCase()}</span>
@@ -46,8 +46,8 @@ export default function ArticleCard({ article, index = 0 }) {
         </div>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 400, color: "#0F0E0D", lineHeight: 1.3, marginBottom: 12, transition: "color 0.2s" }}
-          onMouseEnter={e => e.target.style.color="#E8521A"}
-          onMouseLeave={e => e.target.style.color="#0F0E0D"}>
+          onMouseEnter={e => e.target.style.color = "#E8521A"}
+          onMouseLeave={e => e.target.style.color = "#0F0E0D"}>
           {article.title}
         </h2>
 
@@ -63,8 +63,8 @@ export default function ArticleCard({ article, index = 0 }) {
             <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.06em" }}>CRM DAILY</span>
           </div>
           <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", fontWeight: 700, letterSpacing: "0.1em", display: "flex", alignItems: "center", gap: 4, transition: "gap 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.gap="8px"}
-            onMouseLeave={e => e.currentTarget.style.gap="4px"}>
+            onMouseEnter={e => e.currentTarget.style.gap = "8px"}
+            onMouseLeave={e => e.currentTarget.style.gap = "4px"}>
             READ →
           </span>
         </div>

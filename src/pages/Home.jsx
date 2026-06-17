@@ -1,16 +1,22 @@
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { articles } from "../data/articles";
+import { usePosts } from "../lib/usePosts";
+import { articles as staticArticles } from "../data/articles";
 import CategoryBadge from "../components/CategoryBadge";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
 
-const featured = articles.find(a => a.featured);
-const topStories = articles.filter(a => !a.featured).slice(0, 4);
-const gridArticles = articles.filter(a => !a.featured);
-
 export default function Home() {
   const navigate = useNavigate();
+  const { articles: wpArticles, loading } = usePosts(20);
+
+  // Use WordPress articles if loaded, fall back to static while loading
+  const articles = wpArticles.length > 0 ? wpArticles : staticArticles;
+
+  const featured = articles.find(a => a.featured) || articles[0];
+  const topStories = articles.filter(a => a.id !== featured?.id).slice(0, 4);
+  const gridArticles = articles.filter(a => a.id !== featured?.id);
+
   if (!featured) return null;
 
   return (
@@ -79,7 +85,9 @@ export default function Home() {
               </div>
 
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:14 }}>// TOP STORIES</span>
-              {topStories.map((a, i) => (
+              {loading ? (
+                <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading stories...</span>
+              ) : topStories.map((a, i) => (
                 <motion.div key={a.id} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:0.2+i*0.07}}
                   onClick={() => navigate(`/article/${a.id}`)}
                   style={{ padding:"13px 0", borderBottom:"1px solid rgba(0,0,0,0.06)", cursor:"pointer", transition:"opacity 0.2s" }}
@@ -95,7 +103,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CRM LANDSCAPE section — dark, engaging */}
+      {/* CRM LANDSCAPE section */}
       <section style={{ background: "#0F0E0D", padding: "80px 32px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
@@ -153,7 +161,11 @@ export default function Home() {
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 320px", gap:40, alignItems:"start" }}>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:24 }}>
-              {gridArticles.map((a, i) => <ArticleCard key={a.id} article={a} index={i} />)}
+              {loading && wpArticles.length === 0 ? (
+                <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>Loading articles...</span>
+              ) : (
+                gridArticles.map((a, i) => <ArticleCard key={a.id} article={a} index={i} />)
+              )}
             </div>
             <Sidebar />
           </div>

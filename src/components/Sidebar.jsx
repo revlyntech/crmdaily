@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { articles } from "../data/articles";
+import { usePosts } from "../lib/usePosts";
+import { articles as staticArticles } from "../data/articles";
 import { subscribeEmail } from "../utils/beehiiv";
 
 const topics = [
@@ -21,6 +22,24 @@ export default function Sidebar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
+
+  const { articles: wpArticles, loading } = usePosts(20);
+  const articles = wpArticles.length > 0 ? wpArticles : staticArticles;
+
+  // Real stats derived from actual articles
+  const totalArticles = articles.length;
+  const uniqueCategories = [...new Set(articles.map(a => a.category))];
+  const topicsCount = uniqueCategories.length;
+  const toolArticles = articles.filter(a =>
+    a.category === "Tool Review" || a.category === "Tools"
+  );
+  const toolsCount = toolArticles.length;
+
+  // Latest category names for the sub-labels
+  const topCategoryNames = uniqueCategories.slice(0, 4).join(", ");
+  const topToolNames = toolArticles.slice(0, 3).map(a =>
+    a.title.split(" ")[0]
+  ).join(", ") || "HubSpot, Salesforce, Zoho";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -60,11 +79,13 @@ export default function Sidebar() {
         <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(255,255,255,0.2)", marginTop:10, letterSpacing:"0.08em" }}>NO SPAM. UNSUBSCRIBE ANYTIME.</p>
       </motion.div>
 
-      {/* Popular */}
+      {/* Popular — real articles from WordPress */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.3}}
         style={{ background: "#F2EDE4", border:"1px solid rgba(0,0,0,0.08)", borderTop:"none", padding:28, marginBottom:2 }}>
         <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:18 }}>// POPULAR TODAY</span>
-        {articles.slice(0, 5).map((a, i) => (
+        {loading && wpArticles.length === 0 ? (
+          <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading...</span>
+        ) : articles.slice(0, 5).map((a, i) => (
           <div key={a.id} onClick={() => navigate(`/article/${a.id}`)}
             style={{ display:"flex", gap:16, padding:"13px 0", borderBottom:i<4?"1px solid rgba(0,0,0,0.06)":"none", cursor:"pointer", transition:"opacity 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.opacity="0.6"}
@@ -80,7 +101,7 @@ export default function Sidebar() {
         ))}
       </motion.div>
 
-      {/* Browse Topics — fully connected */}
+      {/* Browse Topics */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.4}}
         style={{ background:"#F2EDE4", border:"1px solid rgba(0,0,0,0.08)", borderTop:"none", padding:28, marginBottom:2 }}>
         <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:16 }}>// BROWSE TOPICS</span>
@@ -96,7 +117,7 @@ export default function Sidebar() {
         </div>
       </motion.div>
 
-      {/* Daily stats widget */}
+      {/* Daily stats — real numbers from WordPress */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.5}}
         style={{ background:"#0F0E0D", padding:28 }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
@@ -104,9 +125,9 @@ export default function Sidebar() {
           <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E" }} className="blink" />
         </div>
         {[
-          { label:"ARTICLES TODAY", value:"12", sub:"↑ 3 from yesterday" },
-          { label:"TOPICS COVERED", value:"8", sub:"CRM, GTM, AI, RevOps" },
-          { label:"TOOLS REVIEWED", value:"3", sub:"HubSpot, Salesforce, Zoho" },
+          { label:"ARTICLES PUBLISHED", value: loading ? "..." : String(totalArticles), sub: `Live from CRM Daily` },
+          { label:"TOPICS COVERED", value: loading ? "..." : String(topicsCount), sub: topCategoryNames || "CRM, GTM, AI, RevOps" },
+          { label:"TOOLS REVIEWED", value: loading ? "..." : String(toolsCount), sub: toolsCount > 0 ? topToolNames : "HubSpot, Salesforce, Zoho" },
         ].map(s => (
           <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

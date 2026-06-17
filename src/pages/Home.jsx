@@ -6,11 +6,18 @@ import CategoryBadge from "../components/CategoryBadge";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
 
+const fallbackImages = {
+  blue:   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+  purple: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+  green:  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+  amber:  "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80",
+  red:    "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1200&q=80",
+};
+
 export default function Home() {
   const navigate = useNavigate();
   const { articles: wpArticles, loading } = usePosts(20);
 
-  // Use WordPress articles if loaded, fall back to static while loading
   const articles = wpArticles.length > 0 ? wpArticles : staticArticles;
 
   const featured = articles.find(a => a.featured) || articles[0];
@@ -18,6 +25,9 @@ export default function Home() {
   const gridArticles = articles.filter(a => a.id !== featured?.id);
 
   if (!featured) return null;
+
+  // Use WordPress featured image if set, else fallback by color
+  const heroImage = featured.featuredImage || fallbackImages[featured.color] || fallbackImages.blue;
 
   return (
     <div className="fade-in">
@@ -27,7 +37,7 @@ export default function Home() {
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 32px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", minHeight: 520 }}>
 
-            {/* Featured */}
+            {/* Featured article */}
             <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.8}}
               style={{ padding: "64px 64px 64px 0", borderRight: "1px solid rgba(0,0,0,0.08)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
 
@@ -35,14 +45,23 @@ export default function Home() {
 
               <div style={{ marginBottom:16 }}><CategoryBadge label={featured.category} color={featured.color} /></div>
 
+              {/* Hero image — always shows, fallback if no WP image */}
+              <div style={{ height:280, overflow:"hidden", position:"relative", marginBottom:24, borderRadius:2 }}>
+                <img src={heroImage} alt={featured.title}
+                  style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.75)", transition:"transform 0.6s ease" }}
+                  onMouseEnter={e => e.target.style.transform="scale(1.02)"}
+                  onMouseLeave={e => e.target.style.transform="scale(1)"} />
+                <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(242,237,228,0.4) 0%, transparent 60%)" }} />
+              </div>
+
               <h1 onClick={() => navigate(`/article/${featured.id}`)}
-                style={{ fontFamily:"'DM Serif Display',serif", fontSize:58, fontWeight:400, lineHeight:1.08, color:"#0F0E0D", marginBottom:20, cursor:"pointer", letterSpacing:"-0.02em", transition:"color 0.25s" }}
+                style={{ fontFamily:"'DM Serif Display',serif", fontSize:48, fontWeight:400, lineHeight:1.08, color:"#0F0E0D", marginBottom:16, cursor:"pointer", letterSpacing:"-0.02em", transition:"color 0.25s" }}
                 onMouseEnter={e => e.currentTarget.style.color="#E8521A"}
                 onMouseLeave={e => e.currentTarget.style.color="#0F0E0D"}>
                 {featured.title}
               </h1>
 
-              <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#6B6560", lineHeight:1.8, marginBottom:32, maxWidth:580 }}>
+              <p style={{ fontFamily:"'Inter',sans-serif", fontSize:15, color:"#6B6560", lineHeight:1.8, marginBottom:28, maxWidth:580 }}>
                 {featured.excerpt}
               </p>
 
@@ -66,7 +85,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right panel */}
+            {/* Right panel — top stories */}
             <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{duration:0.7,delay:0.15}}
               style={{ paddingLeft:40, paddingTop:64 }}>
 
@@ -103,7 +122,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CRM LANDSCAPE section */}
+      {/* WHY CRM DAILY */}
       <section style={{ background: "#0F0E0D", padding: "80px 32px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
@@ -172,7 +191,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CRM Conviction section */}
+      {/* CONVICTIONS */}
       <section style={{ background:"#0F0E0D", padding:"80px 32px" }}>
         <div style={{ maxWidth:1400, margin:"0 auto" }}>
           <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
@@ -181,18 +200,17 @@ export default function Home() {
               Three positions most CRM publications won't take.
             </h2>
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.4)", maxWidth:560, marginBottom:56, lineHeight:1.85 }}>
-              Covering revenue systems produces sharp convictions. Below are three we hold openly — each defensible because we've reported against it.
+              Covering revenue systems produces sharp convictions. Below are three we hold openly.
             </p>
           </motion.div>
-
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:0, borderTop:"1px solid rgba(255,255,255,0.08)" }}>
             {[
-              { n:"CONVICTION 01", title:"A CRM is operating debt, not operating leverage, until someone operates it daily.", sub:"WHY WE REPORT THIS", body:"Most CRMs are implemented well and abandoned six weeks after go-live. Without continuous operation — workflows tuned, fields populated, integrations monitored — the CRM decays." },
-              { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The pattern repeats because the underlying problem lives in the CRM — dirty data, broken suppression sync." },
-              { n:"CONVICTION 03", title:"AI agents in CRM only work on a foundation most companies haven't built yet.", sub:"WHY WE REPORT THIS", body:"Every AI CRM deployment we cover has required foundation work first. The agent build itself is the smaller half. The data architecture that makes the agent reliable is the larger half." },
+              { n:"CONVICTION 01", title:"A CRM is operating debt, not operating leverage, until someone operates it daily.", sub:"WHY WE REPORT THIS", body:"Most CRMs are implemented well and abandoned six weeks after go-live. Without continuous operation the CRM decays." },
+              { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The problem lives in the CRM — dirty data, broken suppression sync." },
+              { n:"CONVICTION 03", title:"AI agents in CRM only work on a foundation most companies haven't built yet.", sub:"WHY WE REPORT THIS", body:"Every AI CRM deployment we cover has required foundation work first. The data architecture that makes the agent reliable is the larger half." },
             ].map((c, i) => (
               <motion.div key={c.n} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}}
-                style={{ padding:"40px 40px 40px 0", borderRight:i<2?"1px solid rgba(255,255,255,0.06)":"none", paddingLeft:i>0?40:0, transition:"background 0.2s", cursor:"default" }}
+                style={{ padding:"40px 40px 40px 0", borderRight:i<2?"1px solid rgba(255,255,255,0.06)":"none", paddingLeft:i>0?40:0, transition:"background 0.2s" }}
                 onMouseEnter={e => e.currentTarget.style.background="rgba(232,82,26,0.04)"}
                 onMouseLeave={e => e.currentTarget.style.background="transparent"}>
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.12em", display:"block", marginBottom:16 }}>{c.n}</span>

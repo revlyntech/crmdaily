@@ -61,66 +61,81 @@ export default function Footer() {
               Your daily source of CRM, GTM & RevOps intelligence. No vendor bias. No commissions. Just expert reporting.
             </p>
             <div style={{ marginTop:24, display:"flex", gap:12 }}>
-              {["LinkedIn","Twitter","RSS"].map(s => (
-                <span key={s} style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.35)", letterSpacing:"0.08em", cursor:"pointer", transition:"color 0.2s" }}
+              {[
+                { label: "LinkedIn", href: "https://linkedin.com" },
+                { label: "Twitter", href: "https://twitter.com" },
+                { label: "RSS", href: "/news" },
+              ].map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
+                  style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.35)", letterSpacing:"0.08em", cursor:"pointer", transition:"color 0.2s", textDecoration:"none" }}
                   onMouseEnter={e => e.target.style.color="#E8521A"}
-                  onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.35)"}>{s}</span>
+                  onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.35)"}>{s.label}</a>
               ))}
             </div>
           </div>
 
-          {/* Navigate — all connected */}
+          {/* Navigate */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>NAVIGATE</span>
             {[
-              ["Home", "/"],
-              ["CRM News", "/news"],
-              ["Guides", "/guides"],
-              ["Tool Reviews", "/tools"],
-              ["Newsletter", "/newsletter"],
-              ["About", "/about"],
-              ["Contact", "/contact"],
+              ["Home",          "/"],
+              ["CRM News",      "/news"],
+              ["Guides",        "/guides"],
+              ["Tool Reviews",  "/tools"],
+              ["Newsletter",    "/newsletter"],
+              ["About",         "/about"],
+              ["Contact",       "/contact"],
             ].map(([label, href]) => (
-              <Link key={label} to={href} style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
+              <Link key={label} to={href}
+                style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
-                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>
+                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>
+                {label}
+              </Link>
             ))}
           </div>
 
-          {/* Topics — all connected */}
+          {/* Topics — ?category= query so pages auto-filter from WordPress */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>TOPICS</span>
             {[
-              ["HubSpot News", "/news"],
-              ["Salesforce", "/news"],
-              ["RevOps Strategy", "/guides"],
-              ["GTM Playbooks", "/guides"],
-              ["CRM Reviews", "/tools"],
-              ["AI in CRM", "/news"],
-              ["Pipedrive", "/tools"],
+              ["HubSpot News",    "/news?category=HubSpot"],
+              ["Salesforce",      "/news?category=Salesforce"],
+              ["RevOps Strategy", "/guides?category=RevOps"],
+              ["GTM Playbooks",   "/guides?category=GTM+Strategy"],
+              ["CRM Reviews",     "/tools?category=Tool+Review"],
+              ["AI in CRM",       "/news?category=AI"],
+              ["Pipedrive",       "/tools?category=Pipedrive"],
             ].map(([label, href]) => (
-              <Link key={label} to={href} style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
+              <Link key={label} to={href}
+                style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
-                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>
+                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>
+                {label}
+              </Link>
             ))}
           </div>
 
-          {/* Legal + contact */}
+          {/* Company */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>COMPANY</span>
             {[
-              ["About CRM Daily", "/about"],
-              ["Contact Us", "/contact"],
-              ["Privacy Policy", "/privacy"],
+              ["About CRM Daily",  "/about"],
+              ["Contact Us",       "/contact"],
+              ["Privacy Policy",   "/privacy"],
               ["Terms of Service", "/privacy"],
             ].map(([label, href]) => (
-              <Link key={label} to={href} style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
+              <Link key={label} to={href}
+                style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
-                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>
+                onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>
+                {label}
+              </Link>
             ))}
             <div style={{ marginTop:24, paddingTop:20, borderTop:"1px solid rgba(255,255,255,0.06)" }}>
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:10 }}>POWERED BY</span>
-              <a href="https://revlyn.io" target="_blank" rel="noreferrer" style={{ fontFamily:"'DM Serif Display',serif", fontSize:16, color:"rgba(242,237,228,0.5)", transition:"color 0.2s", textDecoration:"none" }}
+              <a href="https://revlyn.io" target="_blank" rel="noreferrer"
+                style={{ fontFamily:"'DM Serif Display',serif", fontSize:16, color:"rgba(242,237,228,0.5)", transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
                 onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.5)"}>
                 Revlyn.io ↗

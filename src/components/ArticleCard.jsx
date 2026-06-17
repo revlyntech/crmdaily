@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import CategoryBadge from "./CategoryBadge";
 
-const images = {
+const fallbackImages = {
   blue:   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
   purple: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80",
   green:  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80",
@@ -12,6 +12,8 @@ const images = {
 
 export default function ArticleCard({ article, index = 0 }) {
   const navigate = useNavigate();
+  // Use WordPress featured image if available, else fallback by color
+  const image = article.featuredImage || fallbackImages[article.color] || fallbackImages.blue;
 
   return (
     <motion.article
@@ -22,9 +24,8 @@ export default function ArticleCard({ article, index = 0 }) {
       className="card-lift"
       style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", overflow: "hidden" }}>
 
-      {/* Image */}
       <div style={{ height: 200, overflow: "hidden", position: "relative" }}>
-        <img src={images[article.color] || images.blue} alt={article.title}
+        <img src={image} alt={article.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.82)", transition: "transform 0.5s ease, filter 0.3s ease" }}
           onMouseEnter={e => { e.target.style.transform = "scale(1.05)"; e.target.style.filter = "brightness(0.95)"; }}
           onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.filter = "brightness(0.82)"; }} />
@@ -37,7 +38,6 @@ export default function ArticleCard({ article, index = 0 }) {
         </div>
       </div>
 
-      {/* Content */}
       <div style={{ padding: "22px 24px 24px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
           <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.08em" }}>{article.date.toUpperCase()}</span>

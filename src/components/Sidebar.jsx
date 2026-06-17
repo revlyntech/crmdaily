@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
-import { articles as staticArticles } from "../data/articles";
 import { subscribeEmail } from "../utils/beehiiv";
 
+// Topics with ?category= so pages auto-filter from WordPress — no manual updates needed
 const topics = [
-  { label: "CRM News", to: "/news", color: "cat-news" },
-  { label: "HubSpot", to: "/news", color: "cat-news" },
-  { label: "Salesforce", to: "/news", color: "cat-news" },
-  { label: "RevOps", to: "/guides", color: "cat-revops" },
-  { label: "GTM Strategy", to: "/guides", color: "cat-gtm" },
-  { label: "Tool Reviews", to: "/tools", color: "cat-tools" },
-  { label: "How-To Guides", to: "/guides", color: "cat-guide" },
-  { label: "AI & Automation", to: "/news", color: "cat-revops" },
-  { label: "Pipedrive", to: "/tools", color: "cat-tools" },
-  { label: "Zoho", to: "/tools", color: "cat-tools" },
+  { label: "CRM News",       to: "/news" },
+  { label: "HubSpot",        to: "/news?category=HubSpot" },
+  { label: "Salesforce",     to: "/news?category=Salesforce" },
+  { label: "RevOps",         to: "/guides?category=RevOps" },
+  { label: "GTM Strategy",   to: "/guides?category=GTM+Strategy" },
+  { label: "Tool Reviews",   to: "/tools" },
+  { label: "How-To Guides",  to: "/guides?category=How-To+Guide" },
+  { label: "AI & Automation",to: "/news?category=AI" },
+  { label: "Pipedrive",      to: "/tools?category=Pipedrive" },
+  { label: "Zoho",           to: "/tools?category=Zoho" },
 ];
 
 export default function Sidebar() {
@@ -23,30 +23,26 @@ export default function Sidebar() {
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
 
-  const { articles: wpArticles, loading } = usePosts(20);
-  const articles = wpArticles.length > 0 ? wpArticles : staticArticles;
+  const { articles, loading } = usePosts(20);
 
-  // Real stats derived from actual articles
   const totalArticles = articles.length;
   const uniqueCategories = [...new Set(articles.map(a => a.category))];
   const topicsCount = uniqueCategories.length;
-  const toolArticles = articles.filter(a =>
-    a.category === "Tool Review" || a.category === "Tools"
-  );
+  const toolArticles = articles.filter(a => a.category === "Tool Review" || a.category === "Tools");
   const toolsCount = toolArticles.length;
-
-  // Latest category names for the sub-labels
   const topCategoryNames = uniqueCategories.slice(0, 4).join(", ");
-  const topToolNames = toolArticles.slice(0, 3).map(a =>
-    a.title.split(" ")[0]
-  ).join(", ") || "HubSpot, Salesforce, Zoho";
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!email) return;
     setStatus("loading");
-    const r = await subscribeEmail(email);
-    if (r.success) { setStatus("success"); setEmail(""); }
-    else setStatus("error");
+    try {
+      const r = await subscribeEmail(email);
+      if (r.success) { setStatus("success"); setEmail(""); }
+      else setStatus("error");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -60,30 +56,34 @@ export default function Sidebar() {
         <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"rgba(242,237,228,0.5)", lineHeight:1.75, marginBottom:20 }}>Top CRM & GTM stories every morning. No noise, just signal.</p>
         {status === "success" ? (
           <div style={{ fontFamily:"'Space Mono',monospace", color:"#22C55E", fontSize:11, letterSpacing:"0.1em", padding:"12px", border:"1px solid rgba(34,197,94,0.3)", textAlign:"center" }}>
-            SUBSCRIBED ✓
+            ✓ SUBSCRIBED — CHECK YOUR INBOX
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:8 }}>
-            <input type="email" placeholder="your@company.io" required value={email} onChange={e => setEmail(e.target.value)}
-              style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", color:"#F2EDE4", fontFamily:"'Inter',sans-serif", fontSize:13, padding:"11px 14px", outline:"none", width:"100%", transition:"border-color 0.2s" }}
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            <input
+              type="email" placeholder="your@company.io" value={email}
+              onChange={e => setEmail(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSubmit(e)}
+              style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", color:"#F2EDE4", fontFamily:"'Inter',sans-serif", fontSize:13, padding:"11px 14px", outline:"none", width:"100%", transition:"border-color 0.2s", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor="#E8521A"}
-              onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.1)"} />
-            <button type="submit" disabled={status==="loading"}
+              onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.1)"}
+            />
+            <button onClick={handleSubmit} disabled={status === "loading"}
               style={{ background:"#E8521A", color:"#fff", border:"none", padding:"11px", fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", transition:"background 0.2s" }}
               onMouseEnter={e => e.target.style.background="#D4481A"}
               onMouseLeave={e => e.target.style.background="#E8521A"}>
-              {status === "loading" ? "SUBSCRIBING..." : "GET DAILY DIGEST →"}
+              {status === "loading" ? "SUBSCRIBING..." : status === "error" ? "TRY AGAIN →" : "GET DAILY DIGEST →"}
             </button>
-          </form>
+          </div>
         )}
         <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(255,255,255,0.2)", marginTop:10, letterSpacing:"0.08em" }}>NO SPAM. UNSUBSCRIBE ANYTIME.</p>
       </motion.div>
 
-      {/* Popular — real articles from WordPress */}
+      {/* Popular Today — live from WordPress */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.3}}
         style={{ background: "#F2EDE4", border:"1px solid rgba(0,0,0,0.08)", borderTop:"none", padding:28, marginBottom:2 }}>
         <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:18 }}>// POPULAR TODAY</span>
-        {loading && wpArticles.length === 0 ? (
+        {loading ? (
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading...</span>
         ) : articles.slice(0, 5).map((a, i) => (
           <div key={a.id} onClick={() => navigate(`/article/${a.id}`)}
@@ -101,7 +101,7 @@ export default function Sidebar() {
         ))}
       </motion.div>
 
-      {/* Browse Topics */}
+      {/* Browse Topics — auto-filters via ?category= */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.4}}
         style={{ background:"#F2EDE4", border:"1px solid rgba(0,0,0,0.08)", borderTop:"none", padding:28, marginBottom:2 }}>
         <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:16 }}>// BROWSE TOPICS</span>
@@ -117,7 +117,7 @@ export default function Sidebar() {
         </div>
       </motion.div>
 
-      {/* Daily stats — real numbers from WordPress */}
+      {/* Live stats from WordPress */}
       <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:0.5}}
         style={{ background:"#0F0E0D", padding:28 }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
@@ -125,9 +125,9 @@ export default function Sidebar() {
           <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E" }} className="blink" />
         </div>
         {[
-          { label:"ARTICLES PUBLISHED", value: loading ? "..." : String(totalArticles), sub: `Live from CRM Daily` },
-          { label:"TOPICS COVERED", value: loading ? "..." : String(topicsCount), sub: topCategoryNames || "CRM, GTM, AI, RevOps" },
-          { label:"TOOLS REVIEWED", value: loading ? "..." : String(toolsCount), sub: toolsCount > 0 ? topToolNames : "HubSpot, Salesforce, Zoho" },
+          { label:"ARTICLES PUBLISHED", value: loading ? "..." : String(totalArticles), sub: "Live from CRM Daily" },
+          { label:"TOPICS COVERED",     value: loading ? "..." : String(topicsCount),   sub: topCategoryNames || "CRM, GTM, AI, RevOps" },
+          { label:"TOOLS REVIEWED",     value: loading ? "..." : String(toolsCount),    sub: toolsCount > 0 ? "Tool reviews live" : "Coming soon" },
         ].map(s => (
           <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

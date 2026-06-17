@@ -1,33 +1,28 @@
 const WP_GRAPHQL_URL = 'https://rosybrown-lapwing-248978.hostingersite.com/graphql';
 
-// Map WP category name to your existing color system
 function getColor(categoryName) {
   const map = {
-    'CRM News': 'blue',
-    'HubSpot': 'purple',
-    'Salesforce': 'blue',
-    'Automation': 'green',
-    'RevOps': 'amber',
-    'AI': 'purple',
+    'CRM News': 'blue', 'HubSpot': 'purple', 'Salesforce': 'blue',
+    'Automation': 'green', 'RevOps': 'purple', 'GTM Strategy': 'amber',
+    'Tool Review': 'green', 'How-To Guide': 'red', 'How-To-Guide': 'red',
   };
   return map[categoryName] || 'blue';
 }
 
-// Format WP date to match your existing format e.g. "Jun 17, 2026"
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric'
   });
 }
 
-// Strip HTML tags from excerpt
 function stripHtml(html) {
   return html?.replace(/<[^>]+>/g, '').trim() || '';
 }
 
-// Transform WP post into your existing article shape
 function transformPost(post) {
   const categoryName = post.categories?.nodes?.[0]?.name || 'CRM News';
+  // Use WordPress featured image if available, else null (ArticleCard handles fallback)
+  const featuredImage = post.featuredImage?.node?.sourceUrl || null;
   return {
     id: post.databaseId,
     slug: post.slug,
@@ -38,6 +33,7 @@ function transformPost(post) {
     category: categoryName,
     color: getColor(categoryName),
     readTime: '3 min read',
+    featuredImage,
   };
 }
 
@@ -51,6 +47,7 @@ export async function getPosts(first = 20) {
           title
           excerpt
           date
+          featuredImage { node { sourceUrl } }
           categories { nodes { name } }
         }
       }
@@ -75,6 +72,7 @@ export async function getPostById(id) {
         excerpt
         content
         date
+        featuredImage { node { sourceUrl } }
         categories { nodes { name } }
       }
     }

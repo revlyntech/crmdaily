@@ -5,7 +5,7 @@ import { getPostById } from "../lib/wordpress";
 import CategoryBadge from "../components/CategoryBadge";
 import Sidebar from "../components/Sidebar";
 
-const imgs = {
+const fallbackImgs = {
   blue:   "https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200&q=80",
   purple: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
   green:  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
@@ -38,6 +38,9 @@ export default function Article() {
     </div>
   );
 
+  // Use WordPress featured image if set, else fallback by color
+  const heroImage = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
+
   return (
     <div className="fade-in">
       {/* Meta bar */}
@@ -52,24 +55,25 @@ export default function Article() {
         </div>
       </div>
 
-      {/* Dark hero */}
-      <div style={{ background: "#0F0E0D", padding: "80px 32px 0" }}>
+      {/* Dark hero — FIX: removed padding-bottom so image sits tight */}
+      <div style={{ background: "#0F0E0D", paddingTop: 60, paddingLeft: 32, paddingRight: 32, paddingBottom: 0 }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div style={{ marginBottom: 16 }}><CategoryBadge label={article.category} color={article.color} /></div>
-            <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 60, color: "#F2EDE4", lineHeight: 1.05, letterSpacing: "-0.02em", maxWidth: 900, marginBottom: 20 }}>
+            <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 56, color: "#F2EDE4", lineHeight: 1.05, letterSpacing: "-0.02em", maxWidth: 900, marginBottom: 16 }}>
               {article.title}
             </h1>
-            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 13, color: "rgba(242,237,228,0.5)", maxWidth: 640, lineHeight: 1.85, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 12, color: "rgba(242,237,228,0.5)", maxWidth: 640, lineHeight: 1.85, marginBottom: 32 }}>
               {article.excerpt}
             </p>
           </motion.div>
-          <div style={{ height: 400, overflow: "hidden", position: "relative" }}>
-            <img src={imgs[article.color] || imgs.blue} alt={article.title}
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.4) saturate(0.7)", transition: "transform 0.6s ease" }}
+          {/* FIX: hero image uses WordPress featured image */}
+          <div style={{ height: 380, overflow: "hidden", position: "relative" }}>
+            <img src={heroImage} alt={article.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.7)", transition: "transform 0.6s ease" }}
               onMouseEnter={e => e.target.style.transform = "scale(1.02)"}
               onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 15%,transparent 70%)" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 10%,transparent 65%)" }} />
             <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(0,0,0,0.7)", padding: "6px 14px", border: "1px solid rgba(255,255,255,0.1)" }}>
               <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em" }}>READING: {article.readTime.toUpperCase()}</span>
             </div>
@@ -81,14 +85,10 @@ export default function Article() {
       <div className="grid-bg" style={{ background: "#F2EDE4", padding: "64px 32px 96px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 64, alignItems: "start" }}>
           <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <blockquote style={{ borderLeft: "3px solid #E8521A", paddingLeft: 24, marginBottom: 40, fontFamily: "'DM Serif Display',serif", fontSize: 24, color: "#0F0E0D", lineHeight: 1.4, fontStyle: "italic" }}>
+            <blockquote style={{ borderLeft: "3px solid #E8521A", paddingLeft: 24, marginBottom: 40, fontFamily: "'DM Serif Display',serif", fontSize: 22, color: "#0F0E0D", lineHeight: 1.4, fontStyle: "italic" }}>
               {article.excerpt}
             </blockquote>
-            {/* Render WordPress content */}
-            <div
-              className="article-body"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }} />
             <div style={{ background: "#0F0E0D", padding: 32, marginTop: 48, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
               <div>
                 <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// STAY INFORMED</span>

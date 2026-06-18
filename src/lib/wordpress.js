@@ -1,5 +1,19 @@
 const WP_GRAPHQL_URL = 'https://rosybrown-lapwing-248978.hostingersite.com/graphql';
 
+// ─── In-memory cache ───────────────────────────────────────────
+// Stores fetched articles for 5 minutes so repeated visits
+// and page navigations don't re-fetch from WordPress every time
+const cache = {
+  posts: null,
+  fetchedAt: null,
+  TTL: 5 * 60 * 1000, // 5 minutes
+};
+
+function isCacheValid() {
+  return cache.posts && cache.fetchedAt && (Date.now() - cache.fetchedAt < cache.TTL);
+}
+
+// ─── Helpers ───────────────────────────────────────────────────
 function getColor(categoryName) {
   const map = {
     'CRM News': 'blue', 'HubSpot': 'purple', 'Salesforce': 'blue',
@@ -15,34 +29,22 @@ function formatDate(dateStr) {
   });
 }
 
-// Strip HTML tags AND decode HTML entities properly
 function cleanExcerpt(html) {
   if (!html) return '';
-  // Remove HTML tags
   let text = html.replace(/<[^>]+>/g, '');
-  // Decode HTML entities
   text = text
-    .replace(/&hellip;/g, '…')
-    .replace(/&amp;/g, '&')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&quot;/g, '"')
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8216;/g, "'")
-    .replace(/&#8220;/g, '"')
-    .replace(/&#8221;/g, '"')
-    .replace(/&#8211;/g, '–')
-    .replace(/&#8212;/g, '—')
-    .replace(/\[&hellip;\]/g, '…')
-    .replace(/\[…\]/g, '')
-    .trim();
-  // Cut to first 2 sentences max for clean excerpt
+    .replace(/&hellip;/g, '…').replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
+    .replace(/&#8217;/g, "'").replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"').replace(/&#8221;/g, '"')
+    .replace(/&#8211;/g, '–').replace(/&#8212;/g, '—')
+    .replace(/\[&hellip;\]/g, '').replace(/\[…\]/g, '').trim();
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
   return sentences.slice(0, 2).join(' ').trim() || text.slice(0, 200);
 }
 
 function transformPost(post) {
   const categoryName = post.categories?.nodes?.[0]?.name || 'CRM News';
-  const featuredImage = post.featuredImage?.node?.sourceUrl || null;
   return {
     id: post.databaseId,
     slug: post.slug,
@@ -53,14 +55,34 @@ function transformPost(post) {
     category: categoryName,
     color: getColor(categoryName),
     readTime: '3 min read',
-    featuredImage,
+    featuredImage: post.featuredImage?.node?.sourceUrl || null,
   };
 }
 
-export async function getPosts(first = 20) {
+// ─── Fetch with timeout ────────────────────────────────────────
+async function fetchWithTimeout(url, options, timeout = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timer);
+    return res;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
+  }
+}
+
+// ─── Main fetch — with cache ───────────────────────────────────
+export async function getPosts(first = 100) {
+  // Return cached data instantly if still fresh
+  if (isCacheValid()) {
+    return cache.posts.slice(0, first);
+  }
+
   const query = `
     query GetPosts {
-      posts(first: ${first}, where: { status: PUBLISH }) {
+      posts(first: 100, where: { status: PUBLISH }) {
         nodes {
           databaseId
           slug
@@ -73,16 +95,36 @@ export async function getPosts(first = 20) {
       }
     }
   `;
-  const res = await fetch(WP_GRAPHQL_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query }),
-  });
-  const data = await res.json();
-  return (data?.data?.posts?.nodes || []).map(transformPost);
+
+  try {
+    const res = await fetchWithTimeout(WP_GRAPHQL_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    const data = await res.json();
+    const posts = (data?.data?.posts?.nodes || []).map(transformPost);
+
+    // Store in cache
+    cache.posts = posts;
+    cache.fetchedAt = Date.now();
+
+    return posts.slice(0, first);
+  } catch (err) {
+    console.error('WordPress fetch error:', err);
+    // Return stale cache if available rather than empty
+    return cache.posts || [];
+  }
 }
 
+// ─── Single post fetch — no cache needed ──────────────────────
 export async function getPostById(id) {
+  // Check cache first — avoid an extra network call
+  if (isCacheValid()) {
+    const cached = cache.posts.find(p => p.id === parseInt(id));
+    if (cached && cached.content) return cached;
+  }
+
   const query = `
     query GetPost {
       post(id: "${id}", idType: DATABASE_ID) {
@@ -97,12 +139,18 @@ export async function getPostById(id) {
       }
     }
   `;
-  const res = await fetch(WP_GRAPHQL_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query }),
-  });
-  const data = await res.json();
-  const post = data?.data?.post;
-  return post ? transformPost(post) : null;
+
+  try {
+    const res = await fetchWithTimeout(WP_GRAPHQL_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    const data = await res.json();
+    const post = data?.data?.post;
+    return post ? transformPost(post) : null;
+  } catch (err) {
+    console.error('WordPress post fetch error:', err);
+    return null;
+  }
 }

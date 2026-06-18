@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
 import { getPosts } from './wordpress';
+import { articles as staticArticles } from '../data/articles';
 
-// All posts
+// ─── Main hook — shows static articles INSTANTLY
+// then swaps to WordPress data when it arrives
 export function usePosts(count = 20) {
-  const [articles, setArticles] = useState([]);
+  // Start with static articles so UI renders immediately
+  const [articles, setArticles] = useState(staticArticles);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getPosts(count)
-      .then(setArticles)
+      .then(posts => {
+        if (posts.length > 0) setArticles(posts);
+      })
       .finally(() => setLoading(false));
   }, [count]);
 
   return { articles, loading };
 }
 
-// Filter by category names array
+// ─── Category filter hook
 export function usePostsByCategory(categories = [], count = 50) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,9 +39,9 @@ export function usePostsByCategory(categories = [], count = 50) {
   return { articles, loading };
 }
 
-// Filter by URL search param ?category=HubSpot — used by News/Guides/Tools pages
-export function usePostsFiltered(count = 50) {
-  const [articles, setArticles] = useState([]);
+// ─── URL-based filter hook — reads ?category= from URL
+export function usePostsFiltered(count = 100) {
+  const [articles, setArticles] = useState(staticArticles);
   const [loading, setLoading] = useState(true);
   const params = new URLSearchParams(window.location.search);
   const categoryFilter = params.get('category') || '';
@@ -44,12 +49,13 @@ export function usePostsFiltered(count = 50) {
   useEffect(() => {
     getPosts(count).then(all => {
       if (!categoryFilter) {
-        setArticles(all);
+        setArticles(all.length > 0 ? all : staticArticles);
       } else {
-        setArticles(all.filter(a =>
+        const filtered = all.filter(a =>
           a.category.toLowerCase() === categoryFilter.toLowerCase() ||
           a.title.toLowerCase().includes(categoryFilter.toLowerCase())
-        ));
+        );
+        setArticles(filtered);
       }
     }).finally(() => setLoading(false));
   }, [count, categoryFilter]);

@@ -1,19 +1,17 @@
-const WP_GRAPHQL_URL = 'https://rosybrown-lapwing-248978.hostingersite.com/graphql';
+// Use cms.crmdaily.co instead of the temp hostingersite.com URL
+// This fixes CORS since cms.crmdaily.co has proper headers
+const WP_GRAPHQL_URL = 'https://cms.crmdaily.co/graphql';
 
-// ─── In-memory cache ───────────────────────────────────────────
-// Stores fetched articles for 5 minutes so repeated visits
-// and page navigations don't re-fetch from WordPress every time
 const cache = {
   posts: null,
   fetchedAt: null,
-  TTL: 5 * 60 * 1000, // 5 minutes
+  TTL: 5 * 60 * 1000,
 };
 
 function isCacheValid() {
   return cache.posts && cache.fetchedAt && (Date.now() - cache.fetchedAt < cache.TTL);
 }
 
-// ─── Helpers ───────────────────────────────────────────────────
 function getColor(categoryName) {
   const map = {
     'CRM News': 'blue', 'HubSpot': 'purple', 'Salesforce': 'blue',
@@ -59,7 +57,6 @@ function transformPost(post) {
   };
 }
 
-// ─── Fetch with timeout ────────────────────────────────────────
 async function fetchWithTimeout(url, options, timeout = 8000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
@@ -73,12 +70,8 @@ async function fetchWithTimeout(url, options, timeout = 8000) {
   }
 }
 
-// ─── Main fetch — with cache ───────────────────────────────────
 export async function getPosts(first = 100) {
-  // Return cached data instantly if still fresh
-  if (isCacheValid()) {
-    return cache.posts.slice(0, first);
-  }
+  if (isCacheValid()) return cache.posts.slice(0, first);
 
   const query = `
     query GetPosts {
@@ -104,22 +97,16 @@ export async function getPosts(first = 100) {
     });
     const data = await res.json();
     const posts = (data?.data?.posts?.nodes || []).map(transformPost);
-
-    // Store in cache
     cache.posts = posts;
     cache.fetchedAt = Date.now();
-
     return posts.slice(0, first);
   } catch (err) {
     console.error('WordPress fetch error:', err);
-    // Return stale cache if available rather than empty
     return cache.posts || [];
   }
 }
 
-// ─── Single post fetch — no cache needed ──────────────────────
 export async function getPostById(id) {
-  // Check cache first — avoid an extra network call
   if (isCacheValid()) {
     const cached = cache.posts.find(p => p.id === parseInt(id));
     if (cached && cached.content) return cached;

@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://www.crmdaily.co/sitemap.xml
+# Allow Googlebot to access everything
+User-agent: Googlebot
+Allow: /
 
-# Block admin paths
-Disallow: /wp-admin/
-Disallow: /wp-login.php
+# Sitemap
+Sitemap: https://www.crmdaily.co/sitemap.xml

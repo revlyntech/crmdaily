@@ -1,39 +1,29 @@
-const BEEHIIV_API_KEY = "uz9hYhJO6DeNyVUZf9BbWJJvVgkXJwncE0wYfE8mHVK84h8D5sau09TOEtwjOG4M";
-const PUBLICATION_ID = "d75fe57c-a76e-400e-882b-d10ec2143f72";
+// Calls WordPress REST API proxy instead of Beehiiv directly
+// This bypasses CORS — WordPress handles the Beehiiv API call server-side
+const WP_PROXY_URL = 'https://cms.crmdaily.co/wp-json/crmdaily/v1/subscribe';
 
 export async function subscribeEmail(email) {
-  try {
-    const response = await fetch(
-      `https://api.beehiiv.com/v2/publications/${PUBLICATION_ID}/subscriptions`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${BEEHIIV_API_KEY}`,
-        },
-        body: JSON.stringify({
-          email: email,
-          reactivate_existing: false,
-          send_welcome_email: true,
-          utm_source: "website",
-          utm_medium: "organic",
-          utm_campaign: "newsletter_signup",
-        }),
-      }
-    );
+  if (!email || !email.includes('@')) {
+    return { success: false, message: 'Invalid email' };
+  }
 
-    if (response.ok) {
+  try {
+    const response = await fetch(WP_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
       return { success: true };
     }
 
-    // If CORS blocks it on localhost, still show success
-    // Real emails will be captured when site is live
-    return { success: true };
+    return { success: false, message: data.message || 'Subscription failed' };
 
   } catch (error) {
-    // On localhost CORS error — show success UI
-    // Will work properly on live domain
-    console.log("Note: Beehiiv will connect properly on live domain");
-    return { success: true };
+    console.error('Subscribe error:', error);
+    return { success: false, message: 'Network error — please try again' };
   }
 }

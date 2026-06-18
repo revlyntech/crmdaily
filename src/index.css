@@ -363,3 +363,181 @@ a { text-decoration: none; color: inherit; }
   .article-body h2 { font-size: 24px; }
   .article-body h3 { font-size: 20px; }
 }
+
+/* ============================================
+   INDUSTRY-LEVEL ARTICLE BODY OVERRIDES
+   Fixes WordPress-generated HTML for clean reading
+   ============================================ */
+
+/* Remove WordPress category blockquote at top */
+.article-body > blockquote:first-child {
+  display: none;
+}
+
+/* WordPress adds inline styles — override all */
+.article-body * {
+  font-family: inherit;
+  max-width: 100%;
+}
+
+/* Clean paragraph spacing */
+.article-body p {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px !important;
+  color: #2D2A27 !important;
+  line-height: 1.85 !important;
+  margin-bottom: 28px !important;
+  letter-spacing: -0.01em;
+}
+
+/* H2 — section headers */
+.article-body h2 {
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 30px !important;
+  color: #0F0E0D !important;
+  line-height: 1.2 !important;
+  margin: 48px 0 18px !important;
+  padding-left: 20px !important;
+  border-left: 3px solid #E8521A !important;
+  letter-spacing: -0.02em !important;
+  font-style: normal !important;
+}
+
+/* H3 — subheadings */
+.article-body h3 {
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 24px !important;
+  color: #0F0E0D !important;
+  line-height: 1.3 !important;
+  margin: 36px 0 14px !important;
+  font-style: normal !important;
+}
+
+/* H4 — labels */
+.article-body h4 {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 11px !important;
+  color: #E8521A !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  margin: 32px 0 12px !important;
+}
+
+/* Numbered list items — clean Inter */
+.article-body ol li {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 17px !important;
+  color: #2D2A27 !important;
+  line-height: 1.8 !important;
+}
+
+/* Bullet list items */
+.article-body ul li {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 17px !important;
+  color: #2D2A27 !important;
+  line-height: 1.8 !important;
+}
+
+/* Strong text */
+.article-body strong {
+  font-weight: 600 !important;
+  color: #0F0E0D !important;
+}
+
+/* Table — industry quality */
+.article-body table {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 15px !important;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.article-body table th {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+}
+
+.article-body table td {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  color: #3D3A36 !important;
+}
+
+/* Fix WordPress figure/image blocks */
+.article-body figure {
+  margin: 32px 0 !important;
+}
+
+.article-body figure img {
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* WordPress separator */
+.article-body .wp-block-separator,
+.article-body hr {
+  border: none !important;
+  border-top: 1px solid rgba(0,0,0,0.1) !important;
+  margin: 40px 0 !important;
+}
+
+/* Pull quote / callout box */
+.article-body .wp-block-quote,
+.article-body blockquote {
+  border-left: 3px solid #E8521A !important;
+  padding: 16px 24px !important;
+  margin: 32px 0 !important;
+  background: rgba(232,82,26,0.04) !important;
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 22px !important;
+  color: #0F0E0D !important;
+  line-height: 1.45 !important;
+  font-style: italic !important;
+}
+
+/* WordPress preformatted / code blocks */
+.article-body pre,
+.article-body .wp-block-code {
+  background: #0F0E0D !important;
+  padding: 20px 24px !important;
+  border-radius: 4px !important;
+  overflow-x: auto !important;
+  margin: 24px 0 !important;
+  font-family: 'Space Mono', monospace !important;
+  font-size: 13px !important;
+  color: #F2EDE4 !important;
+}
+
+/* Affiliate/outbound links styling */
+.article-body a[href*="hubspot"],
+.article-body a[href*="pipedrive"],
+.article-body a[href*="salesforce"],
+.article-body a[href*="monday"],
+.article-body a[href*="zoho"] {
+  font-weight: 600;
+  text-decoration-thickness: 2px;
+}
+
+/* Reading comfort — max width on article */
+.article-body {
+  max-width: 680px;
+}
+
+/* WordPress columns block */
+.article-body .wp-block-columns {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 24px !important;
+  margin: 24px 0 !important;
+}
+
+@media (max-width: 768px) {
+  .article-body p { font-size: 16px !important; }
+  .article-body h2 { font-size: 24px !important; }
+  .article-body h3 { font-size: 20px !important; }
+  .article-body { max-width: 100%; }
+  .article-body .wp-block-columns { grid-template-columns: 1fr !important; }
+}

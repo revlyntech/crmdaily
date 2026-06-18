@@ -25,7 +25,7 @@ export default function Article() {
   }, [id]);
 
   if (loading) return (
-    <div style={{ maxWidth: 760, margin: "80px auto", padding: "0 32px", textAlign: "center" }}>
+    <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", letterSpacing: "0.15em" }}>LOADING...</span>
     </div>
   );
@@ -38,66 +38,71 @@ export default function Article() {
     </div>
   );
 
-  // Use WordPress featured image if set, else fallback by color
   const heroImage = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
 
   return (
     <div className="fade-in">
+
       {/* Meta bar */}
       <div style={{ background: "#0F0E0D", padding: "12px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-          <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textDecoration: "none", transition: "color 0.2s" }}
-            onMouseEnter={e => e.target.style.color = "#E8521A"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.4)"}>← HOME</Link>
+          <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textDecoration: "none", transition: "color 0.2s" }}
+            onMouseEnter={e => e.target.style.color="#E8521A"} onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.5)"}>← HOME</Link>
           <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
           <CategoryBadge label={article.category} color={article.color} />
           <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>CRM DAILY TEAM · {article.date.toUpperCase()}</span>
+          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em" }}>CRM DAILY TEAM · {article.date.toUpperCase()}</span>
         </div>
       </div>
 
-      {/* Dark hero — FIX: removed padding-bottom so image sits tight */}
-      <div style={{ background: "#0F0E0D", paddingTop: 60, paddingLeft: 32, paddingRight: 32, paddingBottom: 0 }}>
+      {/* Dark hero */}
+      <div style={{ background: "#0F0E0D", paddingTop: 56, paddingLeft: 32, paddingRight: 32, paddingBottom: 0 }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div style={{ marginBottom: 16 }}><CategoryBadge label={article.category} color={article.color} /></div>
-            <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 56, color: "#F2EDE4", lineHeight: 1.05, letterSpacing: "-0.02em", maxWidth: 900, marginBottom: 16 }}>
+            <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 52, color: "#F2EDE4", lineHeight: 1.08, letterSpacing: "-0.02em", maxWidth: 860, marginBottom: 20 }}>
               {article.title}
             </h1>
-            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 12, color: "rgba(242,237,228,0.5)", maxWidth: 640, lineHeight: 1.85, marginBottom: 32 }}>
-              {article.excerpt}
-            </p>
+            {/* FIX: clean excerpt — Inter font, not monospace, no HTML entities */}
+            {article.excerpt && (
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 18, color: "rgba(242,237,228,0.6)", maxWidth: 640, lineHeight: 1.75, marginBottom: 36, fontWeight: 400 }}>
+                {article.excerpt}
+              </p>
+            )}
           </motion.div>
-          {/* FIX: hero image uses WordPress featured image */}
-          <div style={{ height: 380, overflow: "hidden", position: "relative" }}>
+
+          {/* Hero image */}
+          <div style={{ height: 420, overflow: "hidden", position: "relative" }}>
             <img src={heroImage} alt={article.title}
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.7)", transition: "transform 0.6s ease" }}
-              onMouseEnter={e => e.target.style.transform = "scale(1.02)"}
-              onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 10%,transparent 65%)" }} />
-            <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(0,0,0,0.7)", padding: "6px 14px", border: "1px solid rgba(255,255,255,0.1)" }}>
+              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.8)", transition: "transform 0.6s ease" }}
+              onMouseEnter={e => e.target.style.transform="scale(1.02)"}
+              onMouseLeave={e => e.target.style.transform="scale(1)"} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 8%,transparent 60%)" }} />
+            <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(0,0,0,0.65)", padding: "6px 14px", border: "1px solid rgba(255,255,255,0.1)" }}>
               <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em" }}>READING: {article.readTime.toUpperCase()}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
+      {/* Article content */}
       <div className="grid-bg" style={{ background: "#F2EDE4", padding: "64px 32px 96px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 64, alignItems: "start" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 72, alignItems: "start" }}>
           <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <blockquote style={{ borderLeft: "3px solid #E8521A", paddingLeft: 24, marginBottom: 40, fontFamily: "'DM Serif Display',serif", fontSize: 22, color: "#0F0E0D", lineHeight: 1.4, fontStyle: "italic" }}>
-              {article.excerpt}
-            </blockquote>
+
+            {/* Clean article body — no duplicate blockquote */}
             <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }} />
-            <div style={{ background: "#0F0E0D", padding: 32, marginTop: 48, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+
+            {/* Subscribe CTA at bottom */}
+            <div style={{ background: "#0F0E0D", padding: 32, marginTop: 56, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
               <div>
                 <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// STAY INFORMED</span>
                 <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: "#F2EDE4", marginBottom: 8 }}>Get this kind of intelligence every morning.</h3>
                 <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.45)", lineHeight: 1.7 }}>CRM Daily digest. Free. Every weekday morning.</p>
               </div>
               <Link to="/newsletter" style={{ display: "inline-block", background: "#E8521A", color: "#fff", padding: "12px 24px", fontFamily: "'Space Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", whiteSpace: "nowrap", textDecoration: "none", transition: "background 0.2s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "#D4481A"}
-                onMouseLeave={e => e.currentTarget.style.background = "#E8521A"}>
+                onMouseEnter={e => e.currentTarget.style.background="#D4481A"}
+                onMouseLeave={e => e.currentTarget.style.background="#E8521A"}>
                 SUBSCRIBE FREE →
               </Link>
             </div>

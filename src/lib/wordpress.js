@@ -15,19 +15,39 @@ function formatDate(dateStr) {
   });
 }
 
-function stripHtml(html) {
-  return html?.replace(/<[^>]+>/g, '').trim() || '';
+// Strip HTML tags AND decode HTML entities properly
+function cleanExcerpt(html) {
+  if (!html) return '';
+  // Remove HTML tags
+  let text = html.replace(/<[^>]+>/g, '');
+  // Decode HTML entities
+  text = text
+    .replace(/&hellip;/g, '…')
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&quot;/g, '"')
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&#8211;/g, '–')
+    .replace(/&#8212;/g, '—')
+    .replace(/\[&hellip;\]/g, '…')
+    .replace(/\[…\]/g, '')
+    .trim();
+  // Cut to first 2 sentences max for clean excerpt
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+  return sentences.slice(0, 2).join(' ').trim() || text.slice(0, 200);
 }
 
 function transformPost(post) {
   const categoryName = post.categories?.nodes?.[0]?.name || 'CRM News';
-  // Use WordPress featured image if available, else null (ArticleCard handles fallback)
   const featuredImage = post.featuredImage?.node?.sourceUrl || null;
   return {
     id: post.databaseId,
     slug: post.slug,
     title: post.title,
-    excerpt: stripHtml(post.excerpt),
+    excerpt: cleanExcerpt(post.excerpt),
     content: post.content,
     date: formatDate(post.date),
     category: categoryName,

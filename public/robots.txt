@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.crmdaily.co/sitemap.xml
+
+# Block admin paths
+Disallow: /wp-admin/
+Disallow: /wp-login.php

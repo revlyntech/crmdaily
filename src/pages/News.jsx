@@ -3,15 +3,13 @@ import { useLocation } from "react-router-dom";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
+import SEOMeta from "../components/SEOMeta";
 
 export default function News() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const categoryFilter = params.get('category') || '';
-
   const { articles: all, loading } = usePosts(100);
-
-  // Filter live from WordPress — no manual updates needed ever
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase()
         || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
@@ -19,11 +17,17 @@ export default function News() {
 
   const pageTitle = categoryFilter ? `${categoryFilter} News` : 'CRM & GTM News';
   const pageDesc = categoryFilter
-    ? `All ${categoryFilter} articles from CRM Daily.`
-    : 'Daily intelligence from across the CRM, sales, and go-to-market world.';
+    ? `All ${categoryFilter} articles, news and updates from CRM Daily.`
+    : 'Daily CRM and GTM news — HubSpot, Salesforce, Pipedrive updates, RevOps intelligence and more.';
 
   return (
     <div className="fade-in">
+      <SEOMeta
+        title={pageTitle}
+        description={pageDesc}
+        url={`https://www.crmdaily.co/news${categoryFilter ? `?category=${categoryFilter}` : ''}`}
+        type="website"
+      />
       <div style={{ background:"#0F0E0D", padding:"64px 32px" }}>
         <div style={{ maxWidth:1400, margin:"0 auto" }}>
           <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
@@ -39,7 +43,7 @@ export default function News() {
             {loading ? (
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>Loading articles...</span>
             ) : articles.length === 0 ? (
-              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>No articles in this category yet — check back soon.</span>
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>No articles in this category yet.</span>
             ) : (
               articles.map((a, i) => <ArticleCard key={a.id} article={a} index={i} />)
             )}

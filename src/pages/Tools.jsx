@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
+import SEOMeta from "../components/SEOMeta";
 
 const TOOL_CATEGORIES = ['tool review', 'tools'];
 
@@ -10,9 +11,7 @@ export default function Tools() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const categoryFilter = params.get('category') || '';
-
   const { articles: all, loading } = usePosts(100);
-
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase()
         || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
@@ -20,11 +19,17 @@ export default function Tools() {
 
   const pageTitle = categoryFilter ? `${categoryFilter} Reviews` : 'CRM Tools & Reviews';
   const pageDesc = categoryFilter
-    ? `All ${categoryFilter} reviews from CRM Daily.`
-    : 'Honest, unbiased reviews of every major CRM tool.';
+    ? `Honest ${categoryFilter} reviews and comparisons from CRM Daily.`
+    : 'Honest, unbiased CRM tool reviews and comparisons. HubSpot, Salesforce, Pipedrive and more.';
 
   return (
     <div className="fade-in">
+      <SEOMeta
+        title={pageTitle}
+        description={pageDesc}
+        url={`https://www.crmdaily.co/tools${categoryFilter ? `?category=${categoryFilter}` : ''}`}
+        type="website"
+      />
       <div style={{ background:"#0F0E0D", padding:"64px 32px" }}>
         <div style={{ maxWidth:1400, margin:"0 auto" }}>
           <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>

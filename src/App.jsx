@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import News from "./pages/News";
 import Guides from "./pages/Guides";
 import Tools from "./pages/Tools";
+import CRMTools from "./pages/CRMTools";
 import Newsletter from "./pages/Newsletter";
 import About from "./pages/About";
 import Article from "./pages/Article";
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/news" element={<News />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/tools" element={<Tools />} />
+        <Route path="/crm-tools" element={<CRMTools />} />
         <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/about" element={<About />} />
         <Route path="/article/:id" element={<Article />} />

@@ -2,18 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const crmTools = [
-  { label: "HubSpot",      to: "/tools?category=HubSpot" },
-  { label: "Salesforce",   to: "/tools?category=Salesforce" },
-  { label: "Pipedrive",    to: "/tools?category=Pipedrive" },
-  { label: "Monday.com",   to: "/tools?category=Monday" },
-  { label: "Zoho CRM",     to: "/tools?category=Zoho" },
-  { label: "Freshsales",   to: "/tools?category=Freshsales" },
-  { label: "Close CRM",    to: "/tools?category=Close" },
-  { label: "Copper CRM",   to: "/tools?category=Copper" },
-  { label: "All CRM Tools",to: "/tools" },
-];
-
 const navLinks = [
   { label: "News",       to: "/news" },
   { label: "Guides",     to: "/guides" },
@@ -37,45 +25,25 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); setCrmOpen(false); }, [location]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClick = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setCrmOpen(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setCrmOpen(false);
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const navLinkStyle = (active) => ({
+  const linkStyle = (active) => ({
     color: active ? "#E8521A" : "#0F0E0D",
-    fontSize: 11,
-    fontFamily: "'Space Mono',monospace",
-    fontWeight: 700,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    padding: "0 18px",
-    opacity: active ? 1 : 0.65,
-    transition: "all 0.2s",
-    textDecoration: "none",
-    position: "relative",
-    cursor: "pointer",
-    background: "none",
-    border: "none",
-    height: 68,
-    display: "flex",
-    alignItems: "center",
+    fontSize: 11, fontFamily: "'Space Mono',monospace", fontWeight: 700,
+    letterSpacing: "0.1em", textTransform: "uppercase",
+    padding: "0 18px", opacity: active ? 1 : 0.65,
+    transition: "all 0.2s", textDecoration: "none",
+    height: 68, display: "flex", alignItems: "center",
   });
 
   return (
-    <header style={{
-      background: "#F2EDE4",
-      borderBottom: "1px solid rgba(0,0,0,0.1)",
-      position: "sticky", top: 0, zIndex: 100,
-      boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none",
-      transition: "box-shadow 0.3s ease",
-    }}>
+    <header style={{ background: "#F2EDE4", borderBottom: "1px solid rgba(0,0,0,0.1)", position: "sticky", top: 0, zIndex: 100, boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none", transition: "box-shadow 0.3s ease" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
 
         {/* Logo */}
@@ -90,11 +58,10 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hide-768" style={{ display: "flex", alignItems: "center", gap: 0, height: 68 }}>
-
           {navLinks.map(l => {
             const active = location.pathname === l.to;
             return (
-              <Link key={l.to} to={l.to} style={navLinkStyle(active)}
+              <Link key={l.to} to={l.to} style={linkStyle(active)}
                 onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
                 onMouseLeave={e => { e.currentTarget.style.opacity=active?"1":"0.65"; e.currentTarget.style.color=active?"#E8521A":"#0F0E0D"; }}>
                 {l.label}
@@ -102,75 +69,15 @@ export default function Navbar() {
             );
           })}
 
-          {/* CRM Dropdown */}
-          <div ref={dropdownRef} style={{ position: "relative", height: 68, display: "flex", alignItems: "center" }}>
-            <button
-              onClick={() => setCrmOpen(!crmOpen)}
-              style={{
-                ...navLinkStyle(crmOpen),
-                display: "flex", alignItems: "center", gap: 5,
-                opacity: crmOpen ? 1 : 0.65,
-                color: crmOpen ? "#E8521A" : "#0F0E0D",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity=crmOpen?"1":"0.65"; e.currentTarget.style.color=crmOpen?"#E8521A":"#0F0E0D"; }}>
-              CRM Tools
-              <svg width="8" height="6" viewBox="0 0 8 6" fill="none" style={{ transition: "transform 0.2s", transform: crmOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
-                <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </button>
+          {/* CRM Tools — goes directly to /crm-tools page */}
+          <Link to="/crm-tools"
+            style={linkStyle(location.pathname === "/crm-tools")}
+            onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity=location.pathname==="/crm-tools"?"1":"0.65"; e.currentTarget.style.color=location.pathname==="/crm-tools"?"#E8521A":"#0F0E0D"; }}>
+            CRM Tools
+          </Link>
 
-            <AnimatePresence>
-              {crmOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 0.15 }}
-                  style={{
-                    position: "absolute",
-                    top: "calc(100% + 0px)",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: "#0F0E0D",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    minWidth: 200,
-                    zIndex: 200,
-                    boxShadow: "0 16px 40px rgba(0,0,0,0.2)",
-                  }}>
-                  {/* Arrow tip */}
-                  <div style={{ position: "absolute", top: -5, left: "50%", transform: "translateX(-50%)", width: 10, height: 10, background: "#0F0E0D", borderLeft: "1px solid rgba(255,255,255,0.08)", borderTop: "1px solid rgba(255,255,255,0.08)", rotate: "45deg" }} />
-
-                  {crmTools.map((tool, i) => (
-                    <Link
-                      key={tool.to}
-                      to={tool.to}
-                      style={{
-                        display: "block",
-                        padding: "11px 20px",
-                        fontFamily: "'Space Mono',monospace",
-                        fontSize: 10,
-                        fontWeight: tool.label === "All CRM Tools" ? 700 : 400,
-                        letterSpacing: "0.08em",
-                        color: tool.label === "All CRM Tools" ? "#E8521A" : "rgba(242,237,228,0.7)",
-                        textDecoration: "none",
-                        borderTop: i === crmTools.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
-                        borderBottom: i < crmTools.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                        transition: "all 0.15s",
-                        textTransform: "uppercase",
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.background="rgba(232,82,26,0.08)"; e.currentTarget.style.color="#E8521A"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color=tool.label==="All CRM Tools"?"#E8521A":"rgba(242,237,228,0.7)"; }}>
-                      {tool.label}
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <Link to="/contact"
-            style={navLinkStyle(location.pathname === "/contact")}
+          <Link to="/contact" style={linkStyle(location.pathname === "/contact")}
             onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
             onMouseLeave={e => { e.currentTarget.style.opacity="0.65"; e.currentTarget.style.color="#0F0E0D"; }}>
             Contact
@@ -202,26 +109,16 @@ export default function Navbar() {
           <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}}
             style={{ borderTop:"1px solid rgba(0,0,0,0.08)", background:"#F2EDE4", overflow:"hidden" }}>
             <div style={{ padding:"16px 32px 24px" }}>
-              {[...navLinks, {label:"CRM Tools",to:"/tools"}, {label:"Contact",to:"/contact"}].map(l => (
+              {[...navLinks, {label:"CRM Tools",to:"/crm-tools"}, {label:"Contact",to:"/contact"}].map(l => (
                 <Link key={l.to} to={l.to}
                   style={{ display:"block", padding:"12px 0", fontFamily:"'Space Mono',monospace", fontSize:12, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F0E0D", textDecoration:"none" }}>
                   {l.label}
                 </Link>
               ))}
-              {/* CRM tools in mobile */}
-              <div style={{ paddingLeft: 16, marginTop: 4 }}>
-                {crmTools.slice(0, -1).map(t => (
-                  <Link key={t.to} to={t.to}
-                    style={{ display:"block", padding:"10px 0", fontFamily:"'Space Mono',monospace", fontSize:10, letterSpacing:"0.08em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.04)", color:"#9B958F", textDecoration:"none" }}>
-                    → {t.label}
-                  </Link>
-                ))}
-              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
       <style>{`.show-768{display:none!important;} @media(max-width:768px){.hide-768{display:none!important;} .show-768{display:flex!important;}}`}</style>
     </header>
   );

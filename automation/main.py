@@ -1,4 +1,12 @@
 import sys
+import os
+
+# Add automation folder to path so imports work from root
+sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
+
+# Change working directory to automation folder
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 from scraper import scrape_news
 from writer import generate_article
 from publisher import publish_article

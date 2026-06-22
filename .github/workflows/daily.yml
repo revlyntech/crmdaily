@@ -2,9 +2,8 @@ name: CRM Daily — Auto Publish Article
 
 on:
   schedule:
-    # 8:00 AM IST = 2:30 AM UTC — Monday to Friday only
     - cron: '30 2 * * 1-5'
-  workflow_dispatch:  # manual trigger from GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   publish-article:
@@ -27,9 +26,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
           NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-        run: |
-          cd automation
-          python main.py
+        run: python automation/main.py
 
       - name: Done
         run: echo "✅ Article published at $(date)"

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TopBar from "./components/TopBar";
 import Navbar from "./components/Navbar";
 import Ticker from "./components/Ticker";
+import StockTicker from "./components/StockTicker";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
@@ -22,6 +23,7 @@ export default function App() {
       <TopBar />
       <Navbar />
       <Ticker />
+      <StockTicker />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />

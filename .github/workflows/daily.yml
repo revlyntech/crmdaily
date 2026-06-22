@@ -19,7 +19,8 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r automation/requirements.txt
+        run: |
+          pip install --no-cache-dir -r automation/requirements.txt
 
       - name: Run automation
         env:

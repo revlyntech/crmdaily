@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 
 def load_news():
-    with open("automation/scraped_news.json", "r") as f:
+    with open("scraped_news.json", "r") as f:
         return json.load(f)
 
 def generate_article(news_items):
@@ -49,8 +49,8 @@ Requirements:
 - Strong opening hook paragraph
 - 3-4 sections with H2 headings
 - Actionable insights for CRM/RevOps professionals
-- Reference real tools where relevant (HubSpot, Salesforce, Pipedrive, Gong, Clay etc)
-- Professional but engaging tone — like a smart industry newsletter
+- Reference real tools where relevant
+- Professional but engaging tone
 - Forward-looking conclusion
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags]"""
@@ -63,9 +63,7 @@ Requirements:
 
     response = message.content[0].text
 
-    # Parse response
     article = {}
-
     title_match = re.search(r"TITLE:\s*(.+)", response)
     excerpt_match = re.search(r"EXCERPT:\s*(.+)", response)
     category_match = re.search(r"CATEGORY:\s*(.+)", response)
@@ -82,7 +80,8 @@ Requirements:
     print(f"   Category: {article['category']}")
     print(f"   Tags: {article['tags']}")
 
-    with open("automation/generated_article.json", "w") as f:
+    # Save in current directory (automation/)
+    with open("generated_article.json", "w") as f:
         json.dump(article, f, indent=2, ensure_ascii=False)
 
     return article

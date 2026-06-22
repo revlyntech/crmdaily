@@ -6,7 +6,6 @@ from datetime import datetime, timedelta, timezone
 NEWS_API_KEY = os.environ["NEWS_API_KEY"]
 NEWS_API_URL = "https://newsapi.org/v2/everything"
 
-# Search queries targeting CRM Daily's exact niche
 SEARCH_QUERIES = [
     "HubSpot OR Salesforce OR Pipedrive CRM",
     "RevOps OR revenue operations OR GTM strategy",
@@ -15,7 +14,6 @@ SEARCH_QUERIES = [
     "B2B sales technology 2026",
 ]
 
-# Preferred news sources
 PREFERRED_SOURCES = [
     "techcrunch.com",
     "venturebeat.com",
@@ -57,7 +55,6 @@ def scrape_news():
                             "link": article.get("url", ""),
                             "source": article.get("source", {}).get("name", ""),
                             "published": article.get("publishedAt", ""),
-                            "image": article.get("urlToImage", ""),
                         })
                 print(f"  ✓ '{query}': {len(data.get('articles', []))} articles")
             else:
@@ -66,7 +63,7 @@ def scrape_news():
         except Exception as e:
             print(f"  ✗ Error for '{query}': {e}")
 
-    # Remove duplicates by title
+    # Remove duplicates
     seen_titles = set()
     unique_articles = []
     for a in articles:
@@ -84,11 +81,12 @@ def scrape_news():
         return 0
 
     unique_articles.sort(key=source_score, reverse=True)
-
     top_articles = unique_articles[:6]
+
     print(f"\n✅ Selected {len(top_articles)} articles for writing")
 
-    with open("automation/scraped_news.json", "w") as f:
+    # Save in current directory (automation/)
+    with open("scraped_news.json", "w") as f:
         json.dump(top_articles, f, indent=2, ensure_ascii=False)
 
     return top_articles

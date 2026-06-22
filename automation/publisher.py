@@ -4,7 +4,7 @@ import os
 import base64
 
 WP_URL = "https://cms.crmdaily.co"
-WP_USER = "krishnanshu"
+WP_USER = "rishhsoni@gmail.com"
 
 def get_auth_header():
     wp_password = os.environ["WP_APP_PASSWORD"]
@@ -83,6 +83,6 @@ def publish_article(article):
         return False
 
 if __name__ == "__main__":
-    with open("automation/generated_article.json", "r") as f:
+    with open("generated_article.json", "r") as f:
         article = json.load(f)
     publish_article(article)

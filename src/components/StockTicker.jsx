@@ -6,7 +6,6 @@ export default function StockTicker() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!containerRef.current) return;
-
       containerRef.current.innerHTML = "";
 
       const wrapper = document.createElement("div");
@@ -78,7 +77,7 @@ export default function StockTicker() {
         }} className="blink" />
       </div>
 
-      {/* Widget container */}
+      {/* Widget */}
       <div ref={containerRef} style={{ width: "100%", minHeight: 50 }} />
     </div>
   );

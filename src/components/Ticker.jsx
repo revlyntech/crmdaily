@@ -21,14 +21,37 @@ export default function Ticker() {
           gap: 8,
           borderRight: "1px solid rgba(255,255,255,0.08)",
         }}>
-          <span style={{ width: 6, height: 6, background: "#22C55E", borderRadius: "50%", boxShadow: "0 0 6px #22C55E", flexShrink: 0 }} className="blink" />
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#22C55E", letterSpacing: "0.15em", fontWeight: 700, whiteSpace: "nowrap" }}>BREAKING</span>
+          <span style={{
+            width: 6, height: 6,
+            background: "#22C55E",
+            borderRadius: "50%",
+            boxShadow: "0 0 6px #22C55E",
+            flexShrink: 0,
+          }} className="blink" />
+          <span style={{
+            fontFamily: "'Space Mono',monospace",
+            fontSize: 9,
+            color: "#22C55E",
+            letterSpacing: "0.15em",
+            fontWeight: 700,
+            whiteSpace: "nowrap",
+          }}>BREAKING</span>
         </div>
 
         {/* Scrolling text */}
-        <div style={{ overflow: "hidden", flex: 1, paddingLeft: 20 }}>
+        <div
+          style={{ overflow: "hidden", flex: 1, paddingLeft: 20 }}
+          onMouseEnter={e => {
+            const el = e.currentTarget.querySelector('.ticker-scroll');
+            if (el) el.style.animationPlayState = 'paused';
+          }}
+          onMouseLeave={e => {
+            const el = e.currentTarget.querySelector('.ticker-scroll');
+            if (el) el.style.animationPlayState = 'running';
+          }}
+        >
           <div
-            className="ticker-animate-slow"
+            className="ticker-scroll ticker-animate-slow"
             style={{
               fontFamily: "'Space Mono',monospace",
               fontSize: 11,
@@ -39,7 +62,9 @@ export default function Ticker() {
             }}
           >
             {doubled.map((item, i) => (
-              <span key={i} style={{ whiteSpace: "nowrap" }}>{item} &nbsp;&nbsp;·&nbsp;&nbsp; </span>
+              <span key={i} style={{ whiteSpace: "nowrap" }}>
+                {item} &nbsp;&nbsp;·&nbsp;&nbsp;{" "}
+              </span>
             ))}
           </div>
         </div>

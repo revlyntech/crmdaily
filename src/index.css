@@ -541,3 +541,7 @@ a { text-decoration: none; color: inherit; }
   .article-body { max-width: 100%; }
   .article-body .wp-block-columns { grid-template-columns: 1fr !important; }
 }
+
+/* Slow ticker — matches stock ticker speed */
+@keyframes ticker-slow { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-animate-slow { animation: ticker-slow 40s linear infinite; white-space: nowrap; display: inline-block; }

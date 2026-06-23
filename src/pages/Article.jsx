@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getPostBySlug } from "../lib/wordpress";
+import { getPostBySlug, getPosts } from "../lib/wordpress";
 import CategoryBadge from "../components/CategoryBadge";
 import Sidebar from "../components/Sidebar";
 
@@ -12,6 +12,88 @@ const fallbackImgs = {
   amber:  "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80",
   red:    "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1200&q=80",
 };
+
+function RelatedArticles({ currentArticle }) {
+  const [related, setRelated] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getPosts(50).then(posts => {
+      const filtered = posts
+        .filter(p => p.slug !== currentArticle.slug)
+        .filter(p => p.category === currentArticle.category || 
+          p.title.toLowerCase().split(' ').some(word => 
+            word.length > 4 && currentArticle.title.toLowerCase().includes(word)
+          )
+        )
+        .slice(0, 3);
+
+      // If not enough same-category, fill with latest
+      if (filtered.length < 3) {
+        const rest = posts
+          .filter(p => p.slug !== currentArticle.slug && !filtered.find(f => f.slug === p.slug))
+          .slice(0, 3 - filtered.length);
+        setRelated([...filtered, ...rest]);
+      } else {
+        setRelated(filtered);
+      }
+    });
+  }, [currentArticle.slug]);
+
+  if (related.length === 0) return null;
+
+  return (
+    <div style={{ background: "#F2EDE4", padding: "64px 32px", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 36 }}>
+          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.18em" }}>// RELATED ARTICLES</span>
+          <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          {related.map((article, i) => {
+            const image = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
+            return (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                onClick={() => navigate(`/article/${article.slug}`)}
+                className="card-lift"
+                style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", overflow: "hidden" }}
+              >
+                {/* Image */}
+                <div style={{ height: 160, overflow: "hidden", position: "relative" }}>
+                  <img src={image} alt={article.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8)", transition: "transform 0.4s ease" }}
+                    onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                    onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                  <div style={{ position: "absolute", top: 10, left: 10 }}>
+                    <CategoryBadge label={article.category} color={article.color} />
+                  </div>
+                </div>
+                {/* Content */}
+                <div style={{ padding: "18px 20px 20px" }}>
+                  <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.08em", display: "block", marginBottom: 8 }}>
+                    {article.date.toUpperCase()}
+                  </span>
+                  <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 18, color: "#0F0E0D", lineHeight: 1.3, marginBottom: 14, transition: "color 0.2s" }}
+                    onMouseEnter={e => e.target.style.color = "#E8521A"}
+                    onMouseLeave={e => e.target.style.color = "#0F0E0D"}>
+                    {article.title}
+                  </h3>
+                  <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", fontWeight: 700, letterSpacing: "0.1em" }}>
+                    READ →
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Article() {
   const { slug } = useParams();
@@ -47,11 +129,14 @@ export default function Article() {
       <div style={{ background: "#0F0E0D", padding: "12px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
           <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textDecoration: "none", transition: "color 0.2s" }}
-            onMouseEnter={e => e.target.style.color="#E8521A"} onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.5)"}>← HOME</Link>
+            onMouseEnter={e => e.target.style.color = "#E8521A"}
+            onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.5)"}>← HOME</Link>
           <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
           <CategoryBadge label={article.category} color={article.color} />
           <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em" }}>CRM DAILY TEAM · {article.date.toUpperCase()}</span>
+          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em" }}>
+            CRM DAILY TEAM · {article.date.toUpperCase()}
+          </span>
         </div>
       </div>
 
@@ -74,11 +159,13 @@ export default function Article() {
           <div style={{ height: 420, overflow: "hidden", position: "relative" }}>
             <img src={heroImage} alt={article.title}
               style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.8)", transition: "transform 0.6s ease" }}
-              onMouseEnter={e => e.target.style.transform="scale(1.02)"}
-              onMouseLeave={e => e.target.style.transform="scale(1)"} />
+              onMouseEnter={e => e.target.style.transform = "scale(1.02)"}
+              onMouseLeave={e => e.target.style.transform = "scale(1)"} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 8%,transparent 60%)" }} />
             <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(0,0,0,0.65)", padding: "6px 14px", border: "1px solid rgba(255,255,255,0.1)" }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em" }}>READING: {article.readTime.toUpperCase()}</span>
+              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em" }}>
+                READING: {article.readTime.toUpperCase()}
+              </span>
             </div>
           </div>
         </div>
@@ -88,18 +175,39 @@ export default function Article() {
       <div className="grid-bg" style={{ background: "#F2EDE4", padding: "64px 32px 96px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 72, alignItems: "start" }}>
           <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+
             <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }} />
 
+            {/* Social share */}
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 48, paddingTop: 24, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.1em" }}>SHARE //</span>
+              <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}`}
+                target="_blank" rel="noopener noreferrer"
+                style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#0F0E0D", letterSpacing: "0.1em", padding: "6px 14px", border: "1px solid rgba(0,0,0,0.12)", textDecoration: "none", transition: "all 0.2s" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#0F0E0D"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0F0E0D"; }}>
+                TWITTER ↗
+              </a>
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}`}
+                target="_blank" rel="noopener noreferrer"
+                style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#0F0E0D", letterSpacing: "0.1em", padding: "6px 14px", border: "1px solid rgba(0,0,0,0.12)", textDecoration: "none", transition: "all 0.2s" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#0A66C2"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#0A66C2"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0F0E0D"; e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)"; }}>
+                LINKEDIN ↗
+              </a>
+            </div>
+
             {/* Subscribe CTA */}
-            <div style={{ background: "#0F0E0D", padding: 32, marginTop: 56, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+            <div style={{ background: "#0F0E0D", padding: 32, marginTop: 40, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
               <div>
                 <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// STAY INFORMED</span>
                 <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: "#F2EDE4", marginBottom: 8 }}>Get this kind of intelligence every morning.</h3>
-                <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.45)", lineHeight: 1.7 }}>CRM Daily digest. Free. Every weekday morning.</p>
+                <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.45)", lineHeight: 1.7 }}>CRM Daily digest. Free. Every morning.</p>
               </div>
-              <Link to="/newsletter" style={{ display: "inline-block", background: "#E8521A", color: "#fff", padding: "12px 24px", fontFamily: "'Space Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", whiteSpace: "nowrap", textDecoration: "none", transition: "background 0.2s" }}
-                onMouseEnter={e => e.currentTarget.style.background="#D4481A"}
-                onMouseLeave={e => e.currentTarget.style.background="#E8521A"}>
+              <Link to="/newsletter"
+                style={{ display: "inline-block", background: "#E8521A", color: "#fff", padding: "12px 24px", fontFamily: "'Space Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", whiteSpace: "nowrap", textDecoration: "none", transition: "background 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#D4481A"}
+                onMouseLeave={e => e.currentTarget.style.background = "#E8521A"}>
                 SUBSCRIBE FREE →
               </Link>
             </div>
@@ -107,6 +215,10 @@ export default function Article() {
           <Sidebar />
         </div>
       </div>
+
+      {/* Related Articles */}
+      <RelatedArticles currentArticle={article} />
+
     </div>
   );
 }

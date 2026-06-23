@@ -11,6 +11,13 @@ def load_news():
 def generate_article(news_items):
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
+    # Pick best image from news items
+    featured_image_url = ""
+    for item in news_items:
+        if item.get("image") and item["image"].startswith("http"):
+            featured_image_url = item["image"]
+            break
+
     news_context = "\n\n".join([
         f"Source: {item['source']}\nTitle: {item['title']}\nSummary: {item['summary']}\nURL: {item['link']}"
         for item in news_items
@@ -75,12 +82,12 @@ Requirements:
     article["category"] = category_match.group(1).strip() if category_match else "CRM News"
     article["tags"] = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
     article["content"] = content_match.group(1).strip() if content_match else response
+    article["featured_image_url"] = featured_image_url
 
     print(f"✅ Generated: {article['title']}")
     print(f"   Category: {article['category']}")
-    print(f"   Tags: {article['tags']}")
+    print(f"   Image: {featured_image_url or 'None found'}")
 
-    # Save in current directory (automation/)
     with open("generated_article.json", "w") as f:
         json.dump(article, f, indent=2, ensure_ascii=False)
 

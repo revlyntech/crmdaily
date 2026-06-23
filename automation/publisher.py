@@ -51,10 +51,60 @@ def get_or_create_tags(tag_names, headers):
                 tag_ids.append(new_tag["id"])
     return tag_ids
 
+def upload_featured_image(image_url, title, headers):
+    """Download image from URL and upload to WordPress media library"""
+    try:
+        # Download the image
+        img_response = requests.get(image_url, timeout=10)
+        if img_response.status_code != 200:
+            print(f"   ⚠️ Could not download image: {image_url}")
+            return None
+
+        # Determine content type
+        content_type = img_response.headers.get("Content-Type", "image/jpeg")
+        ext = "jpg" if "jpeg" in content_type else content_type.split("/")[-1]
+        filename = f"{title[:50].replace(' ', '-').lower()}.{ext}"
+
+        # Upload to WordPress
+        upload_headers = {
+            **headers,
+            "Content-Type": content_type,
+            "Content-Disposition": f'attachment; filename="{filename}"',
+        }
+
+        upload_response = requests.post(
+            f"{WP_URL}/wp-json/wp/v2/media",
+            headers=upload_headers,
+            data=img_response.content,
+            timeout=30
+        )
+
+        if upload_response.status_code in [200, 201]:
+            media_id = upload_response.json().get("id")
+            print(f"   ✅ Image uploaded — ID: {media_id}")
+            return media_id
+        else:
+            print(f"   ⚠️ Image upload failed: {upload_response.status_code}")
+            return None
+
+    except Exception as e:
+        print(f"   ⚠️ Image error: {e}")
+        return None
+
 def publish_article(article):
     headers = get_auth_header()
     category_id = get_or_create_category(article["category"], headers)
     tag_ids = get_or_create_tags(article["tags"], headers)
+
+    # Upload featured image if available
+    featured_media_id = None
+    if article.get("featured_image_url"):
+        print(f"   📸 Uploading featured image...")
+        featured_media_id = upload_featured_image(
+            article["featured_image_url"],
+            article["title"],
+            headers
+        )
 
     post_data = {
         "title": article["title"],
@@ -64,6 +114,10 @@ def publish_article(article):
         "categories": [category_id],
         "tags": tag_ids,
     }
+
+    # Add featured image if uploaded successfully
+    if featured_media_id:
+        post_data["featured_media"] = featured_media_id
 
     response = requests.post(
         f"{WP_URL}/wp-json/wp/v2/posts",

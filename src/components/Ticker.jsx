@@ -10,7 +10,7 @@ export default function Ticker() {
           <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#22C55E", letterSpacing: "0.15em", fontWeight: 700 }}>BREAKING</span>
         </div>
         <div style={{ overflow: "hidden", flex: 1, paddingLeft: 20 }}>
-          <div className="ticker-animate" style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.75)", letterSpacing: "0.06em" }}>
+          <div className="ticker-animate-slow" style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.75)", letterSpacing: "0.06em" }}>
             {doubled.map((item, i) => (
               <span key={i}>{item} &nbsp;&nbsp;·&nbsp;&nbsp; </span>
             ))}

@@ -19,7 +19,7 @@ export default function ArticleCard({ article, index = 0 }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3), ease: "easeOut" }}
-      onClick={() => navigate(`/article/${article.id}`)}
+      onClick={() => navigate(`/article/${article.slug}`)}
       className="card-lift"
       style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", overflow: "hidden" }}>
 

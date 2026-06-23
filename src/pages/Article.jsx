@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getPostById } from "../lib/wordpress";
+import { getPostBySlug } from "../lib/wordpress";
 import CategoryBadge from "../components/CategoryBadge";
 import Sidebar from "../components/Sidebar";
 
@@ -14,15 +14,15 @@ const fallbackImgs = {
 };
 
 export default function Article() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPostById(id)
+    getPostBySlug(slug)
       .then(setArticle)
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
 
   if (loading) return (
     <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -63,7 +63,6 @@ export default function Article() {
             <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 52, color: "#F2EDE4", lineHeight: 1.08, letterSpacing: "-0.02em", maxWidth: 860, marginBottom: 20 }}>
               {article.title}
             </h1>
-            {/* FIX: clean excerpt — Inter font, not monospace, no HTML entities */}
             {article.excerpt && (
               <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 18, color: "rgba(242,237,228,0.6)", maxWidth: 640, lineHeight: 1.75, marginBottom: 36, fontWeight: 400 }}>
                 {article.excerpt}
@@ -89,11 +88,9 @@ export default function Article() {
       <div className="grid-bg" style={{ background: "#F2EDE4", padding: "64px 32px 96px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 72, alignItems: "start" }}>
           <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-
-            {/* Clean article body — no duplicate blockquote */}
             <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }} />
 
-            {/* Subscribe CTA at bottom */}
+            {/* Subscribe CTA */}
             <div style={{ background: "#0F0E0D", padding: 32, marginTop: 56, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
               <div>
                 <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// STAY INFORMED</span>

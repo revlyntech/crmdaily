@@ -48,6 +48,11 @@ def scrape_news():
             if data.get("status") == "ok":
                 for article in data.get("articles", []):
                     if article.get("title") and article.get("description"):
+                        # Get image URL — must be a real http URL
+                        image_url = article.get("urlToImage", "")
+                        if image_url and not image_url.startswith("http"):
+                            image_url = ""
+
                         articles.append({
                             "title": article["title"],
                             "summary": article.get("description", "")[:600],
@@ -55,6 +60,7 @@ def scrape_news():
                             "link": article.get("url", ""),
                             "source": article.get("source", {}).get("name", ""),
                             "published": article.get("publishedAt", ""),
+                            "image": image_url,  # ← store image URL
                         })
                 print(f"  ✓ '{query}': {len(data.get('articles', []))} articles")
             else:
@@ -72,20 +78,24 @@ def scrape_news():
             seen_titles.add(clean_title)
             unique_articles.append(a)
 
-    # Prioritise preferred sources
-    def source_score(article):
+    # Prioritise articles that HAVE images first, then by source
+    def article_score(article):
+        has_image = 1 if article.get("image") else 0
         source = article.get("link", "").lower()
+        source_score = 0
         for i, preferred in enumerate(PREFERRED_SOURCES):
             if preferred in source:
-                return len(PREFERRED_SOURCES) - i
-        return 0
+                source_score = len(PREFERRED_SOURCES) - i
+                break
+        return (has_image * 10) + source_score
 
-    unique_articles.sort(key=source_score, reverse=True)
+    unique_articles.sort(key=article_score, reverse=True)
     top_articles = unique_articles[:6]
 
-    print(f"\n✅ Selected {len(top_articles)} articles for writing")
+    # Log image availability
+    images_found = sum(1 for a in top_articles if a.get("image"))
+    print(f"\n✅ Selected {len(top_articles)} articles ({images_found} with images)")
 
-    # Save in current directory (automation/)
     with open("scraped_news.json", "w") as f:
         json.dump(top_articles, f, indent=2, ensure_ascii=False)
 
@@ -95,4 +105,5 @@ if __name__ == "__main__":
     news = scrape_news()
     print("\nSelected articles:")
     for i, a in enumerate(news, 1):
-        print(f"{i}. [{a['source']}] {a['title']}")
+        img = "📸" if a.get("image") else "❌"
+        print(f"{i}. {img} [{a['source']}] {a['title']}")

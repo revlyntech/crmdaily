@@ -26,7 +26,6 @@ export default function Home() {
 
   if (!featured) return null;
 
-  // Use WordPress featured image if set, else fallback by color
   const heroImage = featured.featuredImage || fallbackImages[featured.color] || fallbackImages.blue;
 
   return (
@@ -37,15 +36,12 @@ export default function Home() {
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 32px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", minHeight: 520 }}>
 
-            {/* Featured article */}
             <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.8}}
               style={{ padding: "64px 64px 64px 0", borderRight: "1px solid rgba(0,0,0,0.08)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
 
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F", letterSpacing:"0.12em", marginBottom:16, display:"block" }}>LEAD STORY / {featured.date.toUpperCase()}</span>
-
               <div style={{ marginBottom:16 }}><CategoryBadge label={featured.category} color={featured.color} /></div>
 
-              {/* Hero image — always shows, fallback if no WP image */}
               <div style={{ height:280, overflow:"hidden", position:"relative", marginBottom:24, borderRadius:2 }}>
                 <img src={heroImage} alt={featured.title}
                   style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.75)", transition:"transform 0.6s ease" }}
@@ -54,7 +50,7 @@ export default function Home() {
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(242,237,228,0.4) 0%, transparent 60%)" }} />
               </div>
 
-              <h1 onClick={() => navigate(`/article/${featured.id}`)}
+              <h1 onClick={() => navigate(`/article/${featured.slug}`)}
                 style={{ fontFamily:"'DM Serif Display',serif", fontSize:48, fontWeight:400, lineHeight:1.08, color:"#0F0E0D", marginBottom:16, cursor:"pointer", letterSpacing:"-0.02em", transition:"color 0.25s" }}
                 onMouseEnter={e => e.currentTarget.style.color="#E8521A"}
                 onMouseLeave={e => e.currentTarget.style.color="#0F0E0D"}>
@@ -66,7 +62,7 @@ export default function Home() {
               </p>
 
               <div style={{ display:"flex", alignItems:"center", gap:20 }}>
-                <button onClick={() => navigate(`/article/${featured.id}`)}
+                <button onClick={() => navigate(`/article/${featured.slug}`)}
                   style={{ background:"#0F0E0D", color:"#fff", border:"none", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", transition:"background 0.2s" }}
                   onMouseEnter={e => e.target.style.background="#E8521A"}
                   onMouseLeave={e => e.target.style.background="#0F0E0D"}>
@@ -85,30 +81,23 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right panel — top stories */}
             <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{duration:0.7,delay:0.15}}
               style={{ paddingLeft:40, paddingTop:64 }}>
-
               <div style={{ marginBottom:28, paddingBottom:20, borderBottom:"1px solid rgba(0,0,0,0.07)" }}>
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:12 }}>// WHAT WE COVER</span>
-                {[
-                  "CRM & REVOPS DAILY NEWS",
-                  "TOOL REVIEWS & COMPARISONS",
-                  "GTM STRATEGY GUIDES",
-                ].map((item, i) => (
+                {["CRM & REVOPS DAILY NEWS","TOOL REVIEWS & COMPARISONS","GTM STRATEGY GUIDES"].map((item, i) => (
                   <div key={i} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
                     <span style={{ width:8, height:8, background:"#22C55E", flexShrink:0 }} />
                     <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#6B6560", letterSpacing:"0.06em" }}>{item}</span>
                   </div>
                 ))}
               </div>
-
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:14 }}>// TOP STORIES</span>
               {loading ? (
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading stories...</span>
               ) : topStories.map((a, i) => (
                 <motion.div key={a.id} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:0.2+i*0.07}}
-                  onClick={() => navigate(`/article/${a.id}`)}
+                  onClick={() => navigate(`/article/${a.slug}`)}
                   style={{ padding:"13px 0", borderBottom:"1px solid rgba(0,0,0,0.06)", cursor:"pointer", transition:"opacity 0.2s" }}
                   onMouseEnter={e => e.currentTarget.style.opacity="0.6"}
                   onMouseLeave={e => e.currentTarget.style.opacity="1"}>
@@ -129,8 +118,7 @@ export default function Home() {
             <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.7}}>
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.2em", display:"block", marginBottom:20 }}>// WHY CRM DAILY</span>
               <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:48, color:"#F2EDE4", lineHeight:1.1, letterSpacing:"-0.02em", marginBottom:20 }}>
-                The CRM world moves fast.<br />
-                We keep you <span style={{ color:"#E8521A" }}>ahead of it.</span>
+                The CRM world moves fast.<br />We keep you <span style={{ color:"#E8521A" }}>ahead of it.</span>
               </h2>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.5)", lineHeight:1.85, marginBottom:32 }}>
                 Every day, CRM platforms ship updates, GTM strategies shift, and new tools emerge. CRM Daily filters the noise and delivers only what matters for your revenue team.
@@ -141,7 +129,6 @@ export default function Home() {
                 GET DAILY DIGEST →
               </Link>
             </motion.div>
-
             <motion.div initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.7,delay:0.2}}>
               {[
                 { num:"01", title:"DAILY CRM & GTM NEWS", desc:"Fresh intelligence from HubSpot, Salesforce, Pipedrive, and the entire CRM ecosystem — every morning." },
@@ -222,7 +209,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

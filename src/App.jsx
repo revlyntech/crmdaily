@@ -32,7 +32,7 @@ export default function App() {
         <Route path="/crm-tools" element={<CRMTools />} />
         <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/about" element={<About />} />
-        <Route path="/article/:id" element={<Article />} />
+        <Route path="/article/:slug" element={<Article />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
       </Routes>

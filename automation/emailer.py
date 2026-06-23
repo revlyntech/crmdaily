@@ -16,28 +16,22 @@ def build_email_content(article):
     html = f"""
 <div style="font-family:'Georgia',serif;max-width:600px;margin:0 auto;background:#F2EDE4;">
 
-  <!-- Top label -->
   <p style="font-family:'Courier New',monospace;font-size:10px;color:#E8521A;letter-spacing:0.18em;margin:0 0 8px;">
     // {category.upper()} &nbsp;·&nbsp; {date.upper()}
   </p>
 
-  <!-- Title -->
   <h1 style="font-family:'Georgia',serif;font-size:32px;color:#0F0E0D;line-height:1.1;letter-spacing:-0.02em;margin:0 0 16px;">
     {title}
   </h1>
 
-  <!-- Divider -->
   <hr style="border:none;border-top:2px solid #E8521A;margin:0 0 20px;">
 
-  <!-- Featured image -->
   {'<img src="' + image + '" alt="' + title + '" style="width:100%;height:auto;margin:0 0 20px;display:block;">' if image else ''}
 
-  <!-- Excerpt -->
   <p style="font-family:'Georgia',serif;font-size:17px;color:#6B6560;line-height:1.75;margin:0 0 28px;">
     {excerpt}
   </p>
 
-  <!-- CTA Button -->
   <table cellpadding="0" cellspacing="0" style="margin:0 0 32px;">
     <tr>
       <td style="background:#E8521A;padding:14px 28px;">
@@ -49,10 +43,8 @@ def build_email_content(article):
     </tr>
   </table>
 
-  <!-- Divider -->
   <hr style="border:none;border-top:1px solid rgba(0,0,0,0.1);margin:0 0 20px;">
 
-  <!-- Footer note -->
   <p style="font-family:'Courier New',monospace;font-size:9px;color:#9B958F;letter-spacing:0.08em;margin:0;">
     CRM DAILY — YOUR DAILY CRM & GTM INTELLIGENCE &nbsp;·&nbsp;
     <a href="https://www.crmdaily.co" style="color:#E8521A;text-decoration:none;">crmdaily.co</a>
@@ -88,8 +80,8 @@ def create_and_send_beehiiv_post(article):
     create_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts"
 
     post_data = {
-        "subject_line":    title,
-        "preview_text":    excerpt[:150] if excerpt else title,
+        "title":           title,           # required by Beehiiv v2
+        "subtitle":        excerpt[:150] if excerpt else title,
         "content_json":    {
             "type": "doc",
             "content": [
@@ -104,7 +96,6 @@ def create_and_send_beehiiv_post(article):
         "status":          "draft",
         "audience":        "free",
         "platform":        "email",
-        "send_at":         None,
     }
 
     response = requests.post(create_url, headers=headers, json=post_data)
@@ -121,12 +112,7 @@ def create_and_send_beehiiv_post(article):
     print("   📧 Sending to all subscribers...")
     send_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts/{post_id}/send"
 
-    send_data = {
-        "send_to":  "free",
-        "test":     False,
-    }
-
-    send_response = requests.post(send_url, headers=headers, json=send_data)
+    send_response = requests.post(send_url, headers=headers, json={"send_to": "free", "test": False})
     send_result   = send_response.json()
 
     if send_response.status_code in [200, 201, 202]:

@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { getPostBySlug, getPosts } from "../lib/wordpress";
-import CategoryBadge from "../components/CategoryBadge";
-import Sidebar from "../components/Sidebar";
+import { subscribeEmail } from "../utils/beehiiv";
 
 const fallbackImgs = {
   blue:   "https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200&q=80",
@@ -13,6 +11,45 @@ const fallbackImgs = {
   red:    "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1200&q=80",
 };
 
+// Extract H2 headings from HTML content for table of contents
+function extractHeadings(html) {
+  if (!html) return [];
+  const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+  return matches.map((m, i) => ({
+    id: `sec-${i}`,
+    text: m[1].replace(/<[^>]+>/g, '').trim(),
+  }));
+}
+
+// Inject IDs into H2 tags
+function injectHeadingIds(html) {
+  if (!html) return html;
+  let i = 0;
+  return html.replace(/<h2([^>]*)>/gi, () => `<h2 id="sec-${i++}"$1>`);
+}
+
+// Reading progress bar
+function ProgressBar() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const el = document.documentElement;
+      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+      setProgress(Math.min(100, pct));
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, zIndex: 999,
+      width: `${progress}%`, height: 3,
+      background: '#e9542a', transition: 'width 0.1s linear',
+    }} />
+  );
+}
+
+// Related articles
 function RelatedArticles({ currentArticle }) {
   const [related, setRelated] = useState([]);
   const navigate = useNavigate();
@@ -21,14 +58,8 @@ function RelatedArticles({ currentArticle }) {
     getPosts(50).then(posts => {
       const filtered = posts
         .filter(p => p.slug !== currentArticle.slug)
-        .filter(p => p.category === currentArticle.category || 
-          p.title.toLowerCase().split(' ').some(word => 
-            word.length > 4 && currentArticle.title.toLowerCase().includes(word)
-          )
-        )
+        .filter(p => p.category === currentArticle.category)
         .slice(0, 3);
-
-      // If not enough same-category, fill with latest
       if (filtered.length < 3) {
         const rest = posts
           .filter(p => p.slug !== currentArticle.slug && !filtered.find(f => f.slug === p.slug))
@@ -43,53 +74,101 @@ function RelatedArticles({ currentArticle }) {
   if (related.length === 0) return null;
 
   return (
-    <div style={{ background: "#F2EDE4", padding: "64px 32px", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 36 }}>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.18em" }}>// RELATED ARTICLES</span>
-          <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
+    <div style={{ borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: 48, marginTop: 48 }}>
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 24 }}>// RELATED ARTICLES</p>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
+        {related.map(a => {
+          const img = a.featuredImage || fallbackImgs[a.color] || fallbackImgs.blue;
+          return (
+            <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+              style={{ cursor: 'pointer', borderTop: '2px solid rgba(0,0,0,0.08)', paddingTop: 16 }}
+              onMouseEnter={e => e.currentTarget.querySelector('h3').style.color = '#e9542a'}
+              onMouseLeave={e => e.currentTarget.querySelector('h3').style.color = '#1c1a17'}>
+              <img src={img} alt={a.title} style={{ width: '100%', height: 140, objectFit: 'cover', marginBottom: 12, filter: 'brightness(0.85)' }} />
+              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.14em', marginBottom: 6 }}>{a.category.toUpperCase()}</p>
+              <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 16, color: '#1c1a17', lineHeight: 1.35, transition: 'color 0.2s' }}>{a.title}</h3>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Sidebar newsletter widget
+function SidebarNewsletter() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus('loading');
+    const r = await subscribeEmail(email);
+    setStatus(r.success ? 'success' : 'error');
+    if (r.success) setEmail('');
+  }
+  return (
+    <div style={{ background: '#0d0c0b', padding: 24, marginBottom: 2 }}>
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 12 }}>// DAILY NEWSLETTER</p>
+      <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 20, color: '#efeae1', lineHeight: 1.25, marginBottom: 8 }}>CRM Daily Digest</h3>
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'rgba(239,234,225,0.7)', lineHeight: 1.7, marginBottom: 16 }}>Top CRM & GTM stories every morning. No noise, just signal.</p>
+      {status === 'success' ? (
+        <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: '#22C55E', letterSpacing: '0.1em' }}>✓ SUBSCRIBED</p>
+      ) : (
+        <>
+          <input type="email" placeholder="your@company.io" value={email} onChange={e => setEmail(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSubmit(e)}
+            style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#efeae1', fontFamily: "'Space Mono',monospace", fontSize: 10, padding: '10px 12px', outline: 'none', marginBottom: 8, boxSizing: 'border-box' }} />
+          <button onClick={handleSubmit} style={{ width: '100%', background: '#e9542a', color: '#fff', border: 'none', padding: '11px', fontFamily: "'Space Mono',monospace", fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', cursor: 'pointer' }}
+            onMouseEnter={e => e.target.style.background = '#d4481a'}
+            onMouseLeave={e => e.target.style.background = '#e9542a'}>
+            {status === 'loading' ? 'SUBSCRIBING...' : 'GET DAILY DIGEST →'}
+          </button>
+        </>
+      )}
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: 'rgba(255,255,255,0.5)', marginTop: 10, letterSpacing: '0.1em' }}>NO SPAM. UNSUBSCRIBE ANYTIME.</p>
+    </div>
+  );
+}
+
+// Popular articles sidebar
+function SidebarPopular() {
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
+  useEffect(() => { getPosts(5).then(setPosts); }, []);
+  return (
+    <div style={{ background: '#efeae1', border: '1px solid rgba(0,0,0,0.1)', padding: 24, marginBottom: 2 }}>
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 16 }}>// POPULAR TODAY</p>
+      {posts.slice(0, 5).map((a, i) => (
+        <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+          style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: i < 4 ? '1px solid rgba(0,0,0,0.07)' : 'none', cursor: 'pointer' }}
+          onMouseEnter={e => { e.currentTarget.querySelector('.pop-title').style.color = '#e9542a'; }}
+          onMouseLeave={e => { e.currentTarget.querySelector('.pop-title').style.color = '#1c1a17'; }}>
+          <span style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'rgba(0,0,0,0.12)', flexShrink: 0, lineHeight: 1, marginTop: 2 }}>{String(i+1).padStart(2,'0')}</span>
+          <div>
+            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 7, color: '#e9542a', letterSpacing: '0.12em', marginBottom: 4 }}>{a.category.toUpperCase()}</p>
+            <p className="pop-title" style={{ fontFamily: "'DM Serif Display',serif", fontSize: 13, color: '#1c1a17', lineHeight: 1.35, transition: 'color 0.2s' }}>{a.title}</p>
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
-          {related.map((article, i) => {
-            const image = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
-            return (
-              <motion.div
-                key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                onClick={() => navigate(`/article/${article.slug}`)}
-                className="card-lift"
-                style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", overflow: "hidden" }}
-              >
-                {/* Image */}
-                <div style={{ height: 160, overflow: "hidden", position: "relative" }}>
-                  <img src={image} alt={article.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8)", transition: "transform 0.4s ease" }}
-                    onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
-                    onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-                  <div style={{ position: "absolute", top: 10, left: 10 }}>
-                    <CategoryBadge label={article.category} color={article.color} />
-                  </div>
-                </div>
-                {/* Content */}
-                <div style={{ padding: "18px 20px 20px" }}>
-                  <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.08em", display: "block", marginBottom: 8 }}>
-                    {article.date.toUpperCase()}
-                  </span>
-                  <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 18, color: "#0F0E0D", lineHeight: 1.3, marginBottom: 14, transition: "color 0.2s" }}
-                    onMouseEnter={e => e.target.style.color = "#E8521A"}
-                    onMouseLeave={e => e.target.style.color = "#0F0E0D"}>
-                    {article.title}
-                  </h3>
-                  <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", fontWeight: 700, letterSpacing: "0.1em" }}>
-                    READ →
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+      ))}
+    </div>
+  );
+}
+
+// Topic tags sidebar
+function SidebarTopics() {
+  const topics = ['CRM News','HubSpot','Salesforce','RevOps','GTM Strategy','Tool Reviews','AI & Automation','Pipedrive'];
+  return (
+    <div style={{ background: '#efeae1', border: '1px solid rgba(0,0,0,0.1)', padding: 24 }}>
+      <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 14 }}>// BROWSE TOPICS</p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {topics.map(t => (
+          <span key={t} style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, padding: '5px 9px', border: '1px solid rgba(0,0,0,0.15)', color: '#6b655c', letterSpacing: '0.08em', cursor: 'pointer', transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.target.style.borderColor = '#e9542a'; e.target.style.color = '#e9542a'; }}
+            onMouseLeave={e => { e.target.style.borderColor = 'rgba(0,0,0,0.15)'; e.target.style.color = '#6b655c'; }}>
+            {t.toUpperCase()}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -99,126 +178,353 @@ export default function Article() {
   const { slug } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [headings, setHeadings] = useState([]);
+  const [processedContent, setProcessedContent] = useState('');
+  const [subEmail, setSubEmail] = useState('');
+  const [subStatus, setSubStatus] = useState('idle');
 
   useEffect(() => {
-    getPostBySlug(slug)
-      .then(setArticle)
-      .finally(() => setLoading(false));
+    getPostBySlug(slug).then(a => {
+      setArticle(a);
+      if (a?.content) {
+        setHeadings(extractHeadings(a.content));
+        setProcessedContent(injectHeadingIds(a.content));
+      }
+      setLoading(false);
+    });
+    window.scrollTo(0, 0);
   }, [slug]);
 
+  async function handleFooterSub(e) {
+    e.preventDefault();
+    if (!subEmail) return;
+    setSubStatus('loading');
+    const r = await subscribeEmail(subEmail);
+    setSubStatus(r.success ? 'success' : 'error');
+    if (r.success) setSubEmail('');
+  }
+
   if (loading) return (
-    <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", letterSpacing: "0.15em" }}>LOADING...</span>
-    </div>
+    <>
+      <ProgressBar />
+      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#efeae1' }}>
+        <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: '#e9542a', letterSpacing: '0.15em' }}>LOADING...</span>
+      </div>
+    </>
   );
 
   if (!article) return (
-    <div style={{ maxWidth: 760, margin: "80px auto", padding: "0 32px", textAlign: "center" }}>
-      <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", letterSpacing: "0.15em" }}>ERROR / 404</span>
-      <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 48, color: "#0F0E0D", margin: "16px 0" }}>Article not found</h1>
-      <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "#0F0E0D", fontWeight: 700, letterSpacing: "0.1em" }}>← RETURN HOME</Link>
-    </div>
+    <>
+      <ProgressBar />
+      <div style={{ maxWidth: 640, margin: '80px auto', padding: '0 32px', textAlign: 'center', background: '#efeae1' }}>
+        <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: '#e9542a', letterSpacing: '0.15em' }}>404</span>
+        <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 40, color: '#1c1a17', margin: '16px 0' }}>Article not found</h1>
+        <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: '#1c1a17', fontWeight: 700, letterSpacing: '0.1em' }}>← RETURN HOME</Link>
+      </div>
+    </>
   );
 
-  const heroImage = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
+  const wordCount = article.content ? article.content.replace(/<[^>]+>/g, '').split(/\s+/).length : 0;
+  const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
   return (
-    <div className="fade-in">
+    <>
+      <ProgressBar />
 
-      {/* Meta bar */}
-      <div style={{ background: "#0F0E0D", padding: "12px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-          <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textDecoration: "none", transition: "color 0.2s" }}
-            onMouseEnter={e => e.target.style.color = "#E8521A"}
-            onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.5)"}>← HOME</Link>
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-          <CategoryBadge label={article.category} color={article.color} />
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em" }}>
-            CRM DAILY TEAM · {article.date.toUpperCase()}
-          </span>
+      {/* Breadcrumb */}
+      <div style={{ background: '#efeae1', borderBottom: '1px solid rgba(0,0,0,0.1)', padding: '10px 32px' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Link to="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#8a847a', letterSpacing: '0.1em', textDecoration: 'none', transition: 'color 0.2s' }}
+            onMouseEnter={e => e.target.style.color = '#e9542a'}
+            onMouseLeave={e => e.target.style.color = '#8a847a'}>← HOME</Link>
+          <span style={{ color: 'rgba(0,0,0,0.2)', fontSize: 10 }}>/</span>
+          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#e9542a', letterSpacing: '0.1em' }}>{article.category.toUpperCase()}</span>
+          <span style={{ color: 'rgba(0,0,0,0.2)', fontSize: 10 }}>/</span>
+          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#8a847a', letterSpacing: '0.08em' }}>CRM DAILY TEAM · {article.date.toUpperCase()}</span>
         </div>
       </div>
 
-      {/* Dark hero */}
-      <div style={{ background: "#0F0E0D", paddingTop: 56, paddingLeft: 32, paddingRight: 32, paddingBottom: 0 }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div style={{ marginBottom: 16 }}><CategoryBadge label={article.category} color={article.color} /></div>
-            <h1 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 52, color: "#F2EDE4", lineHeight: 1.08, letterSpacing: "-0.02em", maxWidth: 860, marginBottom: 20 }}>
-              {article.title}
-            </h1>
-            {article.excerpt && (
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 18, color: "rgba(242,237,228,0.6)", maxWidth: 640, lineHeight: 1.75, marginBottom: 36, fontWeight: 400 }}>
-                {article.excerpt}
-              </p>
-            )}
-          </motion.div>
+      {/* Main layout */}
+      <div style={{ background: '#efeae1', padding: '48px 32px 80px' }}>
+        <div style={{
+          maxWidth: 1240, margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: '200px minmax(0, 640px) 300px',
+          gap: '0 56px',
+          alignItems: 'start',
+        }}>
 
-          {/* Hero image */}
-          <div style={{ height: 420, overflow: "hidden", position: "relative" }}>
-            <img src={heroImage} alt={article.title}
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.8)", transition: "transform 0.6s ease" }}
-              onMouseEnter={e => e.target.style.transform = "scale(1.02)"}
-              onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,#0F0E0D 8%,transparent 60%)" }} />
-            <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(0,0,0,0.65)", padding: "6px 14px", border: "1px solid rgba(255,255,255,0.1)" }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em" }}>
-                READING: {article.readTime.toUpperCase()}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Article content */}
-      <div className="grid-bg" style={{ background: "#F2EDE4", padding: "64px 32px 96px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 320px", gap: 72, alignItems: "start" }}>
-          <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-
-            <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }} />
-
-            {/* Social share */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 48, paddingTop: 24, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.1em" }}>SHARE //</span>
-              <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}`}
-                target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#0F0E0D", letterSpacing: "0.1em", padding: "6px 14px", border: "1px solid rgba(0,0,0,0.12)", textDecoration: "none", transition: "all 0.2s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#0F0E0D"; e.currentTarget.style.color = "#fff"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0F0E0D"; }}>
-                TWITTER ↗
-              </a>
-              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}`}
-                target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#0F0E0D", letterSpacing: "0.1em", padding: "6px 14px", border: "1px solid rgba(0,0,0,0.12)", textDecoration: "none", transition: "all 0.2s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#0A66C2"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#0A66C2"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0F0E0D"; e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)"; }}>
-                LINKEDIN ↗
-              </a>
+          {/* ── LEFT META RAIL ── */}
+          <aside style={{ position: 'sticky', top: 24 }}>
+            {/* Category + read time */}
+            <div style={{ paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#e9542a', letterSpacing: '0.14em', marginBottom: 6 }}>{article.category.toUpperCase()}</p>
+              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#8a847a', letterSpacing: '0.1em' }}>{readTime} MIN READ</p>
             </div>
 
-            {/* Subscribe CTA */}
-            <div style={{ background: "#0F0E0D", padding: 32, marginTop: 40, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
-              <div>
-                <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#E8521A", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// STAY INFORMED</span>
-                <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: "#F2EDE4", marginBottom: 8 }}>Get this kind of intelligence every morning.</h3>
-                <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.45)", lineHeight: 1.7 }}>CRM Daily digest. Free. Every morning.</p>
+            {/* Share */}
+            <div style={{ paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#8a847a', letterSpacing: '0.14em', marginBottom: 10 }}>SHARE</p>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {[
+                  { label: 'X', url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
+                  { label: 'in', url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
+                  { label: '↗', url: `https://crmdaily.co/article/${article.slug}` },
+                ].map(s => (
+                  <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
+                    style={{ width: 36, height: 36, border: '1px solid rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Space Mono',monospace", fontSize: 10, color: '#2b2620', textDecoration: 'none', transition: 'all 0.2s', flexShrink: 0 }}
+                    onMouseEnter={e => { e.currentTarget.style.background = '#e9542a'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#e9542a'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#2b2620'; e.currentTarget.style.borderColor = 'rgba(0,0,0,0.15)'; }}>
+                    {s.label}
+                  </a>
+                ))}
               </div>
-              <Link to="/newsletter"
-                style={{ display: "inline-block", background: "#E8521A", color: "#fff", padding: "12px 24px", fontFamily: "'Space Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", whiteSpace: "nowrap", textDecoration: "none", transition: "background 0.2s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "#D4481A"}
-                onMouseLeave={e => e.currentTarget.style.background = "#E8521A"}>
-                SUBSCRIBE FREE →
-              </Link>
             </div>
-          </motion.article>
-          <Sidebar />
+
+            {/* Table of contents */}
+            {headings.length > 0 && (
+              <div>
+                <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#8a847a', letterSpacing: '0.14em', marginBottom: 12 }}>IN THIS ARTICLE</p>
+                <nav>
+                  {headings.map(h => (
+                    <a key={h.id} href={`#${h.id}`}
+                      style={{ display: 'block', fontFamily: "'DM Serif Display',serif", fontSize: 12, color: '#6b655c', lineHeight: 1.45, marginBottom: 10, textDecoration: 'none', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.target.style.color = '#e9542a'}
+                      onMouseLeave={e => e.target.style.color = '#6b655c'}>
+                      {h.text}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            )}
+          </aside>
+
+          {/* ── CENTER ARTICLE ── */}
+          <article>
+            {/* Hero image */}
+            {(article.featuredImage || fallbackImgs[article.color]) && (
+              <div style={{ marginBottom: 32, overflow: 'hidden' }}>
+                <img
+                  src={article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue}
+                  alt={article.title}
+                  style={{ width: '100%', height: 340, objectFit: 'cover', filter: 'brightness(0.88)' }}
+                />
+              </div>
+            )}
+
+            {/* Title + dek */}
+            <div style={{ paddingBottom: 24, marginBottom: 28, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+              <h1 style={{
+                fontFamily: "'DM Serif Display',serif",
+                fontSize: 'clamp(32px,4vw,48px)',
+                fontWeight: 700,
+                color: '#1c1a17',
+                lineHeight: 1.06,
+                letterSpacing: '-0.02em',
+                marginBottom: 14,
+              }}>{article.title}</h1>
+              {article.excerpt && (
+                <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 18, color: '#6b655c', lineHeight: 1.65, fontWeight: 400 }}>
+                  {article.excerpt}
+                </p>
+              )}
+            </div>
+
+            {/* Article body */}
+            <div
+              className="article-reader-body"
+              dangerouslySetInnerHTML={{ __html: processedContent }}
+            />
+
+            {/* Related articles */}
+            <RelatedArticles currentArticle={article} />
+          </article>
+
+          {/* ── RIGHT SIDEBAR ── */}
+          <aside style={{ position: 'sticky', top: 24 }}>
+            <SidebarNewsletter />
+            <SidebarPopular />
+            <SidebarTopics />
+          </aside>
+
         </div>
       </div>
 
-      {/* Related Articles */}
-      <RelatedArticles currentArticle={article} />
+      {/* Footer CTA */}
+      <div style={{ background: '#0d0c0b', padding: '56px 32px' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+          <div>
+            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 12 }}>// STAY INFORMED</p>
+            <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(24px,3vw,36px)', color: '#efeae1', lineHeight: 1.15, maxWidth: 500 }}>
+              Get this kind of intelligence every morning.
+            </h2>
+          </div>
+          {subStatus === 'success' ? (
+            <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: '#22C55E', letterSpacing: '0.1em' }}>✓ SUBSCRIBED — CHECK YOUR INBOX</p>
+          ) : (
+            <div style={{ display: 'flex', gap: 0, border: '1px solid rgba(255,255,255,0.15)' }}>
+              <input type="email" placeholder="your@company.io" value={subEmail} onChange={e => setSubEmail(e.target.value)}
+                style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: '#efeae1', fontFamily: "'Space Mono',monospace", fontSize: 11, padding: '14px 18px', outline: 'none', width: 240 }} />
+              <button onClick={handleFooterSub}
+                style={{ background: '#e9542a', color: '#fff', border: 'none', padding: '14px 20px', fontFamily: "'Space Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => e.target.style.background = '#d4481a'}
+                onMouseLeave={e => e.target.style.background = '#e9542a'}>
+                {subStatus === 'loading' ? '...' : 'SUBSCRIBE FREE →'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
 
-    </div>
+      {/* Article reader styles */}
+      <style>{`
+        .article-reader-body {
+          font-family: 'Inter', sans-serif;
+          font-size: 18px;
+          color: #2b2620;
+          line-height: 1.78;
+        }
+        .article-reader-body p {
+          font-size: 18px !important;
+          color: #2b2620 !important;
+          line-height: 1.78 !important;
+          margin-bottom: 22px !important;
+        }
+        .article-reader-body h2 {
+          font-family: 'DM Serif Display', serif !important;
+          font-size: 28px !important;
+          font-weight: 700 !important;
+          color: #1c1a17 !important;
+          line-height: 1.2 !important;
+          margin: 44px 0 16px !important;
+          padding-left: 16px !important;
+          border-left: 4px solid #e9542a !important;
+          letter-spacing: -0.01em !important;
+        }
+        .article-reader-body h3 {
+          font-family: 'DM Serif Display', serif !important;
+          font-size: 22px !important;
+          color: #1c1a17 !important;
+          line-height: 1.3 !important;
+          margin: 32px 0 12px !important;
+        }
+        .article-reader-body strong, .article-reader-body b {
+          font-weight: 600 !important;
+          color: #1c1a17 !important;
+        }
+        .article-reader-body ul {
+          list-style: none !important;
+          padding-left: 0 !important;
+          margin-bottom: 22px !important;
+        }
+        .article-reader-body ul li {
+          font-size: 18px !important;
+          color: #2b2620 !important;
+          line-height: 1.75 !important;
+          margin-bottom: 10px !important;
+          padding-left: 20px !important;
+          position: relative !important;
+        }
+        .article-reader-body ul li::before {
+          content: '' !important;
+          position: absolute !important;
+          left: 0 !important;
+          top: 10px !important;
+          width: 7px !important;
+          height: 7px !important;
+          background: #e9542a !important;
+          border-radius: 1px !important;
+        }
+        .article-reader-body ol {
+          padding-left: 0 !important;
+          margin-bottom: 22px !important;
+          list-style: none !important;
+          counter-reset: ol-counter !important;
+        }
+        .article-reader-body ol li {
+          font-size: 18px !important;
+          color: #2b2620 !important;
+          line-height: 1.75 !important;
+          margin-bottom: 10px !important;
+          padding-left: 32px !important;
+          position: relative !important;
+          counter-increment: ol-counter !important;
+        }
+        .article-reader-body ol li::before {
+          content: counter(ol-counter) !important;
+          position: absolute !important;
+          left: 0 !important;
+          top: 3px !important;
+          width: 20px !important;
+          height: 20px !important;
+          background: #1c1a17 !important;
+          color: #fff !important;
+          font-family: 'Space Mono', monospace !important;
+          font-size: 9px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+        .article-reader-body blockquote {
+          background: #e7e0d3 !important;
+          border-left: 4px solid #e9542a !important;
+          padding: 20px 28px !important;
+          margin: 32px 0 !important;
+          font-family: 'DM Serif Display', serif !important;
+          font-size: 22px !important;
+          font-style: italic !important;
+          color: #1c1a17 !important;
+          line-height: 1.5 !important;
+        }
+        .article-reader-body blockquote p {
+          font-family: 'DM Serif Display', serif !important;
+          font-size: 22px !important;
+          font-style: italic !important;
+          color: #1c1a17 !important;
+          margin-bottom: 8px !important;
+        }
+        .article-reader-body a {
+          color: #e9542a !important;
+          text-decoration: underline !important;
+          text-underline-offset: 3px !important;
+        }
+        .article-reader-body img {
+          width: 100% !important;
+          height: auto !important;
+          margin: 24px 0 !important;
+        }
+        .article-reader-body hr {
+          border: none !important;
+          border-top: 1px solid rgba(0,0,0,0.1) !important;
+          margin: 36px 0 !important;
+        }
+        .article-reader-body table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          margin: 28px 0 !important;
+          font-size: 14px !important;
+        }
+        .article-reader-body table th {
+          background: #1c1a17 !important;
+          color: #efeae1 !important;
+          padding: 10px 14px !important;
+          font-family: 'Space Mono', monospace !important;
+          font-size: 9px !important;
+          letter-spacing: 0.1em !important;
+          text-align: left !important;
+        }
+        .article-reader-body table td {
+          padding: 10px 14px !important;
+          border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+          font-size: 14px !important;
+          color: #2b2620 !important;
+        }
+        @media (max-width: 900px) {
+          .article-reader-body { font-size: 16px !important; }
+          .article-reader-body p { font-size: 16px !important; }
+          .article-reader-body h2 { font-size: 24px !important; }
+        }
+      `}</style>
+    </>
   );
 }

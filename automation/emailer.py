@@ -65,9 +65,12 @@ def build_email_content(article):
 def create_and_send_beehiiv_post(article):
     """Create a post in Beehiiv and send to all subscribers"""
 
-    # Read env vars here, inside the function — not at module load time
-    BEEHIIV_API_KEY = os.environ["BEEHIIV_API_KEY"]
-    BEEHIIV_PUB_ID  = os.environ["BEEHIIV_PUB_ID"]
+    BEEHIIV_API_KEY = os.environ.get("BEEHIIV_API_KEY")
+    BEEHIIV_PUB_ID  = os.environ.get("BEEHIIV_PUB_ID")
+
+    if not BEEHIIV_API_KEY or not BEEHIIV_PUB_ID:
+        print("   ❌ BEEHIIV_API_KEY or BEEHIIV_PUB_ID not set in environment")
+        return False
 
     title   = article.get("title", "New Article from CRM Daily")
     excerpt = article.get("excerpt", "")

@@ -1,16 +1,15 @@
-name: CRM Daily — Auto Publish Article
+name: CRM Daily - Auto Publish Article
 
 on:
   schedule:
-    # 8:00 AM IST = 2:30 AM UTC — every day
-    - cron: '30 2 * * *'
-    # 6:00 PM IST = 12:30 PM UTC — every day
-    - cron: '30 12 * * *'
+    - cron: '30 2 * * *'   # 8:00 AM IST every day
+    - cron: '30 12 * * *'  # 6:00 PM IST every day
   workflow_dispatch:
 
 jobs:
   publish-article:
     runs-on: ubuntu-latest
+    environment: Production
 
     steps:
       - name: Checkout repository
@@ -27,9 +26,11 @@ jobs:
       - name: Run automation
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
-          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          WP_APP_PASSWORD:   ${{ secrets.WP_APP_PASSWORD }}
+          NEWS_API_KEY:      ${{ secrets.NEWS_API_KEY }}
+          BEEHIIV_API_KEY:   ${{ secrets.BEEHIIV_API_KEY }}
+          BEEHIIV_PUB_ID:    ${{ secrets.BEEHIIV_PUB_ID }}
         run: python automation/main.py
 
       - name: Done
-        run: echo "✅ Article published at $(date)"
+        run: echo "✅ Done at $(date)"

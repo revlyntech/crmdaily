@@ -1,22 +1,19 @@
 import sys
 import os
 
-# Add automation folder to path so imports work from root
-sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
-
-# Change working directory to automation folder
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from scraper import scrape_news
 from writer import generate_article
 from publisher import publish_article
+from emailer import run as send_newsletter
 
 def run():
     print("=" * 50)
-    print("CRM Daily — Automation Engine")
+    print("CRM Daily - Automation Engine")
     print("=" * 50)
 
-    # Step 1 — Scrape
+    # Step 1 - Scrape news
     print("\n📰 Step 1: Fetching today's CRM news...")
     news = scrape_news()
 
@@ -24,19 +21,22 @@ def run():
         print("❌ No relevant news found. Skipping today.")
         sys.exit(0)
 
-    # Step 2 — Write
+    # Step 2 - Write article
     print("\n✍️  Step 2: Writing article with Claude AI...")
     article = generate_article(news)
 
-    # Step 3 — Publish
+    # Step 3 - Publish to WordPress
     print("\n🚀 Step 3: Publishing to WordPress...")
     success = publish_article(article)
 
-    if success:
-        print("\n✅ Done! Article live on crmdaily.co")
-    else:
+    if not success:
         print("\n❌ Publishing failed")
         sys.exit(1)
+
+    # Step 4 - Send newsletter via Beehiiv
+    send_newsletter(article)
+
+    print("\n✅ Done! Article live + newsletter sent to subscribers.")
 
 if __name__ == "__main__":
     run()

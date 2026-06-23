@@ -11,24 +11,40 @@ const fallbackImgs = {
   red:    "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1200&q=80",
 };
 
-// Extract H2 headings from HTML content for table of contents
+function decodeEntities(str) {
+  return str
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&quot;/g, '"')
+    .replace(/&#8220;/g, '\u201C')
+    .replace(/&#8221;/g, '\u201D')
+    .replace(/&#8216;/g, '\u2018')
+    .replace(/&#8217;/g, '\u2019')
+    .replace(/&#8211;/g, '\u2013')
+    .replace(/&#8212;/g, '\u2014')
+    .replace(/&hellip;/g, '\u2026')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#\d+;/g, '')
+    .trim();
+}
+
 function extractHeadings(html) {
   if (!html) return [];
   const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
   return matches.map((m, i) => ({
     id: `sec-${i}`,
-    text: m[1].replace(/<[^>]+>/g, '').trim(),
+    text: decodeEntities(m[1]),
   }));
 }
 
-// Inject IDs into H2 tags
 function injectHeadingIds(html) {
   if (!html) return html;
   let i = 0;
   return html.replace(/<h2([^>]*)>/gi, () => `<h2 id="sec-${i++}"$1>`);
 }
 
-// Reading progress bar
 function ProgressBar() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -49,7 +65,6 @@ function ProgressBar() {
   );
 }
 
-// Related articles
 function RelatedArticles({ currentArticle }) {
   const [related, setRelated] = useState([]);
   const navigate = useNavigate();
@@ -80,7 +95,7 @@ function RelatedArticles({ currentArticle }) {
         {related.map(a => {
           const img = a.featuredImage || fallbackImgs[a.color] || fallbackImgs.blue;
           return (
-            <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+            <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0, 0); }}
               style={{ cursor: 'pointer', borderTop: '2px solid rgba(0,0,0,0.08)', paddingTop: 16 }}
               onMouseEnter={e => e.currentTarget.querySelector('h3').style.color = '#e9542a'}
               onMouseLeave={e => e.currentTarget.querySelector('h3').style.color = '#1c1a17'}>
@@ -95,7 +110,6 @@ function RelatedArticles({ currentArticle }) {
   );
 }
 
-// Sidebar newsletter widget
 function SidebarNewsletter() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
@@ -119,7 +133,8 @@ function SidebarNewsletter() {
           <input type="email" placeholder="your@company.io" value={email} onChange={e => setEmail(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSubmit(e)}
             style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#efeae1', fontFamily: "'Space Mono',monospace", fontSize: 10, padding: '10px 12px', outline: 'none', marginBottom: 8, boxSizing: 'border-box' }} />
-          <button onClick={handleSubmit} style={{ width: '100%', background: '#e9542a', color: '#fff', border: 'none', padding: '11px', fontFamily: "'Space Mono',monospace", fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', cursor: 'pointer' }}
+          <button onClick={handleSubmit}
+            style={{ width: '100%', background: '#e9542a', color: '#fff', border: 'none', padding: '11px', fontFamily: "'Space Mono',monospace", fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', cursor: 'pointer' }}
             onMouseEnter={e => e.target.style.background = '#d4481a'}
             onMouseLeave={e => e.target.style.background = '#e9542a'}>
             {status === 'loading' ? 'SUBSCRIBING...' : 'GET DAILY DIGEST →'}
@@ -131,7 +146,6 @@ function SidebarNewsletter() {
   );
 }
 
-// Popular articles sidebar
 function SidebarPopular() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
@@ -140,11 +154,11 @@ function SidebarPopular() {
     <div style={{ background: '#efeae1', border: '1px solid rgba(0,0,0,0.1)', padding: 24, marginBottom: 2 }}>
       <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 16 }}>// POPULAR TODAY</p>
       {posts.slice(0, 5).map((a, i) => (
-        <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+        <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0, 0); }}
           style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: i < 4 ? '1px solid rgba(0,0,0,0.07)' : 'none', cursor: 'pointer' }}
           onMouseEnter={e => { e.currentTarget.querySelector('.pop-title').style.color = '#e9542a'; }}
           onMouseLeave={e => { e.currentTarget.querySelector('.pop-title').style.color = '#1c1a17'; }}>
-          <span style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'rgba(0,0,0,0.12)', flexShrink: 0, lineHeight: 1, marginTop: 2 }}>{String(i+1).padStart(2,'0')}</span>
+          <span style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'rgba(0,0,0,0.12)', flexShrink: 0, lineHeight: 1, marginTop: 2 }}>{String(i + 1).padStart(2, '0')}</span>
           <div>
             <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 7, color: '#e9542a', letterSpacing: '0.12em', marginBottom: 4 }}>{a.category.toUpperCase()}</p>
             <p className="pop-title" style={{ fontFamily: "'DM Serif Display',serif", fontSize: 13, color: '#1c1a17', lineHeight: 1.35, transition: 'color 0.2s' }}>{a.title}</p>
@@ -155,15 +169,15 @@ function SidebarPopular() {
   );
 }
 
-// Topic tags sidebar
 function SidebarTopics() {
-  const topics = ['CRM News','HubSpot','Salesforce','RevOps','GTM Strategy','Tool Reviews','AI & Automation','Pipedrive'];
+  const topics = ['CRM News', 'HubSpot', 'Salesforce', 'RevOps', 'GTM Strategy', 'Tool Reviews', 'AI & Automation', 'Pipedrive'];
   return (
     <div style={{ background: '#efeae1', border: '1px solid rgba(0,0,0,0.1)', padding: 24 }}>
       <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#e9542a', letterSpacing: '0.18em', marginBottom: 14 }}>// BROWSE TOPICS</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {topics.map(t => (
-          <span key={t} style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, padding: '5px 9px', border: '1px solid rgba(0,0,0,0.15)', color: '#6b655c', letterSpacing: '0.08em', cursor: 'pointer', transition: 'all 0.2s' }}
+          <span key={t}
+            style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, padding: '5px 9px', border: '1px solid rgba(0,0,0,0.15)', color: '#6b655c', letterSpacing: '0.08em', cursor: 'pointer', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.target.style.borderColor = '#e9542a'; e.target.style.color = '#e9542a'; }}
             onMouseLeave={e => { e.target.style.borderColor = 'rgba(0,0,0,0.15)'; e.target.style.color = '#6b655c'; }}>
             {t.toUpperCase()}
@@ -244,7 +258,7 @@ export default function Article() {
         </div>
       </div>
 
-      {/* Main layout */}
+      {/* Main 3-column layout */}
       <div style={{ background: '#efeae1', padding: '48px 32px 80px' }}>
         <div style={{
           maxWidth: 1240, margin: '0 auto',
@@ -254,15 +268,13 @@ export default function Article() {
           alignItems: 'start',
         }}>
 
-          {/* ── LEFT META RAIL ── */}
+          {/* LEFT META RAIL */}
           <aside style={{ position: 'sticky', top: 24 }}>
-            {/* Category + read time */}
             <div style={{ paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
               <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#e9542a', letterSpacing: '0.14em', marginBottom: 6 }}>{article.category.toUpperCase()}</p>
               <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: '#8a847a', letterSpacing: '0.1em' }}>{readTime} MIN READ</p>
             </div>
 
-            {/* Share */}
             <div style={{ paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
               <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#8a847a', letterSpacing: '0.14em', marginBottom: 10 }}>SHARE</p>
               <div style={{ display: 'flex', gap: 8 }}>
@@ -281,7 +293,6 @@ export default function Article() {
               </div>
             </div>
 
-            {/* Table of contents */}
             {headings.length > 0 && (
               <div>
                 <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: '#8a847a', letterSpacing: '0.14em', marginBottom: 12 }}>IN THIS ARTICLE</p>
@@ -299,9 +310,8 @@ export default function Article() {
             )}
           </aside>
 
-          {/* ── CENTER ARTICLE ── */}
+          {/* CENTER ARTICLE */}
           <article>
-            {/* Hero image */}
             {(article.featuredImage || fallbackImgs[article.color]) && (
               <div style={{ marginBottom: 32, overflow: 'hidden' }}>
                 <img
@@ -312,7 +322,6 @@ export default function Article() {
               </div>
             )}
 
-            {/* Title + dek */}
             <div style={{ paddingBottom: 24, marginBottom: 28, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
               <h1 style={{
                 fontFamily: "'DM Serif Display',serif",
@@ -330,17 +339,12 @@ export default function Article() {
               )}
             </div>
 
-            {/* Article body */}
-            <div
-              className="article-reader-body"
-              dangerouslySetInnerHTML={{ __html: processedContent }}
-            />
+            <div className="article-reader-body" dangerouslySetInnerHTML={{ __html: processedContent }} />
 
-            {/* Related articles */}
             <RelatedArticles currentArticle={article} />
           </article>
 
-          {/* ── RIGHT SIDEBAR ── */}
+          {/* RIGHT SIDEBAR */}
           <aside style={{ position: 'sticky', top: 24 }}>
             <SidebarNewsletter />
             <SidebarPopular />
@@ -376,7 +380,6 @@ export default function Article() {
         </div>
       </div>
 
-      {/* Article reader styles */}
       <style>{`
         .article-reader-body {
           font-family: 'Inter', sans-serif;

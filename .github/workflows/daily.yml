@@ -2,8 +2,10 @@ name: CRM Daily — Auto Publish Article
 
 on:
   schedule:
-    # 8:00 AM IST = 2:30 AM UTC — every day including weekends
+    # 8:00 AM IST = 2:30 AM UTC — every day
     - cron: '30 2 * * *'
+    # 6:00 PM IST = 12:30 PM UTC — every day
+    - cron: '30 12 * * *'
   workflow_dispatch:
 
 jobs:

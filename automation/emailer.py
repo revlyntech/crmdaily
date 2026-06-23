@@ -3,9 +3,6 @@ import json
 import requests
 from datetime import datetime
 
-BEEHIIV_API_KEY = os.environ["BEEHIIV_API_KEY"]
-BEEHIIV_PUB_ID  = os.environ["BEEHIIV_PUB_ID"]
-
 def build_email_content(article):
     """Build branded HTML email content for Beehiiv post"""
     title    = article.get("title", "New Article from CRM Daily")
@@ -68,6 +65,10 @@ def build_email_content(article):
 def create_and_send_beehiiv_post(article):
     """Create a post in Beehiiv and send to all subscribers"""
 
+    # Read env vars here, inside the function — not at module load time
+    BEEHIIV_API_KEY = os.environ["BEEHIIV_API_KEY"]
+    BEEHIIV_PUB_ID  = os.environ["BEEHIIV_PUB_ID"]
+
     title   = article.get("title", "New Article from CRM Daily")
     excerpt = article.get("excerpt", "")
     slug    = article.get("slug", "")
@@ -118,7 +119,7 @@ def create_and_send_beehiiv_post(article):
     send_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts/{post_id}/send"
 
     send_data = {
-        "send_to":  "free",   # sends to all free subscribers
+        "send_to":  "free",
         "test":     False,
     }
 

@@ -124,15 +124,17 @@ export default function Contact() {
                 We respond to all enquiries within 1–2 business days.
               </p>
             </div>
+
+            {/* Powered by card — fixed colors */}
             <div style={{ background: "#E8521A", padding: 24 }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "rgba(255,255,255,0.7)", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// POWERED BY</span>
+              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#0F0E0D", letterSpacing: "0.15em", display: "block", marginBottom: 10 }}>// POWERED BY</span>
               <a href="https://revlyn.io" target="_blank" rel="noreferrer"
                 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 20, color: "#fff", transition: "opacity 0.2s", textDecoration: "none" }}
                 onMouseEnter={e => e.target.style.opacity = "0.7"}
                 onMouseLeave={e => e.target.style.opacity = "1"}>
                 Revlyn.io ↗
               </a>
-              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", marginTop: 6 }}>CRM & RevOps Agency</p>
+              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#0F0E0D", marginTop: 6 }}>CRM & RevOps Agency</p>
             </div>
           </div>
 

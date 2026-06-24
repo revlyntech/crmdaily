@@ -44,19 +44,19 @@ REQUIRED_KEYWORDS = [
 PUBLISHED_LOG = "published_titles.json"
 
 def load_published_titles():
-    """Load previously published article titles to avoid duplicates"""
     if os.path.exists(PUBLISHED_LOG):
-        with open(PUBLISHED_LOG, "r") as f:
-            return set(json.load(f))
+        try:
+            with open(PUBLISHED_LOG, "r", encoding="utf-8-sig") as f:
+                return set(json.load(f))
+        except Exception:
+            return set()
     return set()
 
 def save_published_title(title):
-    """Save a published title to the log"""
     titles = load_published_titles()
     titles.add(title.lower().strip())
-    # Keep only last 100 titles
     titles_list = list(titles)[-100:]
-    with open(PUBLISHED_LOG, "w") as f:
+    with open(PUBLISHED_LOG, "w", encoding="utf-8") as f:
         json.dump(titles_list, f)
 
 def is_blocked(url):
@@ -70,19 +70,15 @@ def is_blocked_image(url):
     return any(b in url for b in BLOCKED_IMAGE_DOMAINS)
 
 def is_relevant(title, summary=""):
-    # Fix NoneType error — ensure both are strings
     title = title or ""
     summary = summary or ""
     text = (title + " " + summary).lower()
     return any(kw.lower() in text for kw in REQUIRED_KEYWORDS)
 
 def is_duplicate_topic(title, published_titles):
-    """Check if this story is too similar to a recently published one"""
     title_lower = title.lower().strip()
-    # Exact match
     if title_lower in published_titles:
         return True
-    # Keyword overlap — if 3+ words match a published title, skip it
     title_words = set(w for w in title_lower.split() if len(w) > 4)
     for pub_title in published_titles:
         pub_words = set(w for w in pub_title.split() if len(w) > 4)
@@ -115,7 +111,7 @@ def scrape_news():
                 count = 0
                 for article in data.get("articles", []):
                     title       = article.get("title") or ""
-                    description = article.get("description") or ""  # Fix NoneType
+                    description = article.get("description") or ""
                     url         = article.get("url") or ""
                     image_url   = article.get("urlToImage") or ""
 
@@ -148,7 +144,6 @@ def scrape_news():
         except Exception as e:
             print(f"  ✗ Error for '{query}': {e}")
 
-    # Remove duplicates within this batch
     seen = set()
     unique = []
     for a in articles:

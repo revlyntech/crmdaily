@@ -18,14 +18,14 @@ export default function StockTicker() {
       script.async = true;
       script.innerHTML = JSON.stringify({
         symbols: [
-          { proName:"NYSE:CRM",    title:"Salesforce" },
-          { proName:"NASDAQ:HUBS", title:"HubSpot" },
-          { proName:"NASDAQ:MNDY", title:"Monday.com" },
-          { proName:"NASDAQ:FRSH", title:"Freshworks" },
-          { proName:"NASDAQ:MSFT", title:"Microsoft" },
-          { proName:"NYSE:ORCL",   title:"Oracle" },
-          { proName:"NASDAQ:ZI",   title:"ZoomInfo" },
-          { proName:"NASDAQ:DDOG", title:"Datadog" },
+          { proName: "NYSE:CRM",    title: "Salesforce" },
+          { proName: "NASDAQ:HUBS", title: "HubSpot" },
+          { proName: "NASDAQ:MNDY", title: "Monday.com" },
+          { proName: "NASDAQ:FRSH", title: "Freshworks" },
+          { proName: "NASDAQ:MSFT", title: "Microsoft" },
+          { proName: "NYSE:ORCL",   title: "Oracle" },
+          { proName: "NASDAQ:ZI",   title: "ZoomInfo" },
+          { proName: "NASDAQ:DDOG", title: "Datadog" },
         ],
         showSymbolLogo: true,
         isTransparent: true,
@@ -40,18 +40,12 @@ export default function StockTicker() {
   }, []);
 
   return (
-    <>
-      <style>{`
-        .stockticker-wrapper { background: #0F0E0D; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        @media (max-width: 768px) { .stockticker-wrapper { display: none !important; } }
-      `}</style>
-      <div className="stockticker-wrapper">
-        <div style={{ display:"flex", alignItems:"center", gap:8, padding:"5px 32px 0" }}>
-          <span style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:"rgba(242,237,228,0.3)", letterSpacing:"0.15em", textTransform:"uppercase" }}>// CRM_STOCKS_LIVE</span>
-          <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E", display:"inline-block" }} className="blink" />
-        </div>
-        <div ref={containerRef} style={{ width:"100%", minHeight:50 }} />
+    <div style={{ background: "#0F0E0D", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 32px 0" }}>
+        <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: "rgba(242,237,228,0.3)", letterSpacing: "0.15em", textTransform: "uppercase" }}>// CRM_STOCKS_LIVE</span>
+        <span style={{ width: 6, height: 6, background: "#22C55E", borderRadius: "50%", boxShadow: "0 0 6px #22C55E", display: "inline-block" }} className="blink" />
       </div>
-    </>
+      <div ref={containerRef} style={{ width: "100%", minHeight: 50 }} />
+    </div>
   );
 }

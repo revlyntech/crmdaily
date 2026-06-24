@@ -12,28 +12,15 @@ const fallbackImgs = {
 };
 
 function decodeEntities(str) {
-  return str
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&quot;/g, '"')
-    .replace(/&#8220;/g, '\u201C')
-    .replace(/&#8221;/g, '\u201D')
-    .replace(/&#8216;/g, '\u2018')
-    .replace(/&#8217;/g, '\u2019')
-    .replace(/&#8211;/g, '\u2013')
-    .replace(/&#8212;/g, '\u2014')
-    .replace(/&hellip;/g, '\u2026')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#\d+;/g, '')
-    .trim();
+  return str.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/&quot;/g,'"')
+    .replace(/&#8220;/g,'\u201C').replace(/&#8221;/g,'\u201D').replace(/&#8216;/g,'\u2018')
+    .replace(/&#8217;/g,'\u2019').replace(/&#8211;/g,'\u2013').replace(/&#8212;/g,'\u2014')
+    .replace(/&hellip;/g,'\u2026').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#\d+;/g,'').trim();
 }
 
 function extractHeadings(html) {
   if (!html) return [];
-  const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-  return matches.map((m, i) => ({ id: `sec-${i}`, text: decodeEntities(m[1]) }));
+  return [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)].map((m,i) => ({ id:`sec-${i}`, text:decodeEntities(m[1]) }));
 }
 
 function injectHeadingIds(html) {
@@ -47,40 +34,27 @@ function ProgressBar() {
   useEffect(() => {
     const update = () => {
       const el = document.documentElement;
-      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
-      setProgress(Math.min(100, pct));
+      setProgress(Math.min(100, (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100));
     };
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, []);
-  return (
-    <div style={{ position:'fixed', top:0, left:0, zIndex:999, width:`${progress}%`, height:3, background:'#e9542a', transition:'width 0.1s linear' }} />
-  );
+  return <div style={{ position:'fixed', top:0, left:0, zIndex:999, width:`${progress}%`, height:3, background:'#e9542a', transition:'width 0.1s linear' }} />;
 }
 
 function RelatedArticles({ currentArticle }) {
   const [related, setRelated] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     getPosts(50).then(posts => {
-      const filtered = posts
-        .filter(p => p.slug !== currentArticle.slug)
-        .filter(p => p.category === currentArticle.category)
-        .slice(0, 3);
+      const filtered = posts.filter(p => p.slug !== currentArticle.slug && p.category === currentArticle.category).slice(0,3);
       if (filtered.length < 3) {
-        const rest = posts
-          .filter(p => p.slug !== currentArticle.slug && !filtered.find(f => f.slug === p.slug))
-          .slice(0, 3 - filtered.length);
+        const rest = posts.filter(p => p.slug !== currentArticle.slug && !filtered.find(f => f.slug === p.slug)).slice(0, 3 - filtered.length);
         setRelated([...filtered, ...rest]);
-      } else {
-        setRelated(filtered);
-      }
+      } else setRelated(filtered);
     });
   }, [currentArticle.slug]);
-
   if (related.length === 0) return null;
-
   return (
     <div style={{ borderTop:'1px solid rgba(0,0,0,0.1)', paddingTop:48, marginTop:48 }}>
       <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.18em', marginBottom:24 }}>// RELATED ARTICLES</p>
@@ -124,13 +98,12 @@ function SidebarNewsletter() {
       ) : (
         <>
           <input type="email" placeholder="your@company.io" value={email} onChange={e => setEmail(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSubmit(e)}
+            onKeyDown={e => e.key==='Enter' && handleSubmit(e)}
             style={{ width:'100%', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', color:'#efeae1', fontFamily:"'Space Mono',monospace", fontSize:10, padding:'10px 12px', outline:'none', marginBottom:8, boxSizing:'border-box' }} />
           <button onClick={handleSubmit}
             style={{ width:'100%', background:'#e9542a', color:'#fff', border:'none', padding:'11px', fontFamily:"'Space Mono',monospace", fontSize:9, fontWeight:700, letterSpacing:'0.12em', cursor:'pointer' }}
-            onMouseEnter={e => e.target.style.background='#d4481a'}
-            onMouseLeave={e => e.target.style.background='#e9542a'}>
-            {status === 'loading' ? 'SUBSCRIBING...' : 'GET DAILY DIGEST →'}
+            onMouseEnter={e => e.target.style.background='#d4481a'} onMouseLeave={e => e.target.style.background='#e9542a'}>
+            {status==='loading' ? 'SUBSCRIBING...' : 'GET DAILY DIGEST →'}
           </button>
         </>
       )}
@@ -169,8 +142,7 @@ function SidebarTopics() {
       <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#e9542a', letterSpacing:'0.18em', marginBottom:14 }}>// BROWSE TOPICS</p>
       <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
         {topics.map(t => (
-          <span key={t}
-            style={{ fontFamily:"'Space Mono',monospace", fontSize:8, padding:'5px 9px', border:'1px solid rgba(0,0,0,0.15)', color:'#6b655c', letterSpacing:'0.08em', cursor:'pointer', transition:'all 0.2s' }}
+          <span key={t} style={{ fontFamily:"'Space Mono',monospace", fontSize:8, padding:'5px 9px', border:'1px solid rgba(0,0,0,0.15)', color:'#6b655c', letterSpacing:'0.08em', cursor:'pointer', transition:'all 0.2s' }}
             onMouseEnter={e => { e.target.style.borderColor='#e9542a'; e.target.style.color='#e9542a'; }}
             onMouseLeave={e => { e.target.style.borderColor='rgba(0,0,0,0.15)'; e.target.style.color='#6b655c'; }}>
             {t.toUpperCase()}
@@ -193,13 +165,10 @@ export default function Article() {
   useEffect(() => {
     getPostBySlug(slug).then(a => {
       setArticle(a);
-      if (a?.content) {
-        setHeadings(extractHeadings(a.content));
-        setProcessedContent(injectHeadingIds(a.content));
-      }
+      if (a?.content) { setHeadings(extractHeadings(a.content)); setProcessedContent(injectHeadingIds(a.content)); }
       setLoading(false);
     });
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
   }, [slug]);
 
   async function handleFooterSub(e) {
@@ -211,25 +180,8 @@ export default function Article() {
     if (r.success) setSubEmail('');
   }
 
-  if (loading) return (
-    <>
-      <ProgressBar />
-      <div style={{ minHeight:'60vh', display:'flex', alignItems:'center', justifyContent:'center', background:'#efeae1' }}>
-        <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>LOADING...</span>
-      </div>
-    </>
-  );
-
-  if (!article) return (
-    <>
-      <ProgressBar />
-      <div style={{ maxWidth:640, margin:'80px auto', padding:'0 32px', textAlign:'center', background:'#efeae1' }}>
-        <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>404</span>
-        <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:40, color:'#1c1a17', margin:'16px 0' }}>Article not found</h1>
-        <Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#1c1a17', fontWeight:700, letterSpacing:'0.1em' }}>← RETURN HOME</Link>
-      </div>
-    </>
-  );
+  if (loading) return (<><ProgressBar /><div style={{ minHeight:'60vh', display:'flex', alignItems:'center', justifyContent:'center', background:'#efeae1' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>LOADING...</span></div></>);
+  if (!article) return (<><ProgressBar /><div style={{ maxWidth:640, margin:'80px auto', padding:'0 32px', textAlign:'center' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>404</span><h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:40, color:'#1c1a17', margin:'16px 0' }}>Article not found</h1><Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#1c1a17', fontWeight:700, letterSpacing:'0.1em' }}>← RETURN HOME</Link></div></>);
 
   const wordCount = article.content ? article.content.replace(/<[^>]+>/g,'').split(/\s+/).length : 0;
   const readTime = Math.max(1, Math.ceil(wordCount / 220));
@@ -240,10 +192,9 @@ export default function Article() {
 
       {/* Breadcrumb */}
       <div style={{ background:'#efeae1', borderBottom:'1px solid rgba(0,0,0,0.1)', padding:'10px 16px' }}>
-        <div style={{ maxWidth:1240, margin:'0 auto', display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
-          <Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#8a847a', letterSpacing:'0.1em', textDecoration:'none', transition:'color 0.2s' }}
-            onMouseEnter={e => e.target.style.color='#e9542a'}
-            onMouseLeave={e => e.target.style.color='#8a847a'}>← HOME</Link>
+        <div style={{ maxWidth:1240, margin:'0 auto', display:'flex', alignItems:'center', gap:8, flexWrap:'wrap' }}>
+          <Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#8a847a', letterSpacing:'0.1em', textDecoration:'none' }}
+            onMouseEnter={e => e.target.style.color='#e9542a'} onMouseLeave={e => e.target.style.color='#8a847a'}>← HOME</Link>
           <span style={{ color:'rgba(0,0,0,0.2)', fontSize:10 }}>/</span>
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.1em' }}>{article.category.toUpperCase()}</span>
           <span style={{ color:'rgba(0,0,0,0.2)', fontSize:10 }}>/</span>
@@ -251,33 +202,11 @@ export default function Article() {
         </div>
       </div>
 
-      {/* Mobile share bar — shown only on mobile via CSS */}
-      <div className="mobile-share-bar" style={{ display:'none', background:'#efeae1', borderBottom:'1px solid rgba(0,0,0,0.1)', padding:'10px 16px', gap:10, alignItems:'center' }}>
-        <span style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#8a847a', letterSpacing:'0.14em' }}>SHARE:</span>
-        {[
-          { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
-          { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
-          { label:'↗', url:`https://crmdaily.co/article/${article.slug}` },
-        ].map(s => (
-          <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
-            style={{ width:32, height:32, border:'1px solid rgba(0,0,0,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Space Mono',monospace", fontSize:10, color:'#2b2620', textDecoration:'none' }}>
-            {s.label}
-          </a>
-        ))}
-        <span style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#8a847a', marginLeft:'auto' }}>{readTime} MIN READ</span>
-      </div>
-
       {/* Main layout */}
-      <div style={{ background:'#efeae1', padding:'48px 16px 80px' }}>
-        <div className="article-layout" style={{
-          maxWidth:1240, margin:'0 auto',
-          display:'grid',
-          gridTemplateColumns:'200px minmax(0,640px) 300px',
-          gap:'0 56px',
-          alignItems:'start',
-        }}>
+      <div style={{ background:'#efeae1', padding:'48px 20px 80px' }}>
+        <div className="article-page-layout" style={{ maxWidth:1240, margin:'0 auto', display:'grid', gridTemplateColumns:'200px minmax(0,640px) 300px', gap:'0 56px', alignItems:'start' }}>
 
-          {/* LEFT META RAIL */}
+          {/* LEFT RAIL — hidden on mobile */}
           <aside className="article-left-rail" style={{ position:'sticky', top:24 }}>
             <div style={{ paddingBottom:16, marginBottom:16, borderBottom:'1px solid rgba(0,0,0,0.1)' }}>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.14em', marginBottom:6 }}>{article.category.toUpperCase()}</p>
@@ -305,10 +234,8 @@ export default function Article() {
                 <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#8a847a', letterSpacing:'0.14em', marginBottom:12 }}>IN THIS ARTICLE</p>
                 <nav>
                   {headings.map(h => (
-                    <a key={h.id} href={`#${h.id}`}
-                      style={{ display:'block', fontFamily:"'DM Serif Display',serif", fontSize:12, color:'#6b655c', lineHeight:1.45, marginBottom:10, textDecoration:'none', transition:'color 0.2s' }}
-                      onMouseEnter={e => e.target.style.color='#e9542a'}
-                      onMouseLeave={e => e.target.style.color='#6b655c'}>
+                    <a key={h.id} href={`#${h.id}`} style={{ display:'block', fontFamily:"'DM Serif Display',serif", fontSize:12, color:'#6b655c', lineHeight:1.45, marginBottom:10, textDecoration:'none', transition:'color 0.2s' }}
+                      onMouseEnter={e => e.target.style.color='#e9542a'} onMouseLeave={e => e.target.style.color='#6b655c'}>
                       {h.text}
                     </a>
                   ))}
@@ -318,41 +245,60 @@ export default function Article() {
           </aside>
 
           {/* CENTER ARTICLE */}
-          <article className="article-center">
+          <article className="article-center-col">
+            {/* Mobile meta bar */}
+            <div className="article-mobile-meta">
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.12em' }}>{article.category.toUpperCase()}</span>
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#8a847a', letterSpacing:'0.1em' }}>{readTime} MIN READ</span>
+              <div style={{ display:'flex', gap:6, marginLeft:'auto' }}>
+                {[
+                  { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
+                  { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
+                ].map(s => (
+                  <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
+                    style={{ width:30, height:30, border:'1px solid rgba(0,0,0,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Space Mono',monospace", fontSize:9, color:'#2b2620', textDecoration:'none' }}>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             {(article.featuredImage || fallbackImgs[article.color]) && (
-              <div style={{ marginBottom:32, overflow:'hidden' }}>
-                <img
-                  src={article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue}
-                  alt={article.title}
-                  style={{ width:'100%', height:340, objectFit:'cover', filter:'brightness(0.88)' }}
-                />
+              <div style={{ marginBottom:28, overflow:'hidden' }}>
+                <img src={article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue} alt={article.title}
+                  style={{ width:'100%', height:300, objectFit:'cover', filter:'brightness(0.88)' }} />
               </div>
             )}
+
             <div style={{ paddingBottom:24, marginBottom:28, borderBottom:'1px solid rgba(0,0,0,0.1)' }}>
-              <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:'clamp(28px,5vw,48px)', fontWeight:700, color:'#1c1a17', lineHeight:1.06, letterSpacing:'-0.02em', marginBottom:14 }}>{article.title}</h1>
+              <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:'clamp(26px,5vw,48px)', fontWeight:700, color:'#1c1a17', lineHeight:1.1, letterSpacing:'-0.02em', marginBottom:14 }}>{article.title}</h1>
               {article.excerpt && (
-                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:18, color:'#6b655c', lineHeight:1.65, fontWeight:400 }}>
-                  {article.excerpt}
-                </p>
+                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:17, color:'#6b655c', lineHeight:1.65, fontWeight:400 }}>{article.excerpt}</p>
               )}
             </div>
+
             <div className="article-reader-body" dangerouslySetInnerHTML={{ __html: processedContent }} />
+
+            {/* Mobile newsletter — shown only on mobile */}
+            <div className="article-mobile-newsletter">
+              <SidebarNewsletter />
+            </div>
+
             <RelatedArticles currentArticle={article} />
           </article>
 
-          {/* RIGHT SIDEBAR */}
-          <aside className="article-right-sidebar" style={{ position:'sticky', top:24 }}>
+          {/* RIGHT SIDEBAR — hidden on mobile */}
+          <aside className="article-right-rail" style={{ position:'sticky', top:24 }}>
             <SidebarNewsletter />
             <SidebarPopular />
             <SidebarTopics />
           </aside>
-
         </div>
       </div>
 
       {/* Footer CTA */}
-      <div style={{ background:'#0d0c0b', padding:'56px 16px' }}>
-        <div className="footer-cta-inner" style={{ maxWidth:1240, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'space-between', gap:32, flexWrap:'wrap' }}>
+      <div style={{ background:'#0d0c0b', padding:'56px 20px' }}>
+        <div className="article-footer-cta" style={{ maxWidth:1240, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'space-between', gap:32, flexWrap:'wrap' }}>
           <div>
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.18em', marginBottom:12 }}>// STAY INFORMED</p>
             <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:'clamp(22px,3vw,36px)', color:'#efeae1', lineHeight:1.15, maxWidth:500 }}>
@@ -362,14 +308,13 @@ export default function Article() {
           {subStatus === 'success' ? (
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:'#22C55E', letterSpacing:'0.1em' }}>✓ SUBSCRIBED — CHECK YOUR INBOX</p>
           ) : (
-            <div className="footer-email-form" style={{ display:'flex', gap:0, border:'1px solid rgba(255,255,255,0.15)', width:'auto' }}>
+            <div className="article-footer-form" style={{ display:'flex', gap:0, border:'1px solid rgba(255,255,255,0.15)' }}>
               <input type="email" placeholder="your@company.io" value={subEmail} onChange={e => setSubEmail(e.target.value)}
                 style={{ background:'rgba(255,255,255,0.05)', border:'none', color:'#efeae1', fontFamily:"'Space Mono',monospace", fontSize:11, padding:'14px 18px', outline:'none', width:240, minWidth:0 }} />
               <button onClick={handleFooterSub}
                 style={{ background:'#e9542a', color:'#fff', border:'none', padding:'14px 20px', fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:'0.12em', cursor:'pointer', whiteSpace:'nowrap' }}
-                onMouseEnter={e => e.target.style.background='#d4481a'}
-                onMouseLeave={e => e.target.style.background='#e9542a'}>
-                {subStatus === 'loading' ? '...' : 'SUBSCRIBE FREE →'}
+                onMouseEnter={e => e.target.style.background='#d4481a'} onMouseLeave={e => e.target.style.background='#e9542a'}>
+                {subStatus==='loading' ? '...' : 'SUBSCRIBE FREE →'}
               </button>
             </div>
           )}
@@ -377,12 +322,10 @@ export default function Article() {
       </div>
 
       <style>{`
-        .article-reader-body {
-          font-family: 'Inter', sans-serif;
-          font-size: 18px;
-          color: #2b2620;
-          line-height: 1.78;
-        }
+        .article-mobile-meta { display: none; }
+        .article-mobile-newsletter { display: none; }
+
+        .article-reader-body { font-family: 'Inter', sans-serif; font-size: 18px; color: #2b2620; line-height: 1.78; }
         .article-reader-body p { font-size: 18px !important; color: #2b2620 !important; line-height: 1.78 !important; margin-bottom: 22px !important; }
         .article-reader-body h2 { font-family: 'DM Serif Display', serif !important; font-size: 28px !important; font-weight: 700 !important; color: #1c1a17 !important; line-height: 1.2 !important; margin: 44px 0 16px !important; padding-left: 16px !important; border-left: 4px solid #e9542a !important; letter-spacing: -0.01em !important; }
         .article-reader-body h3 { font-family: 'DM Serif Display', serif !important; font-size: 22px !important; color: #1c1a17 !important; line-height: 1.3 !important; margin: 32px 0 12px !important; }
@@ -402,17 +345,25 @@ export default function Article() {
         .article-reader-body table th { background: #1c1a17 !important; color: #efeae1 !important; padding: 10px 14px !important; font-family: 'Space Mono', monospace !important; font-size: 9px !important; letter-spacing: 0.1em !important; text-align: left !important; }
         .article-reader-body table td { padding: 10px 14px !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; font-size: 14px !important; color: #2b2620 !important; }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+          .article-page-layout { grid-template-columns: 1fr !important; gap: 0 !important; }
+          .article-left-rail { display: none !important; }
+          .article-right-rail { display: none !important; }
+          .article-mobile-meta { display: flex !important; align-items: center; gap: 10px; padding: 12px 0; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.08); flex-wrap: wrap; }
+          .article-mobile-newsletter { display: block !important; margin: 40px 0 0; }
+          .related-grid { grid-template-columns: 1fr !important; }
+          .article-footer-cta { flex-direction: column !important; align-items: flex-start !important; }
+          .article-footer-form { width: 100% !important; flex-direction: column !important; }
+          .article-footer-form input { width: 100% !important; }
+
           .article-reader-body { font-size: 16px !important; }
           .article-reader-body p { font-size: 16px !important; line-height: 1.75 !important; }
           .article-reader-body h2 { font-size: 22px !important; padding-left: 12px !important; margin: 32px 0 12px !important; }
-          .article-reader-body h3 { font-size: 19px !important; }
-          .article-reader-body blockquote { font-size: 18px !important; padding: 14px 18px !important; }
+          .article-reader-body h3 { font-size: 19px !important; margin: 24px 0 10px !important; }
+          .article-reader-body blockquote { font-size: 18px !important; padding: 14px 16px !important; }
           .article-reader-body ul li { font-size: 16px !important; }
           .article-reader-body ol li { font-size: 16px !important; }
           .article-reader-body table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
-          .footer-email-form { width: 100% !important; flex-direction: column !important; }
-          .footer-email-form input { width: 100% !important; }
         }
       `}</style>
     </>

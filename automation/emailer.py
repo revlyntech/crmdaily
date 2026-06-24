@@ -4,7 +4,6 @@ import requests
 from datetime import datetime
 
 def build_email_content(article):
-    """Build branded HTML email content for Beehiiv post"""
     title    = article.get("title", "New Article from CRM Daily")
     excerpt  = article.get("excerpt", "")
     slug     = article.get("slug", "")
@@ -15,48 +14,36 @@ def build_email_content(article):
 
     html = f"""
 <div style="font-family:'Georgia',serif;max-width:600px;margin:0 auto;background:#F2EDE4;">
-
   <p style="font-family:'Courier New',monospace;font-size:10px;color:#E8521A;letter-spacing:0.18em;margin:0 0 8px;">
     // {category.upper()} &nbsp;·&nbsp; {date.upper()}
   </p>
-
   <h1 style="font-family:'Georgia',serif;font-size:32px;color:#0F0E0D;line-height:1.1;letter-spacing:-0.02em;margin:0 0 16px;">
     {title}
   </h1>
-
   <hr style="border:none;border-top:2px solid #E8521A;margin:0 0 20px;">
-
   {'<img src="' + image + '" alt="' + title + '" style="width:100%;height:auto;margin:0 0 20px;display:block;">' if image else ''}
-
   <p style="font-family:'Georgia',serif;font-size:17px;color:#6B6560;line-height:1.75;margin:0 0 28px;">
     {excerpt}
   </p>
-
   <table cellpadding="0" cellspacing="0" style="margin:0 0 32px;">
     <tr>
       <td style="background:#E8521A;padding:14px 28px;">
-        <a href="{url}"
-          style="font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">
+        <a href="{url}" style="font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">
           READ FULL ARTICLE →
         </a>
       </td>
     </tr>
   </table>
-
   <hr style="border:none;border-top:1px solid rgba(0,0,0,0.1);margin:0 0 20px;">
-
   <p style="font-family:'Courier New',monospace;font-size:9px;color:#9B958F;letter-spacing:0.08em;margin:0;">
     CRM DAILY — YOUR DAILY CRM & GTM INTELLIGENCE &nbsp;·&nbsp;
     <a href="https://www.crmdaily.co" style="color:#E8521A;text-decoration:none;">crmdaily.co</a>
   </p>
-
 </div>
 """
     return html
 
 def create_and_send_beehiiv_post(article):
-    """Create a confirmed post in Beehiiv — sends automatically to all subscribers"""
-
     BEEHIIV_API_KEY = os.environ.get("BEEHIIV_API_KEY")
     BEEHIIV_PUB_ID  = os.environ.get("BEEHIIV_PUB_ID")
 
@@ -75,7 +62,7 @@ def create_and_send_beehiiv_post(article):
         "Content-Type":  "application/json",
     }
 
-    print("   📝 Creating Beehiiv post...")
+    print("   📝 Creating Beehiiv draft...")
     create_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts"
 
     post_data = {
@@ -83,7 +70,7 @@ def create_and_send_beehiiv_post(article):
         "subtitle":     excerpt[:150] if excerpt else title,
         "content_html": html,
         "content_text": f"{title}\n\n{excerpt}\n\nRead full article: {url}",
-        "status":       "confirmed",   # confirmed = published + sends to subscribers
+        "status":       "draft",
         "audience":     "free",
         "platform":     "email",
     }
@@ -92,21 +79,21 @@ def create_and_send_beehiiv_post(article):
     result   = response.json()
 
     if response.status_code not in [200, 201]:
-        print(f"   ❌ Failed to create post: {result}")
+        print(f"   ❌ Failed to create draft: {result}")
         return False
 
     post_id = result.get("data", {}).get("id")
-    print(f"   ✅ Post published to Beehiiv — ID: {post_id}")
-    print(f"   📧 Beehiiv will send to all subscribers automatically")
+    print(f"   ✅ Draft created in Beehiiv — ID: {post_id}")
+    print(f"   👉 Go to beehiiv.com → Posts → open draft → click Send to deliver to subscribers")
     return True
 
 def run(article):
-    print("\n📬 Step 4: Sending newsletter via Beehiiv...")
+    print("\n📬 Step 4: Creating newsletter draft in Beehiiv...")
     success = create_and_send_beehiiv_post(article)
     if success:
-        print("   ✅ Newsletter delivered to all subscribers")
+        print("   ✅ Beehiiv draft ready — send manually from dashboard")
     else:
-        print("   ⚠️ Newsletter send failed — article still published on site")
+        print("   ⚠️ Beehiiv draft failed — article still published on site")
 
 if __name__ == "__main__":
     with open("generated_article.json", "r") as f:

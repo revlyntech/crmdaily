@@ -55,7 +55,7 @@ def build_email_content(article):
     return html
 
 def create_and_send_beehiiv_post(article):
-    """Create a post in Beehiiv and send to all subscribers"""
+    """Create a confirmed post in Beehiiv — sends automatically to all subscribers"""
 
     BEEHIIV_API_KEY = os.environ.get("BEEHIIV_API_KEY")
     BEEHIIV_PUB_ID  = os.environ.get("BEEHIIV_PUB_ID")
@@ -75,27 +75,17 @@ def create_and_send_beehiiv_post(article):
         "Content-Type":  "application/json",
     }
 
-    # Step 1 — Create the post
     print("   📝 Creating Beehiiv post...")
     create_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts"
 
     post_data = {
-        "title":           title,           # required by Beehiiv v2
-        "subtitle":        excerpt[:150] if excerpt else title,
-        "content_json":    {
-            "type": "doc",
-            "content": [
-                {
-                    "type": "paragraph",
-                    "content": [{"type": "text", "text": excerpt}]
-                }
-            ]
-        },
-        "content_html":    html,
-        "content_text":    f"{title}\n\n{excerpt}\n\nRead full article: {url}",
-        "status":          "draft",
-        "audience":        "free",
-        "platform":        "email",
+        "title":        title,
+        "subtitle":     excerpt[:150] if excerpt else title,
+        "content_html": html,
+        "content_text": f"{title}\n\n{excerpt}\n\nRead full article: {url}",
+        "status":       "confirmed",   # confirmed = published + sends to subscribers
+        "audience":     "free",
+        "platform":     "email",
     }
 
     response = requests.post(create_url, headers=headers, json=post_data)
@@ -106,21 +96,9 @@ def create_and_send_beehiiv_post(article):
         return False
 
     post_id = result.get("data", {}).get("id")
-    print(f"   ✅ Post created — ID: {post_id}")
-
-    # Step 2 — Send the post to all subscribers
-    print("   📧 Sending to all subscribers...")
-    send_url = f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUB_ID}/posts/{post_id}/send"
-
-    send_response = requests.post(send_url, headers=headers, json={"send_to": "free", "test": False})
-    send_result   = send_response.json()
-
-    if send_response.status_code in [200, 201, 202]:
-        print(f"   ✅ Email sent to all subscribers!")
-        return True
-    else:
-        print(f"   ❌ Failed to send: {send_result}")
-        return False
+    print(f"   ✅ Post published to Beehiiv — ID: {post_id}")
+    print(f"   📧 Beehiiv will send to all subscribers automatically")
+    return True
 
 def run(article):
     print("\n📬 Step 4: Sending newsletter via Beehiiv...")

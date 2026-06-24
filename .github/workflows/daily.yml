@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -31,6 +33,16 @@ jobs:
           BEEHIIV_API_KEY:   ${{ secrets.BEEHIIV_API_KEY }}
           BEEHIIV_PUB_ID:    ${{ secrets.BEEHIIV_PUB_ID }}
         run: python automation/main.py
+
+      - name: Commit dedup and category logs
+        run: |
+          git config user.name "CRM Daily Bot"
+          git config user.email "bot@crmdaily.co"
+          cp automation/published_titles.json . 2>/dev/null || true
+          cp automation/category_log.json . 2>/dev/null || true
+          git add -f automation/published_titles.json automation/category_log.json 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: update dedup + category logs [skip ci]"
+          git push origin main || true
 
       - name: Done
         run: echo "✅ Done at $(date)"

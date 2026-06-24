@@ -41,6 +41,15 @@ REQUIRED_KEYWORDS = [
     "artificial intelligence sales", "AI CRM", "sales software",
 ]
 
+# Block topics that are overrepresented in current news cycle
+# Remove entries here once fresh news arrives (after ~1 week)
+BLOCKED_TITLE_KEYWORDS = [
+    "klue",
+    "oauth",
+    "klue breach",
+    "salesforce oauth",
+]
+
 PUBLISHED_LOG = "published_titles.json"
 
 def load_published_titles():
@@ -74,6 +83,10 @@ def is_relevant(title, summary=""):
     summary = summary or ""
     text = (title + " " + summary).lower()
     return any(kw.lower() in text for kw in REQUIRED_KEYWORDS)
+
+def is_blocked_topic(title):
+    title_lower = title.lower()
+    return any(kw in title_lower for kw in BLOCKED_TITLE_KEYWORDS)
 
 def is_duplicate_topic(title, published_titles):
     title_lower = title.lower().strip()
@@ -121,8 +134,11 @@ def scrape_news():
                         continue
                     if not is_relevant(title, description):
                         continue
+                    if is_blocked_topic(title):
+                        print(f"  🚫 Blocked topic: {title[:60]}")
+                        continue
                     if is_duplicate_topic(title, published_titles):
-                        print(f"  ⏭ Skipping duplicate topic: {title[:60]}")
+                        print(f"  ⏭ Skipping duplicate: {title[:60]}")
                         continue
 
                     clean_image = "" if is_blocked_image(image_url) else image_url

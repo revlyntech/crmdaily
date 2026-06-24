@@ -6,7 +6,6 @@ from datetime import datetime, timedelta, timezone
 NEWS_API_KEY = os.environ["NEWS_API_KEY"]
 NEWS_API_URL = "https://newsapi.org/v2/everything"
 
-# Broader queries to get more results
 SEARCH_QUERIES = [
     "HubSpot OR Salesforce OR Pipedrive",
     "CRM software sales",
@@ -17,7 +16,6 @@ SEARCH_QUERIES = [
     "Gong OR Clari OR Apollo OR Salesloft",
 ]
 
-# Block only clearly irrelevant domains
 BLOCKED_DOMAINS = [
     "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk",
     "cnn.com", "nytimes.com", "theguardian.com",
@@ -26,7 +24,6 @@ BLOCKED_DOMAINS = [
     "espn.com", "sports.yahoo.com", "nfl.com", "nba.com",
 ]
 
-# Block images from political/news photo agencies
 BLOCKED_IMAGE_DOMAINS = [
     "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk",
     "cnn.com", "nytimes.com", "theguardian.com",
@@ -34,7 +31,6 @@ BLOCKED_IMAGE_DOMAINS = [
     "media.cnn.com", "ichef.bbci.co.uk", "s.abcnews.com",
 ]
 
-# At least one of these must appear in title OR description
 REQUIRED_KEYWORDS = [
     "CRM", "HubSpot", "Salesforce", "Pipedrive", "sales",
     "RevOps", "GTM", "revenue", "Outreach", "Gong", "Clari",
@@ -44,6 +40,24 @@ REQUIRED_KEYWORDS = [
     "Clay", "Smartlead", "sales tech", "sales tool", "sales AI",
     "artificial intelligence sales", "AI CRM", "sales software",
 ]
+
+PUBLISHED_LOG = "published_titles.json"
+
+def load_published_titles():
+    """Load previously published article titles to avoid duplicates"""
+    if os.path.exists(PUBLISHED_LOG):
+        with open(PUBLISHED_LOG, "r") as f:
+            return set(json.load(f))
+    return set()
+
+def save_published_title(title):
+    """Save a published title to the log"""
+    titles = load_published_titles()
+    titles.add(title.lower().strip())
+    # Keep only last 100 titles
+    titles_list = list(titles)[-100:]
+    with open(PUBLISHED_LOG, "w") as f:
+        json.dump(titles_list, f)
 
 def is_blocked(url):
     if not url:
@@ -56,13 +70,31 @@ def is_blocked_image(url):
     return any(b in url for b in BLOCKED_IMAGE_DOMAINS)
 
 def is_relevant(title, summary=""):
+    # Fix NoneType error — ensure both are strings
+    title = title or ""
+    summary = summary or ""
     text = (title + " " + summary).lower()
     return any(kw.lower() in text for kw in REQUIRED_KEYWORDS)
 
+def is_duplicate_topic(title, published_titles):
+    """Check if this story is too similar to a recently published one"""
+    title_lower = title.lower().strip()
+    # Exact match
+    if title_lower in published_titles:
+        return True
+    # Keyword overlap — if 3+ words match a published title, skip it
+    title_words = set(w for w in title_lower.split() if len(w) > 4)
+    for pub_title in published_titles:
+        pub_words = set(w for w in pub_title.split() if len(w) > 4)
+        overlap = title_words & pub_words
+        if len(overlap) >= 3:
+            return True
+    return False
+
 def scrape_news():
     articles = []
-    # Go back 3 days to get more results on free plan
     from_date = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
+    published_titles = load_published_titles()
 
     print("Fetching news from NewsAPI...")
 
@@ -82,10 +114,10 @@ def scrape_news():
             if data.get("status") == "ok":
                 count = 0
                 for article in data.get("articles", []):
-                    title = article.get("title", "")
-                    description = article.get("description", "")
-                    url = article.get("url", "")
-                    image_url = article.get("urlToImage", "")
+                    title       = article.get("title") or ""
+                    description = article.get("description") or ""  # Fix NoneType
+                    url         = article.get("url") or ""
+                    image_url   = article.get("urlToImage") or ""
 
                     if not title or title == "[Removed]":
                         continue
@@ -93,16 +125,19 @@ def scrape_news():
                         continue
                     if not is_relevant(title, description):
                         continue
+                    if is_duplicate_topic(title, published_titles):
+                        print(f"  ⏭ Skipping duplicate topic: {title[:60]}")
+                        continue
 
                     clean_image = "" if is_blocked_image(image_url) else image_url
 
                     articles.append({
-                        "title": title,
-                        "summary": description[:600] if description else "",
-                        "link": url,
-                        "source": article.get("source", {}).get("name", ""),
+                        "title":     title,
+                        "summary":   description[:600],
+                        "link":      url,
+                        "source":    article.get("source", {}).get("name", ""),
                         "published": article.get("publishedAt", ""),
-                        "image": clean_image,
+                        "image":     clean_image,
                     })
                     count += 1
 
@@ -113,7 +148,7 @@ def scrape_news():
         except Exception as e:
             print(f"  ✗ Error for '{query}': {e}")
 
-    # Remove duplicates
+    # Remove duplicates within this batch
     seen = set()
     unique = []
     for a in articles:
@@ -122,7 +157,6 @@ def scrape_news():
             seen.add(key)
             unique.append(a)
 
-    # Score: prefer articles with clean images + known sources
     GOOD_SOURCES = [
         "techcrunch.com", "venturebeat.com", "forbes.com",
         "businessinsider.com", "zdnet.com", "inc.com",

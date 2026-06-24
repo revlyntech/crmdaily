@@ -3,7 +3,7 @@ import os
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-from scraper import scrape_news
+from scraper import scrape_news, save_published_title
 from writer import generate_article
 from publisher import publish_article
 from emailer import run as send_newsletter
@@ -33,7 +33,11 @@ def run():
         print("\n❌ Publishing failed")
         sys.exit(1)
 
-    # Step 4 - Send newsletter via Beehiiv
+    # Log the published title so it's never repeated
+    save_published_title(article["title"])
+    print(f"   📝 Logged title to dedup list")
+
+    # Step 4 - Newsletter via Beehiiv RSS (handled automatically)
     send_newsletter(article)
 
     print("\n✅ Done! Article live + newsletter sent to subscribers.")

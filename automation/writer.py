@@ -2,10 +2,8 @@ import anthropic
 import json
 import os
 import re
-import requests
 from datetime import datetime
 
-# Direct Unsplash image URLs by topic — guaranteed to work, no API needed
 TOPIC_IMAGES = {
     "CRM News": [
         "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
@@ -44,10 +42,43 @@ TOPIC_IMAGES = {
     ],
 }
 
+# Category rotation — cycles through all 6 categories over time
+CATEGORY_ROTATION = [
+    "CRM News",
+    "GTM Strategy",
+    "Tool Reviews",
+    "RevOps Intelligence",
+    "Sales Tech",
+    "AI in Sales",
+]
+
+CATEGORY_LOG = "category_log.json"
+
+def get_next_category():
+    """Return the next category in rotation, cycling through all 6"""
+    if os.path.exists(CATEGORY_LOG):
+        with open(CATEGORY_LOG, "r") as f:
+            data = json.load(f)
+        last_index = data.get("last_index", -1)
+    else:
+        last_index = -1
+
+    next_index = (last_index + 1) % len(CATEGORY_ROTATION)
+
+    with open(CATEGORY_LOG, "w") as f:
+        json.dump({"last_index": next_index}, f)
+
+    return CATEGORY_ROTATION[next_index]
+
+def save_category_log(category):
+    """Update log with the actually used category"""
+    if category in CATEGORY_ROTATION:
+        index = CATEGORY_ROTATION.index(category)
+        with open(CATEGORY_LOG, "w") as f:
+            json.dump({"last_index": index}, f)
+
 def get_relevant_image(category, title, index=0):
-    """Pick a relevant image from curated list based on category"""
     images = TOPIC_IMAGES.get(category, TOPIC_IMAGES["default"])
-    # Use index to vary which image is picked each run
     chosen = images[index % len(images)]
     print(f"   📸 Image selected for '{category}': {chosen[:50]}...")
     return chosen
@@ -65,8 +96,23 @@ def generate_article(news_items):
     ])
 
     today = datetime.now().strftime("%B %d, %Y")
-    # Use hour to vary image selection between morning/evening runs
     hour_index = datetime.now().hour
+
+    # Force the next category in rotation
+    forced_category = get_next_category()
+    print(f"   📂 Forced category for this run: {forced_category}")
+
+    # Category-specific writing instructions
+    category_instructions = {
+        "CRM News": "Write a news article about the most significant CRM industry development in the news items.",
+        "GTM Strategy": "Write a strategic guide about go-to-market strategy, pipeline building, or revenue team alignment. Use the news items as context/inspiration but make it a practical strategy piece.",
+        "Tool Reviews": "Write a detailed review or comparison of a CRM/sales tool mentioned in the news items. Focus on features, use cases, pros and cons for RevOps teams.",
+        "RevOps Intelligence": "Write an analytical piece about revenue operations trends, metrics, or best practices. Use the news items as context.",
+        "Sales Tech": "Write about sales technology, automation tools, or the sales tech stack. Use the news items as context.",
+        "AI in Sales": "Write about AI applications in sales, CRM automation, or AI-powered GTM. Use the news items as context.",
+    }
+
+    writing_instruction = category_instructions.get(forced_category, category_instructions["CRM News"])
 
     prompt = f"""You are a senior editor at CRM Daily, a leading publication for CRM and GTM professionals.
 
@@ -75,12 +121,13 @@ Today is {today}. Based on the following news items, write ONE comprehensive, or
 NEWS ITEMS:
 {news_context}
 
-Pick the MOST interesting and relevant story and write a full article about it.
+WRITING TASK: {writing_instruction}
 
-IMPORTANT WRITING RULES:
-- Always use a simple hyphen (-) instead of an em dash (—) or en dash (–)
+IMPORTANT RULES:
+- The article MUST be categorised as: {forced_category}
+- Always use a simple hyphen (-) instead of an em dash or en dash
 - Write in plain, direct English
-- No em dashes anywhere in the article
+- No em dashes anywhere
 
 Follow this EXACT format:
 
@@ -88,9 +135,9 @@ TITLE: [Compelling SEO-optimised headline - max 70 characters, use hyphen not em
 
 EXCERPT: [2-3 sentence summary for the article card - max 160 characters]
 
-CATEGORY: [ONE of: CRM News, GTM Strategy, Tool Reviews, RevOps Intelligence, Sales Tech, AI in Sales]
+CATEGORY: {forced_category}
 
-TAGS: [5 comma-separated tags e.g. HubSpot, Salesforce, RevOps, Sales Automation, CRM]
+TAGS: [5 comma-separated tags relevant to {forced_category}]
 
 CONTENT:
 [Write 700-900 words in HTML format using:
@@ -104,12 +151,12 @@ Requirements:
 - Strong opening hook paragraph
 - 3-4 sections with H2 headings
 - Actionable insights for CRM/RevOps professionals
-- Reference real tools where relevant (HubSpot, Salesforce, Pipedrive, Gong, Clay etc)
+- Reference real tools where relevant
 - Professional but engaging tone
 - Forward-looking conclusion
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags
-- Use hyphen (-) not em dash (—) everywhere]"""
+- Use hyphen (-) not em dash everywhere]"""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
@@ -118,29 +165,28 @@ Requirements:
     )
 
     response = message.content[0].text
-
-    # Also replace any em dashes that sneak through in post-processing
     response = response.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
 
     article = {}
-    title_match = re.search(r"TITLE:\s*(.+)", response)
+    title_match   = re.search(r"TITLE:\s*(.+)", response)
     excerpt_match = re.search(r"EXCERPT:\s*(.+)", response)
     category_match = re.search(r"CATEGORY:\s*(.+)", response)
-    tags_match = re.search(r"TAGS:\s*(.+)", response)
+    tags_match    = re.search(r"TAGS:\s*(.+)", response)
     content_match = re.search(r"CONTENT:\s*([\s\S]+)", response)
 
-    article["title"] = title_match.group(1).strip() if title_match else f"CRM Intelligence Report - {today}"
-    article["excerpt"] = excerpt_match.group(1).strip() if excerpt_match else ""
-    article["category"] = category_match.group(1).strip() if category_match else "CRM News"
-    article["tags"] = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
+    article["title"]    = title_match.group(1).strip() if title_match else f"CRM Intelligence Report - {today}"
+    article["excerpt"]  = excerpt_match.group(1).strip() if excerpt_match else ""
+    article["category"] = forced_category  # Always use the forced category
+    article["tags"]     = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
 
     content = content_match.group(1).strip() if content_match else response
-    # Clean em dashes from content too
     content = content.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
     article["content"] = content
 
-    # Get relevant image based on category
     article["featured_image_url"] = get_relevant_image(article["category"], article["title"], hour_index)
+
+    # Save category log so next run uses the next category
+    save_category_log(article["category"])
 
     print(f"✅ Generated: {article['title']}")
     print(f"   Category: {article['category']}")

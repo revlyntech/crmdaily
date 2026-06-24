@@ -15,61 +15,63 @@ export default function ArticleCard({ article, index = 0 }) {
   const image = article.featuredImage || fallbackImages[article.color] || fallbackImages.blue;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3), ease: "easeOut" }}
-      onClick={() => navigate(`/article/${article.slug}`)}
-      className="card-lift"
-      style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", overflow: "hidden" }}>
+    <>
+      <style>{`
+        .article-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); cursor: pointer; overflow: hidden; }
+        .article-card-img { height: 200px; overflow: hidden; position: relative; background: #E8E3DC; }
+        .article-card-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); transition: transform 0.5s ease, filter 0.3s ease; }
+        .article-card-img img:hover { transform: scale(1.05); filter: brightness(0.95); }
+        .article-card-body { padding: 22px 24px 24px; }
+        .article-card-title { font-family: 'DM Serif Display',serif; font-size: 22px; font-weight: 400; color: #0F0E0D; line-height: 1.3; margin-bottom: 12px; transition: color 0.2s; }
+        @media (max-width: 640px) {
+          .article-card { display: flex; flex-direction: row; align-items: stretch; }
+          .article-card-img { width: 120px !important; height: auto !important; min-height: 120px; flex-shrink: 0; }
+          .article-card-body { padding: 14px 16px !important; flex: 1; min-width: 0; }
+          .article-card-title { font-size: 15px !important; margin-bottom: 6px !important; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+          .article-card-excerpt { display: none !important; }
+          .article-card-footer { padding-top: 10px !important; }
+        }
+      `}</style>
+      <motion.article
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3), ease: "easeOut" }}
+        onClick={() => navigate(`/article/${article.slug}`)}
+        className="card-lift article-card">
 
-      <div style={{ height: 200, overflow: "hidden", position: "relative", background: "#E8E3DC" }}>
-        <img
-          src={image}
-          alt={article.title}
-          loading="lazy"
-          decoding="async"
-          style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.82)", transition: "transform 0.5s ease, filter 0.3s ease" }}
-          onMouseEnter={e => { e.target.style.transform = "scale(1.05)"; e.target.style.filter = "brightness(0.95)"; }}
-          onMouseLeave={e => { e.target.style.transform = "scale(1)"; e.target.style.filter = "brightness(0.82)"; }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 60%)" }} />
-        <div style={{ position: "absolute", bottom: 12, right: 12, background: "rgba(0,0,0,0.7)", padding: "3px 10px" }}>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#fff", letterSpacing: "0.1em" }}>{article.readTime.toUpperCase()}</span>
-        </div>
-        <div style={{ position: "absolute", top: 12, left: 12 }}>
-          <CategoryBadge label={article.category} color={article.color} />
-        </div>
-      </div>
-
-      <div style={{ padding: "22px 24px 24px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.08em" }}>{article.date.toUpperCase()}</span>
-          <span style={{ width: 1, height: 10, background: "rgba(0,0,0,0.1)" }} />
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.08em" }}>CRMDAILY TEAM</span>
-        </div>
-
-        <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 400, color: "#0F0E0D", lineHeight: 1.3, marginBottom: 12, transition: "color 0.2s" }}
-          onMouseEnter={e => e.target.style.color = "#E8521A"}
-          onMouseLeave={e => e.target.style.color = "#0F0E0D"}>
-          {article.title}
-        </h2>
-
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: "#6B6560", lineHeight: 1.75, marginBottom: 20, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-          {article.excerpt}
-        </p>
-
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 16, borderTop: "1px solid rgba(0,0,0,0.07)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ width: 20, height: 20, background: "#E8521A", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ color: "#fff", fontSize: 9, fontWeight: 700 }}>CD</span>
-            </div>
-            <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#9B958F", letterSpacing: "0.06em" }}>CRM DAILY</span>
+        <div className="article-card-img">
+          <img src={image} alt={article.title} loading="lazy" decoding="async" />
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 60%)" }} />
+          <div style={{ position:"absolute", bottom:12, right:12, background:"rgba(0,0,0,0.7)", padding:"3px 10px" }}>
+            <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#fff", letterSpacing:"0.1em" }}>{article.readTime.toUpperCase()}</span>
           </div>
-          <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: "#E8521A", fontWeight: 700, letterSpacing: "0.1em", display: "flex", alignItems: "center", gap: 4 }}>
-            READ →
-          </span>
+          <div style={{ position:"absolute", top:12, left:12 }}>
+            <CategoryBadge label={article.category} color={article.color} />
+          </div>
         </div>
-      </div>
-    </motion.article>
+
+        <div className="article-card-body">
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
+            <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.08em" }}>{article.date.toUpperCase()}</span>
+          </div>
+
+          <h2 className="article-card-title">{article.title}</h2>
+
+          <p className="article-card-excerpt" style={{ fontFamily:"'Inter',sans-serif", fontSize:14, color:"#6B6560", lineHeight:1.75, marginBottom:20, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+            {article.excerpt}
+          </p>
+
+          <div className="article-card-footer" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:16, borderTop:"1px solid rgba(0,0,0,0.07)" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+              <div style={{ width:20, height:20, background:"#E8521A", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ color:"#fff", fontSize:9, fontWeight:700 }}>CD</span>
+              </div>
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.06em" }}>CRM DAILY</span>
+            </div>
+            <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", fontWeight:700, letterSpacing:"0.1em" }}>READ →</span>
+          </div>
+        </div>
+      </motion.article>
+    </>
   );
 }

@@ -51,6 +51,15 @@ CATEGORY_ROTATION = [
     "AI in Sales",
 ]
 
+# Internal pages for linking — Claude will pick relevant ones
+INTERNAL_PAGES = [
+    { "url": "https://www.crmdaily.co/crm-tools", "label": "CRM Tools Directory" },
+    { "url": "https://www.crmdaily.co/news",      "label": "CRM News" },
+    { "url": "https://www.crmdaily.co/guides",    "label": "CRM Guides" },
+    { "url": "https://www.crmdaily.co/tools",     "label": "Tool Reviews" },
+    { "url": "https://www.crmdaily.co/newsletter","label": "CRM Daily Newsletter" },
+]
+
 CATEGORY_LOG = "category_log.json"
 
 def get_next_category():
@@ -62,7 +71,6 @@ def get_next_category():
         last_index = -1
 
     next_index = (last_index + 1) % len(CATEGORY_ROTATION)
-
     with open(CATEGORY_LOG, "w", encoding="utf-8") as f:
         json.dump({"last_index": next_index}, f)
 
@@ -74,7 +82,7 @@ def save_category_log(category):
         with open(CATEGORY_LOG, "w", encoding="utf-8") as f:
             json.dump({"last_index": index}, f)
 
-def get_relevant_image(category, title, index=0):
+def get_relevant_image(category, index=0):
     images = TOPIC_IMAGES.get(category, TOPIC_IMAGES["default"])
     chosen = images[index % len(images)]
     print(f"   📸 Image selected for '{category}': {chosen[:50]}...")
@@ -92,19 +100,24 @@ def generate_article(news_items):
         for item in news_items
     ])
 
-    today = datetime.now().strftime("%B %d, %Y")
-    hour_index = datetime.now().hour
+    today       = datetime.now().strftime("%B %d, %Y")
+    hour_index  = datetime.now().hour
 
     forced_category = get_next_category()
     print(f"   📂 Forced category for this run: {forced_category}")
 
+    # Internal links to include naturally in the article
+    internal_links_text = "\n".join([
+        f"- {p['label']}: {p['url']}" for p in INTERNAL_PAGES
+    ])
+
     category_instructions = {
         "CRM News":           "Write a news article about the most significant CRM industry development in the news items.",
-        "GTM Strategy":       "Write a strategic guide about go-to-market strategy, pipeline building, or revenue team alignment. Use the news items as context but make it a practical strategy piece.",
-        "Tool Reviews":       "Write a detailed review or comparison of a CRM/sales tool mentioned in the news items. Focus on features, use cases, pros and cons for RevOps teams.",
-        "RevOps Intelligence":"Write an analytical piece about revenue operations trends, metrics, or best practices. Use the news items as context.",
-        "Sales Tech":         "Write about sales technology, automation tools, or the sales tech stack. Use the news items as context.",
-        "AI in Sales":        "Write about AI applications in sales, CRM automation, or AI-powered GTM. Use the news items as context.",
+        "GTM Strategy":       "Write a strategic guide about go-to-market strategy, pipeline building, or revenue team alignment. Use the news as context but make it a practical strategy piece.",
+        "Tool Reviews":       "Write a detailed review or comparison of a CRM/sales tool mentioned in the news. Focus on features, use cases, pros and cons for RevOps teams.",
+        "RevOps Intelligence":"Write an analytical piece about revenue operations trends, metrics, or best practices. Use the news as context.",
+        "Sales Tech":         "Write about sales technology, automation tools, or the sales tech stack. Use the news as context.",
+        "AI in Sales":        "Write about AI applications in sales, CRM automation, or AI-powered GTM. Use the news as context.",
     }
 
     writing_instruction = category_instructions.get(forced_category, category_instructions["CRM News"])
@@ -118,11 +131,20 @@ NEWS ITEMS:
 
 WRITING TASK: {writing_instruction}
 
+INTERNAL LINKS TO INCLUDE:
+Naturally include 2-3 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags:
+{internal_links_text}
+
+Example of how to use them:
+- "...visit our <a href="https://www.crmdaily.co/crm-tools">CRM Tools Directory</a> for comparisons..."
+- "...read our latest <a href="https://www.crmdaily.co/guides">CRM Guides</a> for step-by-step help..."
+
 IMPORTANT RULES:
 - The article MUST be categorised as: {forced_category}
 - Always use a simple hyphen (-) instead of an em dash or en dash
 - Write in plain, direct English
 - No em dashes anywhere
+- Include 2-3 internal links naturally — do NOT force them, only add where they make sense
 
 Follow this EXACT format:
 
@@ -141,6 +163,7 @@ CONTENT:
 - <strong> for key terms
 - <ul><li> for bullet points
 - <blockquote> for stats or key quotes
+- <a href="URL">anchor text</a> for 2-3 internal links
 
 Requirements:
 - Strong opening hook paragraph
@@ -151,7 +174,8 @@ Requirements:
 - Forward-looking conclusion
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags
-- Use hyphen (-) not em dash everywhere]"""
+- Use hyphen (-) not em dash everywhere
+- Internal links must be real URLs from the list above]"""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
@@ -162,13 +186,13 @@ Requirements:
     response = message.content[0].text
     response = response.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
 
-    article = {}
-    title_match    = re.search(r"TITLE:\s*(.+)", response)
-    excerpt_match  = re.search(r"EXCERPT:\s*(.+)", response)
-    tags_match     = re.search(r"TAGS:\s*(.+)", response)
-    content_match  = re.search(r"CONTENT:\s*([\s\S]+)", response)
+    article        = {}
+    title_match   = re.search(r"TITLE:\s*(.+)",          response)
+    excerpt_match = re.search(r"EXCERPT:\s*(.+)",         response)
+    tags_match    = re.search(r"TAGS:\s*(.+)",            response)
+    content_match = re.search(r"CONTENT:\s*([\s\S]+)",   response)
 
-    article["title"]    = title_match.group(1).strip() if title_match else f"CRM Intelligence Report - {today}"
+    article["title"]    = title_match.group(1).strip()   if title_match   else f"CRM Intelligence Report - {today}"
     article["excerpt"]  = excerpt_match.group(1).strip() if excerpt_match else ""
     article["category"] = forced_category
     article["tags"]     = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
@@ -177,7 +201,7 @@ Requirements:
     content = content.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
     article["content"] = content
 
-    article["featured_image_url"] = get_relevant_image(article["category"], article["title"], hour_index)
+    article["featured_image_url"] = get_relevant_image(article["category"], hour_index)
 
     save_category_log(article["category"])
 
@@ -192,4 +216,4 @@ Requirements:
 
 if __name__ == "__main__":
     news = load_news()
-    article = generate_article(news)
+    generate_article(news)

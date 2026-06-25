@@ -42,7 +42,7 @@ jobs:
         run: |
           git config user.name "CRM Daily Bot"
           git config user.email "bot@crmdaily.co"
-          git add -f automation/published_titles.json automation/category_log.json 2>/dev/null || true
+          git add -f automation/published_titles.json automation/category_log.json automation/published_urls.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: update dedup + category logs [skip ci]"
           git push origin main || true
 

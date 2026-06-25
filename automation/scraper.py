@@ -22,6 +22,7 @@ BLOCKED_DOMAINS = [
     "washingtonpost.com", "politico.com", "foxnews.com",
     "nbcnews.com", "abcnews.com", "cbsnews.com",
     "espn.com", "sports.yahoo.com", "nfl.com", "nba.com",
+    "prtimes.jp", "marketbeat.com", "krones.com",
 ]
 
 BLOCKED_IMAGE_DOMAINS = [
@@ -41,21 +42,34 @@ REQUIRED_KEYWORDS = [
     "artificial intelligence sales", "AI CRM", "sales software",
 ]
 
-# Block topics that are overrepresented in current news cycle
-# Remove entries here once fresh news arrives (after ~1 week)
+# Block topics that are overrepresented — update weekly as needed
 BLOCKED_TITLE_KEYWORDS = [
     "klue",
     "oauth",
     "klue breach",
     "salesforce oauth",
+    "krones",
+    "beverage",
+    "schneider electric",
+    "jim cramer",
 ]
 
-PUBLISHED_LOG = "published_titles.json"
+PUBLISHED_LOG  = "published_titles.json"
+PUBLISHED_URLS = "published_urls.json"
 
 def load_published_titles():
     if os.path.exists(PUBLISHED_LOG):
         try:
             with open(PUBLISHED_LOG, "r", encoding="utf-8-sig") as f:
+                return set(json.load(f))
+        except Exception:
+            return set()
+    return set()
+
+def load_published_urls():
+    if os.path.exists(PUBLISHED_URLS):
+        try:
+            with open(PUBLISHED_URLS, "r", encoding="utf-8-sig") as f:
                 return set(json.load(f))
         except Exception:
             return set()
@@ -68,6 +82,13 @@ def save_published_title(title):
     with open(PUBLISHED_LOG, "w", encoding="utf-8") as f:
         json.dump(titles_list, f)
 
+def save_published_url(url):
+    urls = load_published_urls()
+    urls.add(url.strip())
+    urls_list = list(urls)[-200:]
+    with open(PUBLISHED_URLS, "w", encoding="utf-8") as f:
+        json.dump(urls_list, f)
+
 def is_blocked(url):
     if not url:
         return True
@@ -79,9 +100,9 @@ def is_blocked_image(url):
     return any(b in url for b in BLOCKED_IMAGE_DOMAINS)
 
 def is_relevant(title, summary=""):
-    title = title or ""
+    title   = title or ""
     summary = summary or ""
-    text = (title + " " + summary).lower()
+    text    = (title + " " + summary).lower()
     return any(kw.lower() in text for kw in REQUIRED_KEYWORDS)
 
 def is_blocked_topic(title):
@@ -95,27 +116,28 @@ def is_duplicate_topic(title, published_titles):
     title_words = set(w for w in title_lower.split() if len(w) > 4)
     for pub_title in published_titles:
         pub_words = set(w for w in pub_title.split() if len(w) > 4)
-        overlap = title_words & pub_words
+        overlap   = title_words & pub_words
         if len(overlap) >= 3:
             return True
     return False
 
 def scrape_news():
-    articles = []
-    from_date = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
+    articles         = []
+    from_date        = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
     published_titles = load_published_titles()
+    published_urls   = load_published_urls()
 
     print("Fetching news from NewsAPI...")
 
     for query in SEARCH_QUERIES:
         try:
             response = requests.get(NEWS_API_URL, params={
-                "q": query,
-                "from": from_date,
-                "sortBy": "relevancy",
+                "q":        query,
+                "from":     from_date,
+                "sortBy":   "relevancy",
                 "language": "en",
                 "pageSize": 10,
-                "apiKey": NEWS_API_KEY,
+                "apiKey":   NEWS_API_KEY,
             })
 
             data = response.json()
@@ -137,6 +159,9 @@ def scrape_news():
                     if is_blocked_topic(title):
                         print(f"  🚫 Blocked topic: {title[:60]}")
                         continue
+                    if url in published_urls:
+                        print(f"  🔁 Duplicate URL: {title[:60]}")
+                        continue
                     if is_duplicate_topic(title, published_titles):
                         print(f"  ⏭ Skipping duplicate: {title[:60]}")
                         continue
@@ -155,12 +180,13 @@ def scrape_news():
 
                 print(f"  ✓ '{query}': {count} relevant articles")
             else:
-                print(f"  ✗ '{query}': {data.get('message', 'Error')}")
+                print(f"  ✗ Error for '{query}': {data.get('message', 'Error')}")
 
         except Exception as e:
             print(f"  ✗ Error for '{query}': {e}")
 
-    seen = set()
+    # Remove duplicates within this batch
+    seen   = set()
     unique = []
     for a in articles:
         key = a["title"].lower().strip()
@@ -173,6 +199,7 @@ def scrape_news():
         "businessinsider.com", "zdnet.com", "inc.com",
         "entrepreneur.com", "wired.com", "fastcompany.com",
         "thenextweb.com", "businesswire.com", "prnewswire.com",
+        "saastr.com", "globenewswire.com",
     ]
 
     def score(a):
@@ -183,6 +210,9 @@ def scrape_news():
     unique.sort(key=score, reverse=True)
     top = unique[:6]
 
+    if not top:
+        print("⚠️ No articles found after filtering — check BLOCKED_TITLE_KEYWORDS")
+
     images = sum(1 for a in top if a.get("image"))
     print(f"\n✅ Selected {len(top)} articles ({images} with images)")
     for i, a in enumerate(top, 1):
@@ -191,6 +221,11 @@ def scrape_news():
 
     with open("scraped_news.json", "w") as f:
         json.dump(top, f, indent=2, ensure_ascii=False)
+
+    # Save URLs so we never use the same source article twice
+    for a in top:
+        if a.get("link"):
+            save_published_url(a["link"])
 
     return top
 

@@ -75,7 +75,7 @@ export default function Footer() {
               Your daily source of CRM, GTM & RevOps intelligence. No vendor bias. No commissions. Just expert reporting.
             </p>
             <div style={{ marginTop:24, display:"flex", gap:12 }}>
-              {[{label:"LinkedIn",href:"https://linkedin.com"},{label:"Twitter",href:"https://twitter.com"},{label:"RSS",href:"/news"}].map(s => (
+              {[{label:"LinkedIn",href:"https://www.linkedin.com/company/78777881/"},{label:"Twitter",href:"https://twitter.com"},{label:"RSS",href:"/news"}].map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
                   style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.35)", letterSpacing:"0.08em", cursor:"pointer", transition:"color 0.2s", textDecoration:"none" }}
                   onMouseEnter={e => e.target.style.color="#E8521A"}

@@ -29,6 +29,49 @@ function injectHeadingIds(html) {
   return html.replace(/<h2([^>]*)>/gi, () => `<h2 id="sec-${i++}"$1>`);
 }
 
+// ─── NewsArticle JSON-LD Schema ───────────────────────────────────────────────
+function ArticleSchema({ article, readTime }) {
+  if (!article) return null;
+  const image = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "description": article.excerpt || "",
+    "image": [image],
+    "datePublished": article.datePublished || article.date,
+    "dateModified": article.dateModified || article.datePublished || article.date,
+    "author": {
+      "@type": "Organization",
+      "name": "CRM Daily",
+      "url": "https://www.crmdaily.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CRM Daily",
+      "url": "https://www.crmdaily.co",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.crmdaily.co/favicon-192.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://www.crmdaily.co/article/${article.slug}`
+    },
+    "articleSection": article.category,
+    "timeRequired": `PT${readTime}M`,
+    "url": `https://www.crmdaily.co/article/${article.slug}`
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function ProgressBar() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -189,6 +232,9 @@ export default function Article() {
   return (
     <>
       <ProgressBar />
+
+      {/* NewsArticle Schema Markup */}
+      <ArticleSchema article={article} readTime={readTime} />
 
       {/* Breadcrumb */}
       <div style={{ background:'#efeae1', borderBottom:'1px solid rgba(0,0,0,0.1)', padding:'10px 16px' }}>

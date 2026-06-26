@@ -33,14 +33,21 @@ function injectHeadingIds(html) {
 function ArticleSchema({ article, readTime }) {
   if (!article) return null;
   const image = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
+  
+  const toISO = (dateStr) => {
+    if (!dateStr) return null;
+    try { return new Date(dateStr).toISOString(); } 
+    catch { return null; }
+  };
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": article.title,
     "description": article.excerpt || "",
     "image": [image],
-    "datePublished": article.datePublished || article.date,
-    "dateModified": article.dateModified || article.datePublished || article.date,
+    "datePublished": toISO(article.datePublished) || toISO(article.date),
+    "dateModified": toISO(article.dateModified) || toISO(article.datePublished) || toISO(article.date),
     "author": {
       "@type": "Organization",
       "name": "CRM Daily",

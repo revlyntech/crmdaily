@@ -1,1 +1,12 @@
-{"date": "2026-06-26", "articles": [], "sent": true}
+{
+  "date": "2026-06-27",
+  "articles": [
+    {
+      "title": "Partner-Led Growth Is Broken - Here's How to Fix It",
+      "excerpt": "Most partner teams track pipeline in spreadsheets while AI reshapes GTM entirely. Here's a practical guide to building a pipeline that actually works in 2026.",
+      "slug": "partner-led-growth-is-broken-heres-how-to-fix-it",
+      "category": "GTM Strategy",
+      "featured_image_url": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";

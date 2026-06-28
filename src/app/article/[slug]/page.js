@@ -1,26 +1,14 @@
 export const dynamic = 'force-dynamic';
-import { getPostBySlug, getPosts } from '../../../../src/lib/wordpress';
+import { getPostBySlug } from '../../../../src/lib/wordpress';
 import ArticleClient from './ArticleClient';
 
-// Generate all article pages at build time
-export async function generateStaticParams() {
-  try {
-    const posts = await getPosts(100);
-    return posts.map(post => ({ slug: post.slug }));
-  } catch {
-    return [];
-  }
-}
-
-// Generate per-article meta tags — this is the SEO magic
+// Generate per-article meta tags
 export async function generateMetadata({ params }) {
   try {
     const article = await getPostBySlug(params.slug);
     if (!article) return { title: 'Article Not Found | CRM Daily' };
-
     const image = article.featuredImage || 'https://www.crmdaily.co/og-image.png';
     const url = `https://www.crmdaily.co/article/${params.slug}`;
-
     return {
       title: `${article.title} | CRM Daily`,
       description: article.excerpt || 'Daily CRM & GTM intelligence from CRM Daily.',
@@ -30,8 +18,6 @@ export async function generateMetadata({ params }) {
         description: article.excerpt,
         url,
         type: 'article',
-        publishedTime: article.datePublished,
-        modifiedTime: article.dateModified,
         images: [{ url: image, width: 1200, height: 630, alt: article.title }],
         siteName: 'CRM Daily',
       },
@@ -47,7 +33,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Server component — renders on server for SEO
 export default async function ArticlePage({ params }) {
   let article = null;
   try {
@@ -56,7 +41,6 @@ export default async function ArticlePage({ params }) {
     // handled in client component
   }
 
-  // NewsArticle JSON-LD schema
   const schema = article ? {
     "@context": "https://schema.org",
     "@type": "NewsArticle",

@@ -9,7 +9,7 @@ const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guid
 
 export default function Guides() {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(location.search);
+  
   const categoryFilter = searchParams.get('category') || '';
   const { articles: all, loading } = usePosts(100);
   const articles = categoryFilter

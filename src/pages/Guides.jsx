@@ -1,3 +1,5 @@
+'use client';
+import { useSearchParams } from 'next/navigation';
 import { motion } from "framer-motion";
 
 import { usePosts } from "../lib/usePosts";
@@ -8,6 +10,8 @@ import SEOMeta from "../components/SEOMeta";
 const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guide'];
 
 export default function Guides() {
+  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); {
   
   
   const categoryFilter = searchParams.get('category') || '';
@@ -60,3 +64,4 @@ export default function Guides() {
     </>
   );
 }
+

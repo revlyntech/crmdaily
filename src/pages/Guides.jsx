@@ -10,7 +10,7 @@ const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guid
 export default function Guides() {
   
   
-  const categoryFilter = params.get('category') || '';
+  const categoryFilter = searchParams.get('category') || '';
   const { articles: all, loading } = usePosts(100);
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))

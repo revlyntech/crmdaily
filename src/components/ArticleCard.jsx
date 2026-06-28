@@ -1,5 +1,4 @@
-'use client';
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import CategoryBadge from "./CategoryBadge";
 
@@ -12,7 +11,7 @@ const fallbackImages = {
 };
 
 export default function ArticleCard({ article, index = 0 }) {
-  const router = useRouter();
+  const navigate = useNavigate();
   const image = article.featuredImage || fallbackImages[article.color] || fallbackImages.blue;
 
   return (
@@ -37,7 +36,7 @@ export default function ArticleCard({ article, index = 0 }) {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3), ease: "easeOut" }}
-        onClick={() => router.push(`/article/${article.slug}`)}
+        onClick={() => navigate(`/article/${article.slug}`)}
         className="card-lift article-card">
 
         <div className="article-card-img">

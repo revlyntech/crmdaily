@@ -1,5 +1,4 @@
-'use client';
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { subscribeEmail } from "../utils/beehiiv";
 
@@ -24,6 +23,7 @@ export default function Footer() {
         .footer-main { background: #0F0E0D; padding: 64px 32px 48px; }
         .footer-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
         .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+
         @media (max-width: 640px) {
           .footer-newsletter { padding: 40px 20px; }
           .footer-newsletter h2 { font-size: 26px !important; }
@@ -88,7 +88,7 @@ export default function Footer() {
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>NAVIGATE</span>
             {[["Home","/"],["CRM News","/news"],["Guides","/guides"],["Tool Reviews","/tools"],["Newsletter","/newsletter"],["About","/about"],["Contact","/contact"]].map(([label,href]) => (
-              <Link key={label} href={href}
+              <Link key={label} to={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
                 onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>
@@ -99,7 +99,7 @@ export default function Footer() {
           <div className="footer-hide-mobile">
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>TOPICS</span>
             {[["HubSpot News","/news?category=HubSpot"],["Salesforce","/news?category=Salesforce"],["RevOps Strategy","/guides?category=RevOps"],["GTM Playbooks","/guides?category=GTM+Strategy"],["CRM Reviews","/tools?category=Tool+Review"],["AI in CRM","/news?category=AI"],["Pipedrive","/tools?category=Pipedrive"]].map(([label,href]) => (
-              <Link key={label} href={href}
+              <Link key={label} to={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
                 onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>
@@ -110,7 +110,7 @@ export default function Footer() {
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>COMPANY</span>
             {[["About CRM Daily","/about"],["Contact Us","/contact"],["Privacy Policy","/privacy"],["Terms of Service","/privacy"]].map(([label,href]) => (
-              <Link key={label} href={href}
+              <Link key={label} to={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
                 onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.6)"}>{label}</Link>

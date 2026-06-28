@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
+import { useLocation } from "react-router-dom";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
@@ -8,9 +8,9 @@ import SEOMeta from "../components/SEOMeta";
 const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guide'];
 
 export default function Guides() {
-  const searchParams = useSearchParams();
-  
-  const categoryFilter = searchParams.get('category') || '';
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const categoryFilter = params.get('category') || '';
   const { articles: all, loading } = usePosts(100);
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))

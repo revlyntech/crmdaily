@@ -1,4 +1,4 @@
-const WP_GRAPHQL_URL = typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : '/api/graphql';
+const WP_GRAPHQL_URL = 'https://cms.crmdaily.co/graphql';
 
 const cache = {
   posts: null,

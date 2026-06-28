@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export default function About() {
   const stats = [
@@ -96,7 +96,7 @@ export default function About() {
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(255,255,255,0.7)", letterSpacing:"0.15em", display:"block", marginBottom:16 }}>// JOIN THE COMMUNITY</span>
                 <h3 style={{ fontFamily:"'DM Serif Display',serif", fontSize:28, color:"#fff", marginBottom:12, letterSpacing:"-0.01em" }}>Start reading CRM Daily free.</h3>
                 <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:24 }}>5,000+ CRM managers, RevOps leads, and GTM teams get the digest every morning.</p>
-                <Link href="/newsletter" style={{ display:"inline-block", background:"#0F0E0D", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", textDecoration:"none" }}
+                <Link to="/newsletter" style={{ display:"inline-block", background:"#0F0E0D", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", textDecoration:"none" }}
                   onMouseEnter={e => e.currentTarget.style.background="#1A1917"} onMouseLeave={e => e.currentTarget.style.background="#0F0E0D"}>
                   SUBSCRIBE FREE →
                 </Link>

@@ -1,0 +1,27 @@
+name: Keep Workflows Active
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at midnight
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Keep alive ping
+        run: |
+          git config user.name "CRM Daily Bot"
+          git config user.email "bot@crmdaily.co"
+          echo "$(date)" > .github/keep-alive.txt
+          git add .github/keep-alive.txt
+          git commit -m "chore: keep workflows active $(date +%Y-%m-%d)"
+          git push origin main

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Allow Googlebot to access everything
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.crmdaily.co/sitemap.xml

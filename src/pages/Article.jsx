@@ -206,7 +206,8 @@ function SidebarTopics() {
 }
 
 export default function Article() {
-  const { slug } = useParams();
+  const params = useParams();
+  const slug = params?.slug;
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [headings, setHeadings] = useState([]);

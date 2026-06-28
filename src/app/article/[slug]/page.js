@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getPostBySlug, getPosts } from '../../../../src/lib/wordpress';
 import ArticleClient from './ArticleClient';
 

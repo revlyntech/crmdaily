@@ -8,8 +8,8 @@ import SEOMeta from "../components/SEOMeta";
 const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guide'];
 
 export default function Guides() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  
+  
   const categoryFilter = params.get('category') || '';
   const { articles: all, loading } = usePosts(100);
   const articles = categoryFilter

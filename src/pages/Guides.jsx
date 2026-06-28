@@ -16,10 +16,11 @@ export default function Guides() {
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
     : all.filter(a => GUIDE_CATEGORIES.includes(a.category.toLowerCase()));
   const pageTitle = categoryFilter ? categoryFilter : 'CRM & GTM Guides';
-  const pageDesc = categoryFilter ? In-depth ${categoryFilter} guides from CRM Daily practitioners. : 'In-depth CRM and GTM guides, RevOps playbooks, and how-to tutorials written by practitioners.';
+  const pageDesc = categoryFilter ? `In-depth ${categoryFilter} guides from CRM Daily practitioners.` : 'In-depth CRM and GTM guides, RevOps playbooks, and how-to tutorials written by practitioners.';
+
   return (
     <>
-      <style>{
+      <style>{`
         .guides-layout { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start; }
         .guides-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         @media (max-width: 768px) {
@@ -30,9 +31,9 @@ export default function Guides() {
           .guides-grid { grid-template-columns: 1fr !important; }
           .guides-sidebar { display: none !important; }
         }
-      }</style>
+      `}</style>
       <div className="fade-in">
-        <SEOMeta title={pageTitle} description={pageDesc} url={https://www.crmdaily.co/guides} type="website" />
+        <SEOMeta title={pageTitle} description={pageDesc} url="https://www.crmdaily.co/guides" type="website" />
         <div className="guides-hero" style={{ background:"#0F0E0D", padding:"64px 32px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
             <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>

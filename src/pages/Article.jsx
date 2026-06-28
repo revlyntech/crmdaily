@@ -1,4 +1,6 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getPostBySlug, getPosts } from "../lib/wordpress";
 import { subscribeEmail } from "../utils/beehiiv";
@@ -94,7 +96,7 @@ function ProgressBar() {
 
 function RelatedArticles({ currentArticle }) {
   const [related, setRelated] = useState([]);
-  const navigate = useNavigate();
+  const router = useRouter();
   useEffect(() => {
     getPosts(50).then(posts => {
       const filtered = posts.filter(p => p.slug !== currentArticle.slug && p.category === currentArticle.category).slice(0,3);
@@ -112,7 +114,7 @@ function RelatedArticles({ currentArticle }) {
         {related.map(a => {
           const img = a.featuredImage || fallbackImgs[a.color] || fallbackImgs.blue;
           return (
-            <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+            <div key={a.id} onClick={() => { router.push(`/article/${a.slug}`); window.scrollTo(0,0); }}
               style={{ cursor:'pointer', borderTop:'2px solid rgba(0,0,0,0.08)', paddingTop:16 }}
               onMouseEnter={e => e.currentTarget.querySelector('h3').style.color='#e9542a'}
               onMouseLeave={e => e.currentTarget.querySelector('h3').style.color='#1c1a17'}>
@@ -163,14 +165,14 @@ function SidebarNewsletter() {
 }
 
 function SidebarPopular() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [posts, setPosts] = useState([]);
   useEffect(() => { getPosts(5).then(setPosts); }, []);
   return (
     <div style={{ background:'#efeae1', border:'1px solid rgba(0,0,0,0.1)', padding:24, marginBottom:2 }}>
       <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#e9542a', letterSpacing:'0.18em', marginBottom:16 }}>// POPULAR TODAY</p>
       {posts.slice(0,5).map((a,i) => (
-        <div key={a.id} onClick={() => { navigate(`/article/${a.slug}`); window.scrollTo(0,0); }}
+        <div key={a.id} onClick={() => { router.push(`/article/${a.slug}`); window.scrollTo(0,0); }}
           style={{ display:'flex', gap:12, padding:'12px 0', borderBottom:i<4?'1px solid rgba(0,0,0,0.07)':'none', cursor:'pointer' }}
           onMouseEnter={e => e.currentTarget.querySelector('.pop-title').style.color='#e9542a'}
           onMouseLeave={e => e.currentTarget.querySelector('.pop-title').style.color='#1c1a17'}>
@@ -231,7 +233,7 @@ export default function Article() {
   }
 
   if (loading) return (<><ProgressBar /><div style={{ minHeight:'60vh', display:'flex', alignItems:'center', justifyContent:'center', background:'#efeae1' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>LOADING...</span></div></>);
-  if (!article) return (<><ProgressBar /><div style={{ maxWidth:640, margin:'80px auto', padding:'0 32px', textAlign:'center' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>404</span><h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:40, color:'#1c1a17', margin:'16px 0' }}>Article not found</h1><Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#1c1a17', fontWeight:700, letterSpacing:'0.1em' }}>← RETURN HOME</Link></div></>);
+  if (!article) return (<><ProgressBar /><div style={{ maxWidth:640, margin:'80px auto', padding:'0 32px', textAlign:'center' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#e9542a', letterSpacing:'0.15em' }}>404</span><h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:40, color:'#1c1a17', margin:'16px 0' }}>Article not found</h1><Link href="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#1c1a17', fontWeight:700, letterSpacing:'0.1em' }}>← RETURN HOME</Link></div></>);
 
   const wordCount = article.content ? article.content.replace(/<[^>]+>/g,'').split(/\s+/).length : 0;
   const readTime = Math.max(1, Math.ceil(wordCount / 220));
@@ -246,7 +248,7 @@ export default function Article() {
       {/* Breadcrumb */}
       <div style={{ background:'#efeae1', borderBottom:'1px solid rgba(0,0,0,0.1)', padding:'10px 16px' }}>
         <div style={{ maxWidth:1240, margin:'0 auto', display:'flex', alignItems:'center', gap:8, flexWrap:'wrap' }}>
-          <Link to="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#8a847a', letterSpacing:'0.1em', textDecoration:'none' }}
+          <Link href="/" style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#8a847a', letterSpacing:'0.1em', textDecoration:'none' }}
             onMouseEnter={e => e.target.style.color='#e9542a'} onMouseLeave={e => e.target.style.color='#8a847a'}>← HOME</Link>
           <span style={{ color:'rgba(0,0,0,0.2)', fontSize:10 }}>/</span>
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#e9542a', letterSpacing:'0.1em' }}>{article.category.toUpperCase()}</span>

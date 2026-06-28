@@ -1,5 +1,7 @@
+'use client';
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
 import { subscribeEmail } from "../utils/beehiiv";
@@ -20,7 +22,7 @@ const topics = [
 export default function Sidebar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
-  const navigate = useNavigate();
+  const router = useRouter();
   const { articles, loading } = usePosts(20);
 
   const totalArticles = articles.length;
@@ -89,7 +91,7 @@ export default function Sidebar() {
           {loading ? (
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading...</span>
           ) : articles.slice(0,5).map((a,i) => (
-            <div key={a.id} onClick={() => navigate(`/article/${a.id}`)}
+            <div key={a.id} onClick={() => router.push(`/article/${a.slug}`)}
               style={{ display:"flex", gap:16, padding:"13px 0", borderBottom:i<4?"1px solid rgba(0,0,0,0.06)":"none", cursor:"pointer", transition:"opacity 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.opacity="0.6"}
               onMouseLeave={e => e.currentTarget.style.opacity="1"}>
@@ -108,7 +110,7 @@ export default function Sidebar() {
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.18em", display:"block", marginBottom:16 }}>// BROWSE TOPICS</span>
           <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
             {topics.map(t => (
-              <Link key={t.label} to={t.to}
+              <Link key={t.label} href={t.to}
                 style={{ fontFamily:"'Space Mono',monospace", fontSize:9, padding:"5px 10px", border:"1px solid rgba(0,0,0,0.12)", color:"#6B6560", letterSpacing:"0.08em", transition:"all 0.2s", textDecoration:"none", display:"inline-block" }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor="#E8521A"; e.currentTarget.style.color="#E8521A"; e.currentTarget.style.background="rgba(232,82,26,0.05)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor="rgba(0,0,0,0.12)"; e.currentTarget.style.color="#6B6560"; e.currentTarget.style.background="transparent"; }}>

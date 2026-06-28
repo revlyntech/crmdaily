@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
@@ -8,9 +8,9 @@ import SEOMeta from "../components/SEOMeta";
 const TOOL_CATEGORIES = ['tool review', 'tools'];
 
 export default function Tools() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const categoryFilter = params.get('category') || '';
+  const searchParams = useSearchParams();
+  const params = searchParams;
+  const categoryFilter = searchParams.get('category') || '';
   const { articles: all, loading } = usePosts(100);
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))

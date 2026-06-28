@@ -1,4 +1,6 @@
-import { useNavigate, Link } from "react-router-dom";
+'use client';
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
 import { articles as staticArticles } from "../data/articles";
@@ -15,7 +17,7 @@ const fallbackImages = {
 };
 
 export default function Home() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { articles: wpArticles, loading } = usePosts(20);
   const articles = wpArticles.length > 0 ? wpArticles : staticArticles;
   const featured = articles.find(a => a.featured) || articles[0];
@@ -79,7 +81,7 @@ export default function Home() {
                   <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(242,237,228,0.4) 0%, transparent 60%)" }} />
                 </div>
 
-                <h1 className="home-hero-title" onClick={() => navigate(`/article/${featured.slug}`)}
+                <h1 className="home-hero-title" onClick={() => router.push(`/article/${featured.slug}`)}
                   onMouseEnter={e => e.currentTarget.style.color="#E8521A"}
                   onMouseLeave={e => e.currentTarget.style.color="#0F0E0D"}>
                   {featured.title}
@@ -90,14 +92,14 @@ export default function Home() {
                 </p>
 
                 <div className="home-hero-actions" style={{ display:"flex", alignItems:"center", gap:20 }}>
-                  <button onClick={() => navigate(`/article/${featured.slug}`)}
+                  <button onClick={() => router.push(`/article/${featured.slug}`)}
                     style={{ background:"#0F0E0D", color:"#fff", border:"none", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", transition:"background 0.2s" }}
                     onMouseEnter={e => e.target.style.background="#E8521A"}
                     onMouseLeave={e => e.target.style.background="#0F0E0D"}>
                     READ FULL STORY →
                   </button>
-                  <Link to="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SEE ALL NEWS ·</Link>
-                  <Link to="/newsletter" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SUBSCRIBE FREE</Link>
+                  <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SEE ALL NEWS ·</Link>
+                  <Link href="/newsletter" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SUBSCRIBE FREE</Link>
                 </div>
               </motion.div>
 
@@ -117,7 +119,7 @@ export default function Home() {
                   <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F" }}>Loading stories...</span>
                 ) : topStories.map((a,i) => (
                   <motion.div key={a.id} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:0.2+i*0.07}}
-                    onClick={() => navigate(`/article/${a.slug}`)}
+                    onClick={() => router.push(`/article/${a.slug}`)}
                     style={{ padding:"13px 0", borderBottom:"1px solid rgba(0,0,0,0.06)", cursor:"pointer", transition:"opacity 0.2s" }}
                     onMouseEnter={e => e.currentTarget.style.opacity="0.6"}
                     onMouseLeave={e => e.currentTarget.style.opacity="1"}>
@@ -143,7 +145,7 @@ export default function Home() {
                 <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.5)", lineHeight:1.85, marginBottom:32 }}>
                   Every day, CRM platforms ship updates, GTM strategies shift, and new tools emerge. CRM Daily filters the noise and delivers only what matters for your revenue team.
                 </p>
-                <Link to="/newsletter" style={{ display:"inline-block", background:"#E8521A", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", transition:"background 0.2s", textDecoration:"none" }}
+                <Link href="/newsletter" style={{ display:"inline-block", background:"#E8521A", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", transition:"background 0.2s", textDecoration:"none" }}
                   onMouseEnter={e => e.currentTarget.style.background="#D4481A"}
                   onMouseLeave={e => e.currentTarget.style.background="#E8521A"}>
                   GET DAILY DIGEST →
@@ -176,7 +178,7 @@ export default function Home() {
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.2em", display:"block", marginBottom:8 }}>// LATEST ARTICLES</span>
                 <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:42, color:"#0F0E0D", letterSpacing:"-0.02em" }}>Today's Intelligence</h2>
               </div>
-              <Link to="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>VIEW ALL ARTICLES →</Link>
+              <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>VIEW ALL ARTICLES →</Link>
             </div>
             <div className="home-articles-layout">
               <div className="home-articles-grid">

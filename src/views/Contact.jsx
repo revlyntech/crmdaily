@@ -46,7 +46,7 @@ export default function Contact() {
             <div>
               {status === "success" ? (
                 <motion.div initial={{ scale:0.9, opacity:0 }} animate={{ scale:1, opacity:1 }} style={{ background:"#0F0E0D", padding:40, textAlign:"center" }}>
-                  <div style={{ fontSize:48, marginBottom:16 }}>Γ£ô</div>
+                  <div style={{ fontSize:48, marginBottom:16 }}>✓</div>
                   <span style={{ fontFamily:"'Space Mono',monospace", color:"#22C55E", fontSize:12, letterSpacing:"0.1em", display:"block", marginBottom:12 }}>MESSAGE_SENT</span>
                   <p style={{ fontFamily:"'Space Mono',monospace", color:"rgba(242,237,228,0.5)", fontSize:11, lineHeight:1.8 }}>We received your message and will reply within 1–2 business days.</p>
                 </motion.div>

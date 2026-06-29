@@ -153,7 +153,7 @@ export default function Home() {
               </motion.div>
               <motion.div initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.7,delay:0.2}}>
                 {[
-                  { num:"01", title:"DAILY CRM & GTM NEWS", desc:"Fresh intelligence from HubSpot, Salesforce, Pipedrive, and the entire CRM ecosystem ΓÇö every morning." },
+                  { num:"01", title:"DAILY CRM & GTM NEWS", desc:"Fresh intelligence from HubSpot, Salesforce, Pipedrive, and the entire CRM ecosystem — every morning." },
                   { num:"02", title:"EXPERT TOOL REVIEWS", desc:"Honest, unbiased reviews of every major CRM tool. No vendor sponsorships. No commission incentives." },
                   { num:"03", title:"GTM & REVOPS GUIDES", desc:"Actionable playbooks for scaling your go-to-market motion. Written by practitioners, not marketers." },
                 ].map((item,i) => (
@@ -210,7 +210,7 @@ export default function Home() {
             <div className="home-convictions-grid">
               {[
                 { n:"CONVICTION 01", title:"A CRM is operating debt, not operating leverage, until someone operates it daily.", sub:"WHY WE REPORT THIS", body:"Most CRMs are implemented well and abandoned six weeks after go-live. Without continuous operation the CRM decays." },
-                { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The problem lives in the CRM ΓÇö dirty data, broken suppression sync." },
+                { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The problem lives in the CRM — dirty data, broken suppression sync." },
                 { n:"CONVICTION 03", title:"AI agents in CRM only work on a foundation most companies haven't built yet.", sub:"WHY WE REPORT THIS", body:"Every AI CRM deployment we cover has required foundation work first. The data architecture that makes the agent reliable is the larger half." },
               ].map((c,i) => (
                 <motion.div key={c.n} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}}

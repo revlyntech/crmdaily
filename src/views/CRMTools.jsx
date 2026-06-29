@@ -65,7 +65,7 @@ export default function CRMTools() {
                   {tools.length} tools curated and reviewed by the CRM Daily team. Click View to visit any tool directly.
                 </p>
               </div>
-              <input type="text" placeholder="Search tools ΓÇö HubSpot, Clay, Gong..." value={search} onChange={e => setSearch(e.target.value)}
+              <input type="text" placeholder="Search tools — HubSpot, Clay, Gong..." value={search} onChange={e => setSearch(e.target.value)}
                 className="crmtools-search"
                 style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", color:"#F2EDE4", fontFamily:"'Space Mono',monospace", fontSize:11, padding:"14px 20px", outline:"none", boxSizing:"border-box", letterSpacing:"0.06em", transition:"border-color 0.2s" }}
                 onFocus={e => e.target.style.borderColor="#E8521A"} onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />

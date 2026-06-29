@@ -48,7 +48,7 @@ export default function Contact() {
                 <motion.div initial={{ scale:0.9, opacity:0 }} animate={{ scale:1, opacity:1 }} style={{ background:"#0F0E0D", padding:40, textAlign:"center" }}>
                   <div style={{ fontSize:48, marginBottom:16 }}>Γ£ô</div>
                   <span style={{ fontFamily:"'Space Mono',monospace", color:"#22C55E", fontSize:12, letterSpacing:"0.1em", display:"block", marginBottom:12 }}>MESSAGE_SENT</span>
-                  <p style={{ fontFamily:"'Space Mono',monospace", color:"rgba(242,237,228,0.5)", fontSize:11, lineHeight:1.8 }}>We received your message and will reply within 1ΓÇô2 business days.</p>
+                  <p style={{ fontFamily:"'Space Mono',monospace", color:"rgba(242,237,228,0.5)", fontSize:11, lineHeight:1.8 }}>We received your message and will reply within 1–2 business days.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:16 }}>
@@ -77,7 +77,7 @@ export default function Contact() {
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:10 }}>// EMAIL</span>
                 <a href="mailto:hello@crmdaily.co" style={{ fontFamily:"'DM Serif Display',serif", fontSize:20, color:"#0F0E0D", transition:"color 0.2s", textDecoration:"none" }} onMouseEnter={e => e.target.style.color="#E8521A"} onMouseLeave={e => e.target.style.color="#0F0E0D"}>hello@crmdaily.co</a>
               </div>
-              {[["EDITORIAL ENQUIRIES","For news tips, article pitches, and editorial feedback ΓÇö use the form or email us directly."],["SPONSORSHIP","Interested in reaching 5,000+ CRM & RevOps professionals? We offer sponsored content and newsletter placements."],["RESPONSE TIME","We respond to all enquiries within 1ΓÇô2 business days."]].map(([label,text]) => (
+              {[["EDITORIAL ENQUIRIES","For news tips, article pitches, and editorial feedback — use the form or email us directly."],["SPONSORSHIP","Interested in reaching 5,000+ CRM & RevOps professionals? We offer sponsored content and newsletter placements."],["RESPONSE TIME","We respond to all enquiries within 1–2 business days."]].map(([label,text]) => (
                 <div key={label}>
                   <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:10 }}>// {label}</span>
                   <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#6B6560", lineHeight:1.8 }}>{text}</p>

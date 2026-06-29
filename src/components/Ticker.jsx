@@ -1,4 +1,4 @@
-'use client';
+ï»¿'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getPosts } from "../lib/wordpress";
@@ -43,7 +43,7 @@ export default function Ticker() {
                 style={{ whiteSpace: "nowrap", cursor: "pointer" }}
                 onMouseEnter={e => e.target.style.color = "#E8521A"}
                 onMouseLeave={e => e.target.style.color = "rgba(242,237,228,0.75)"}>
-                {item.title} &nbsp;&nbsp;·&nbsp;&nbsp;{" "}
+                {item.title} &nbsp;&nbsp;ï¿½&nbsp;&nbsp;{" "}
               </span>
             ))}
           </div>

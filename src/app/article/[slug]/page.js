@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { getPostBySlug } from '../../../lib/wordpress';
+import { notFound } from 'next/navigation';
 import ArticleClient from './ArticleClient';
 
 export async function generateMetadata({ params }) {
@@ -37,8 +38,10 @@ export default async function ArticlePage({ params }) {
   try {
     article = await getPostBySlug(params.slug);
   } catch {
-    // ArticleClient handles null article with a 404 UI
+    // will be handled below
   }
+
+  if (!article) notFound();
 
   return <ArticleClient initialArticle={article} slug={params.slug} />;
 }

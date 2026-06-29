@@ -1,4 +1,4 @@
-import { useState } from "react";
+ï»¿import { useState } from "react";
 import { motion } from "framer-motion";
 import SEOMeta from "../components/SEOMeta";
 
@@ -65,7 +65,7 @@ export default function CRMTools() {
                   {tools.length} tools curated and reviewed by the CRM Daily team. Click View to visit any tool directly.
                 </p>
               </div>
-              <input type="text" placeholder="Search tools GÇö HubSpot, Clay, Gong..." value={search} onChange={e => setSearch(e.target.value)}
+              <input type="text" placeholder="Search tools Î“Ã‡Ã¶ HubSpot, Clay, Gong..." value={search} onChange={e => setSearch(e.target.value)}
                 className="crmtools-search"
                 style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", color:"#F2EDE4", fontFamily:"'Space Mono',monospace", fontSize:11, padding:"14px 20px", outline:"none", boxSizing:"border-box", letterSpacing:"0.06em", transition:"border-color 0.2s" }}
                 onFocus={e => e.target.style.borderColor="#E8521A"} onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />
@@ -133,7 +133,7 @@ function ToolCard({ tool, index }) {
         style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, padding:"10px 0", background:"transparent", border:"1px solid rgba(0,0,0,0.12)", fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:"0.1em", color:"#0F0E0D", textDecoration:"none", transition:"all 0.2s" }}
         onMouseEnter={e => { e.currentTarget.style.background="#E8521A"; e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="#E8521A"; }}
         onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color="#0F0E0D"; e.currentTarget.style.borderColor="rgba(0,0,0,0.12)"; }}>
-        VIEW Gåù
+        VIEW Î“Ã¥Ã¹
       </a>
     </motion.div>
   );

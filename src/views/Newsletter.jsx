@@ -1,4 +1,4 @@
-import { useState } from "react";
+ï»¿import { useState } from "react";
 import { motion } from "framer-motion";
 import { subscribeEmail } from "../utils/beehiiv";
 
@@ -33,10 +33,10 @@ export default function Newsletter() {
           <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.8}} style={{position:"relative"}}>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.2em" }}>// DAILY DIGEST</span>
             <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:72, color:"#F2EDE4", marginTop:16, marginBottom:16, letterSpacing:"-0.03em", lineHeight:1 }}>CRM Daily Digest</h1>
-            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:13, color:"rgba(242,237,228,0.5)", maxWidth:480, margin:"0 auto 40px", lineHeight:1.85 }}>Your morning CRM & GTM briefing. Top stories, tool updates, and actionable insights GÇö every weekday.</p>
+            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:13, color:"rgba(242,237,228,0.5)", maxWidth:480, margin:"0 auto 40px", lineHeight:1.85 }}>Your morning CRM & GTM briefing. Top stories, tool updates, and actionable insights Î“Ã‡Ã¶ every weekday.</p>
             {status === "success" ? (
               <motion.div initial={{scale:0.9,opacity:0}} animate={{scale:1,opacity:1}} style={{ fontFamily:"'Space Mono',monospace", color:"#22C55E", fontSize:12, letterSpacing:"0.1em", padding:"16px 32px", border:"1px solid rgba(34,197,94,0.3)", display:"inline-block" }}>
-                SUBSCRIBED SUCCESSFULLY G£ô
+                SUBSCRIBED SUCCESSFULLY Î“Â£Ã´
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="nl-form-row">
@@ -44,7 +44,7 @@ export default function Newsletter() {
                 <button type="submit" disabled={status==="loading"}
                   style={{ background:"#E8521A", color:"#fff", border:"none", padding:"16px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", flexShrink:0, transition:"background 0.2s" }}
                   onMouseEnter={e => e.target.style.background="#D4481A"} onMouseLeave={e => e.target.style.background="#E8521A"}>
-                  {status==="loading" ? "..." : "JOIN FREE GåÆ"}
+                  {status==="loading" ? "..." : "JOIN FREE Î“Ã¥Ã†"}
                 </button>
               </form>
             )}
@@ -56,10 +56,10 @@ export default function Newsletter() {
             <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:36, color:"#0F0E0D", textAlign:"center", marginBottom:48, letterSpacing:"-0.02em" }}>What arrives in your inbox every morning</h2>
             <div className="nl-content-grid">
               {[
-                { n:"01", icon:"=ƒô¦", title:"Top CRM Stories", desc:"The 5 most important CRM & GTM developments of the day, curated and explained." },
-                { n:"02", icon:"=ƒöº", title:"Tool Spotlight", desc:"One CRM tool reviewed briefly GÇö what it does, who it's for, and whether it's worth it." },
-                { n:"03", icon:"=ƒôê", title:"Market Pulse", desc:"HubSpot and Salesforce ecosystem updates, pricing changes, and partnership news." },
-                { n:"04", icon:"=ƒÄ»", title:"GTM Insight", desc:"One actionable GTM or RevOps strategy you can implement immediately." },
+                { n:"01", icon:"â‰¡Æ’Ã´â–‘", title:"Top CRM Stories", desc:"The 5 most important CRM & GTM developments of the day, curated and explained." },
+                { n:"02", icon:"â‰¡Æ’Ã¶Âº", title:"Tool Spotlight", desc:"One CRM tool reviewed briefly Î“Ã‡Ã¶ what it does, who it's for, and whether it's worth it." },
+                { n:"03", icon:"â‰¡Æ’Ã´Ãª", title:"Market Pulse", desc:"HubSpot and Salesforce ecosystem updates, pricing changes, and partnership news." },
+                { n:"04", icon:"â‰¡Æ’Ã„Â»", title:"GTM Insight", desc:"One actionable GTM or RevOps strategy you can implement immediately." },
               ].map((b,i) => (
                 <motion.div key={b.n} className="nl-content-item" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.3+i*0.08}}
                   style={{ padding:36, borderRight:i%2===0?"1px solid rgba(0,0,0,0.1)":"none", borderBottom:i<2?"1px solid rgba(0,0,0,0.1)":"none", transition:"background 0.2s" }}

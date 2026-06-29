@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -96,9 +96,9 @@ export default function Home() {
                     style={{ background:"#0F0E0D", color:"#fff", border:"none", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", transition:"background 0.2s" }}
                     onMouseEnter={e => e.target.style.background="#E8521A"}
                     onMouseLeave={e => e.target.style.background="#0F0E0D"}>
-                    READ FULL STORY G��
+                    READ FULL STORY ΓåÆ
                   </button>
-                  <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SEE ALL NEWS -+</Link>
+                  <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SEE ALL NEWS ┬╖</Link>
                   <Link href="/newsletter" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>SUBSCRIBE FREE</Link>
                 </div>
               </motion.div>
@@ -125,7 +125,7 @@ export default function Home() {
                     onMouseLeave={e => e.currentTarget.style.opacity="1"}>
                     <div style={{ marginBottom:6 }}><CategoryBadge label={a.category} color={a.color} /></div>
                     <h3 style={{ fontFamily:"'DM Serif Display',serif", fontSize:15, color:"#0F0E0D", lineHeight:1.35, marginBottom:6 }}>{a.title}</h3>
-                    <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.06em" }}>{a.date.toUpperCase()} -+ {a.readTime.toUpperCase()}</span>
+                    <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.06em" }}>{a.date.toUpperCase()} ┬╖ {a.readTime.toUpperCase()}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -148,12 +148,12 @@ export default function Home() {
                 <Link href="/newsletter" style={{ display:"inline-block", background:"#E8521A", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", transition:"background 0.2s", textDecoration:"none" }}
                   onMouseEnter={e => e.currentTarget.style.background="#D4481A"}
                   onMouseLeave={e => e.currentTarget.style.background="#E8521A"}>
-                  GET DAILY DIGEST G��
+                  GET DAILY DIGEST ΓåÆ
                 </Link>
               </motion.div>
               <motion.div initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.7,delay:0.2}}>
                 {[
-                  { num:"01", title:"DAILY CRM & GTM NEWS", desc:"Fresh intelligence from HubSpot, Salesforce, Pipedrive, and the entire CRM ecosystem G�� every morning." },
+                  { num:"01", title:"DAILY CRM & GTM NEWS", desc:"Fresh intelligence from HubSpot, Salesforce, Pipedrive, and the entire CRM ecosystem ΓÇö every morning." },
                   { num:"02", title:"EXPERT TOOL REVIEWS", desc:"Honest, unbiased reviews of every major CRM tool. No vendor sponsorships. No commission incentives." },
                   { num:"03", title:"GTM & REVOPS GUIDES", desc:"Actionable playbooks for scaling your go-to-market motion. Written by practitioners, not marketers." },
                 ].map((item,i) => (
@@ -178,7 +178,7 @@ export default function Home() {
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.2em", display:"block", marginBottom:8 }}>// LATEST ARTICLES</span>
                 <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:42, color:"#0F0E0D", letterSpacing:"-0.02em" }}>Today's Intelligence</h2>
               </div>
-              <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>VIEW ALL ARTICLES G��</Link>
+              <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#9B958F", letterSpacing:"0.1em", textDecoration:"none" }}>VIEW ALL ARTICLES ΓåÆ</Link>
             </div>
             <div className="home-articles-layout">
               <div className="home-articles-grid">
@@ -210,7 +210,7 @@ export default function Home() {
             <div className="home-convictions-grid">
               {[
                 { n:"CONVICTION 01", title:"A CRM is operating debt, not operating leverage, until someone operates it daily.", sub:"WHY WE REPORT THIS", body:"Most CRMs are implemented well and abandoned six weeks after go-live. Without continuous operation the CRM decays." },
-                { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The problem lives in the CRM G�� dirty data, broken suppression sync." },
+                { n:"CONVICTION 02", title:"Most outbound failure is a CRM data problem, not an email tool problem.", sub:"WHY WE REPORT THIS", body:"Companies experiencing declining outbound results typically blame their sales email tool. The problem lives in the CRM ΓÇö dirty data, broken suppression sync." },
                 { n:"CONVICTION 03", title:"AI agents in CRM only work on a foundation most companies haven't built yet.", sub:"WHY WE REPORT THIS", body:"Every AI CRM deployment we cover has required foundation work first. The data architecture that makes the agent reliable is the larger half." },
               ].map((c,i) => (
                 <motion.div key={c.n} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}}

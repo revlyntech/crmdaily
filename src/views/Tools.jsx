@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
@@ -49,7 +49,7 @@ export default function Tools() {
             <div className="tools-layout">
               <div className="tools-grid">
                 {loading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>Loading tools...</span>
-                  : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>No tool reviews yet G�� check back soon.</span>
+                  : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>No tool reviews yet ΓÇö check back soon.</span>
                   : articles.map((a,i) => <ArticleCard key={a.id} article={a} index={i} />)}
               </div>
               <div className="tools-sidebar"><Sidebar /></div>

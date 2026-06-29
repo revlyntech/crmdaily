@@ -1,4 +1,4 @@
-import { useState } from "react";
+ï»¿import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
@@ -37,7 +37,7 @@ export default function News() {
   const pageTitle = categoryFilter ? `${categoryFilter} News` : 'CRM & GTM News';
   const pageDesc = categoryFilter
     ? `All ${categoryFilter} articles, news and updates from CRM Daily.`
-    : 'Daily CRM and GTM news GÇö HubSpot, Salesforce, Pipedrive updates, RevOps intelligence and more.';
+    : 'Daily CRM and GTM news Î“Ã‡Ã¶ HubSpot, Salesforce, Pipedrive updates, RevOps intelligence and more.';
 
   return (
     <>
@@ -72,11 +72,11 @@ export default function News() {
               <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:56, color:"#F2EDE4", letterSpacing:"-0.02em", lineHeight:1.05, marginBottom:16 }}>{pageTitle}</h1>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.45)", marginBottom:32 }}>{pageDesc}</p>
               <div className="news-search" style={{ position:"relative", maxWidth:520 }}>
-                <span style={{ position:"absolute", left:16, top:"50%", transform:"translateY(-50%)", fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.3)", pointerEvents:"none" }}>=ƒöì</span>
-                <input type="text" placeholder="Search articles GÇö HubSpot, RevOps, GTM..." value={search} onChange={e => handleSearch(e.target.value)}
+                <span style={{ position:"absolute", left:16, top:"50%", transform:"translateY(-50%)", fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.3)", pointerEvents:"none" }}>â‰¡Æ’Ã¶Ã¬</span>
+                <input type="text" placeholder="Search articles Î“Ã‡Ã¶ HubSpot, RevOps, GTM..." value={search} onChange={e => handleSearch(e.target.value)}
                   style={{ width:"100%", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", color:"#F2EDE4", fontFamily:"'Space Mono',monospace", fontSize:11, padding:"14px 20px 14px 44px", outline:"none", boxSizing:"border-box", letterSpacing:"0.04em", transition:"border-color 0.2s" }}
                   onFocus={e => e.target.style.borderColor="#E8521A"} onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />
-                {search && <button onClick={() => handleSearch("")} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:"rgba(242,237,228,0.4)", cursor:"pointer", fontSize:16, lineHeight:1 }}>G£ò</button>}
+                {search && <button onClick={() => handleSearch("")} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:"rgba(242,237,228,0.4)", cursor:"pointer", fontSize:16, lineHeight:1 }}>Î“Â£Ã²</button>}
               </div>
               {search && <p style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"rgba(242,237,228,0.4)", marginTop:12, letterSpacing:"0.08em" }}>{filtered.length} result{filtered.length!==1?"s":""} for "{search}"</p>}
             </motion.div>
@@ -114,7 +114,7 @@ export default function News() {
                 {/* Pagination */}
                 {!loading && totalPages > 1 && (
                   <div className="pagination">
-                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>GåÉ PREV</button>
+                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>Î“Ã¥Ã‰ PREV</button>
 
                     {Array.from({ length: totalPages }, (_, i) => i + 1)
                       .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
@@ -130,10 +130,10 @@ export default function News() {
                       )
                     }
 
-                    <button className="page-btn" onClick={() => { setPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT GåÆ</button>
+                    <button className="page-btn" onClick={() => { setPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT Î“Ã¥Ã†</button>
 
                     <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.08em", marginLeft:8 }}>
-                      PAGE {page} OF {totalPages} -+ {filtered.length} ARTICLES
+                      PAGE {page} OF {totalPages} â”¬â•– {filtered.length} ARTICLES
                     </span>
                   </div>
                 )}

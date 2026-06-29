@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 
 const sections = [
   ["Who we are","CRM Daily is a free media publication covering CRM, GTM, and RevOps. Powered by Revlyn."],

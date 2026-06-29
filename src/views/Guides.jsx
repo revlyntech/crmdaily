@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useSearchParams } from 'next/navigation';
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";

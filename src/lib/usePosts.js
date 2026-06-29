@@ -6,7 +6,7 @@ import { articles as staticArticles } from '../data/articles';
 // then swaps to WordPress data when it arrives
 export function usePosts(count = 20) {
   // Start with static articles so UI renders immediately
-  const [articles, setArticles] = useState(staticArticles);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export function usePostsByCategory(categories = [], count = 50) {
 
 // ─── URL-based filter hook — reads ?category= from URL
 export function usePostsFiltered(count = 100) {
-  const [articles, setArticles] = useState(staticArticles);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const params = new URLSearchParams(window.location.search);
   const categoryFilter = params.get('category') || '';

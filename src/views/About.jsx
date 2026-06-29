@@ -9,8 +9,8 @@ export default function About() {
     { value: "0", label: "Vendor sponsorships" },
   ];
   const values = [
-    { tag: "// NO VENDOR BIAS", title: "We don't take sides.", body: "We cover every CRM platform ΓÇö HubSpot, Salesforce, Pipedrive, Monday, and beyond ΓÇö with the same critical eye. No platform pays us to write favourably about them." },
-    { tag: "// EXPERT REPORTING", title: "Written for practitioners.", body: "Every article is written for the people who live in CRMs every day ΓÇö RevOps leads, sales managers, GTM teams. Not for executives who skim headlines." },
+    { tag: "// NO VENDOR BIAS", title: "We don't take sides.", body: "We cover every CRM platform — HubSpot, Salesforce, Pipedrive, Monday, and beyond — with the same critical eye. No platform pays us to write favourably about them." },
+    { tag: "// EXPERT REPORTING", title: "Written for practitioners.", body: "Every article is written for the people who live in CRMs every day — RevOps leads, sales managers, GTM teams. Not for executives who skim headlines." },
     { tag: "// DAILY CADENCE", title: "Fresh intelligence, every morning.", body: "Two articles a day, published at 8am and 6pm IST. So you start every day knowing what moved in the CRM world overnight." },
   ];
   return (
@@ -36,7 +36,7 @@ export default function About() {
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:20 }}>// ABOUT_CRMDAILY</span>
               <h1>The daily briefing for CRM & GTM professionals.</h1>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.45)", marginTop:20, maxWidth:560, lineHeight:1.8 }}>
-                News, tool reviews, guides, and analysis ΓÇö published every day, free forever.
+                News, tool reviews, guides, and analysis — published every day, free forever.
               </p>
             </motion.div>
           </div>
@@ -62,8 +62,8 @@ export default function About() {
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:16 }}>// OUR_MISSION</span>
                 <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:40, color:"#0F0E0D", letterSpacing:"-0.02em", lineHeight:1.15, marginBottom:24 }}>CRM intelligence, without the vendor noise.</h2>
                 <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#3D3A36", lineHeight:1.85, marginBottom:20 }}>CRM Daily was built because the CRM world lacked a truly independent daily source. Most coverage is either vendor-produced marketing or shallow roundups that don't help practitioners make real decisions.</p>
-                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#3D3A36", lineHeight:1.85, marginBottom:20 }}>We publish news, deep-dive guides, tool reviews, and GTM strategy analysis ΓÇö every single day. No paywalls, no affiliate rankings dressed up as journalism.</p>
-                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#3D3A36", lineHeight:1.85 }}>CRM Daily is powered by <a href="https://revlyn.io" target="_blank" rel="noreferrer" style={{ color:"#E8521A", textDecoration:"none", borderBottom:"1px solid #E8521A" }}>Revlyn</a> ΓÇö a specialist CRM, RevOps, and AI enablement agency. Our editorial is fully independent. No vendor sponsorships influence our coverage.</p>
+                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#3D3A36", lineHeight:1.85, marginBottom:20 }}>We publish news, deep-dive guides, tool reviews, and GTM strategy analysis — every single day. No paywalls, no affiliate rankings dressed up as journalism.</p>
+                <p style={{ fontFamily:"'Inter',sans-serif", fontSize:16, color:"#3D3A36", lineHeight:1.85 }}>CRM Daily is powered by <a href="https://revlyn.io" target="_blank" rel="noreferrer" style={{ color:"#E8521A", textDecoration:"none", borderBottom:"1px solid #E8521A" }}>Revlyn</a> — a specialist CRM, RevOps, and AI enablement agency. Our editorial is fully independent. No vendor sponsorships influence our coverage.</p>
               </div>
               <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
                 {values.map((v,i) => (

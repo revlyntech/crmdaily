@@ -1,4 +1,4 @@
-'use client';
+
 
 import "./globals.css";
 import Script from "next/script";
@@ -7,8 +7,8 @@ import Navbar from "../components/Navbar";
 import Ticker from "../components/Ticker";
 import StockTicker from "../components/StockTicker";
 import Footer from "../components/Footer";
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+
+import ScrollToTop from "../components/ScrollToTop";
 
 function ScrollToTop() {
   const pathname = usePathname();

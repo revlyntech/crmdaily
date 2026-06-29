@@ -1,6 +1,6 @@
-﻿const WP_GRAPHQL_URL = 'https://www.crmdaily.co/api/graphql';
+const WP_GRAPHQL_URL = 'https://www.crmdaily.co/api/graphql';
 
-// In-memory cache (per serverless instance â€” resets on cold start, that's fine)
+// In-memory cache (per serverless instance — resets on cold start, that's fine)
 const cache = {
   posts: null,
   fetchedAt: null,
@@ -31,12 +31,12 @@ function cleanExcerpt(html) {
   if (!html) return '';
   let text = html.replace(/<[^>]+>/g, '');
   text = text
-    .replace(/&hellip;/g, 'â€¦').replace(/&amp;/g, '&')
+    .replace(/&hellip;/g, '…').replace(/&amp;/g, '&')
     .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
     .replace(/&#8217;/g, "'").replace(/&#8216;/g, "'")
     .replace(/&#8220;/g, '"').replace(/&#8221;/g, '"')
-    .replace(/&#8211;/g, 'â€“').replace(/&#8212;/g, 'â€”')
-    .replace(/\[&hellip;\]/g, '').replace(/\[â€¦\]/g, '').trim();
+    .replace(/&#8211;/g, '–').replace(/&#8212;/g, '—')
+    .replace(/\[&hellip;\]/g, '').replace(/\[…\]/g, '').trim();
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
   return sentences.slice(0, 2).join(' ').trim() || text.slice(0, 200);
 }
@@ -99,6 +99,7 @@ export async function getPosts(first = 100) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
     const data = await res.json();
     const posts = (data?.data?.posts?.nodes || []).map(transformPost);
     cache.posts = posts;
@@ -138,6 +139,7 @@ export async function getPostBySlug(slug) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
     const data = await res.json();
     if (data?.errors) {
       console.error('GraphQL errors:', JSON.stringify(data.errors));
@@ -181,6 +183,7 @@ export async function getPostById(id) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
     const data = await res.json();
     const post = data?.data?.post;
     return post ? transformPost(post) : null;

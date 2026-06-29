@@ -1,4 +1,4 @@
-const WP_GRAPHQL_URL = 'https://cms.crmdaily.co/graphql';
+const WP_GRAPHQL_URL = 'https://www.crmdaily.co/api/graphql';
 
 // In-memory cache (per serverless instance — resets on cold start, that's fine)
 const cache = {

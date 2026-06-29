@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/article/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
@@ -16,5 +29,4 @@ const nextConfig = {
     domains: ['cms.crmdaily.co', 'images.unsplash.com'],
   },
 };
-
 export default nextConfig;

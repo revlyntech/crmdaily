@@ -1,8 +1,24 @@
-﻿'use client';
-import { tickerItems } from "../data/articles";
+'use client';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getPosts } from "../lib/wordpress";
 
 export default function Ticker() {
-  const doubled = [...tickerItems, ...tickerItems, ...tickerItems];
+  const [items, setItems] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    getPosts(10).then(posts => {
+      if (posts.length > 0) {
+        setItems(posts.map(p => ({ title: p.title, slug: p.slug })));
+      }
+    });
+  }, []);
+
+  if (items.length === 0) return null;
+
+  const doubled = [...items, ...items, ...items];
+
   return (
     <div style={{
       background: "#0F0E0D",
@@ -18,12 +34,17 @@ export default function Ticker() {
           <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "#22C55E", letterSpacing: "0.15em", fontWeight: 700, whiteSpace: "nowrap" }}>BREAKING</span>
         </div>
         <div style={{ overflow: "hidden", flex: 1, paddingLeft: 20 }}
-          onMouseEnter={e => { const el = e.currentTarget.querySelector('.ticker-scroll'); if (el) el.style.animationPlayState = 'paused'; }}
-          onMouseLeave={e => { const el = e.currentTarget.querySelector('.ticker-scroll'); if (el) el.style.animationPlayState = 'running'; }}>
+          onMouseEnter={e => { const el = e.currentTarget.querySelector(".ticker-scroll"); if (el) el.style.animationPlayState = "paused"; }}
+          onMouseLeave={e => { const el = e.currentTarget.querySelector(".ticker-scroll"); if (el) el.style.animationPlayState = "running"; }}>
           <div className="ticker-scroll ticker-animate-slow"
             style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "rgba(242,237,228,0.75)", letterSpacing: "0.06em", whiteSpace: "nowrap", display: "inline-block" }}>
             {doubled.map((item, i) => (
-              <span key={i} style={{ whiteSpace: "nowrap" }}>{item} &nbsp;&nbsp;·&nbsp;&nbsp;{" "}</span>
+              <span key={i} onClick={() => router.push(`/article/${item.slug}`)}
+                style={{ whiteSpace: "nowrap", cursor: "pointer" }}
+                onMouseEnter={e => e.target.style.color = "#E8521A"}
+                onMouseLeave={e => e.target.style.color = "rgba(242,237,228,0.75)"}>
+                {item.title} &nbsp;&nbsp;�&nbsp;&nbsp;{" "}
+              </span>
             ))}
           </div>
         </div>

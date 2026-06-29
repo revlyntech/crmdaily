@@ -34,14 +34,19 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ArticlePage({ params }) {
+  console.log('[ArticlePage] slug:', params.slug);
   let article = null;
   try {
     article = await getPostBySlug(params.slug);
-  } catch {
-    // will be handled below
+    console.log('[ArticlePage] article found:', !!article, article?.title);
+  } catch (err) {
+    console.error('[ArticlePage] error:', err);
   }
 
-  if (!article) notFound();
+  if (!article) {
+    console.log('[ArticlePage] article is null, calling notFound()');
+    notFound();
+  }
 
   return <ArticleClient initialArticle={article} slug={params.slug} />;
 }

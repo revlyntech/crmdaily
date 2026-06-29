@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function About() {
   const stats = [
     { value: "5,000+", label: "Daily readers" },
-    { value: "2├ù", label: "Articles per day" },
+    { value: "2+", label: "Articles per day" },
     { value: "100%", label: "Independent editorial" },
     { value: "0", label: "Vendor sponsorships" },
   ];

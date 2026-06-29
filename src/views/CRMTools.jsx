@@ -133,7 +133,7 @@ function ToolCard({ tool, index }) {
         style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, padding:"10px 0", background:"transparent", border:"1px solid rgba(0,0,0,0.12)", fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:"0.1em", color:"#0F0E0D", textDecoration:"none", transition:"all 0.2s" }}
         onMouseEnter={e => { e.currentTarget.style.background="#E8521A"; e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="#E8521A"; }}
         onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color="#0F0E0D"; e.currentTarget.style.borderColor="rgba(0,0,0,0.12)"; }}>
-        VIEW Γåù
+        VIEW ←
       </a>
     </motion.div>
   );

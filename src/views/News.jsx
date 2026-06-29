@@ -130,10 +130,10 @@ export default function News() {
                       )
                     }
 
-                    <button className="page-btn" onClick={() => { setPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT ΓåÆ</button>
+                    <button className="page-btn" onClick={() => { setPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT →</button>
 
                     <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#9B958F", letterSpacing:"0.08em", marginLeft:8 }}>
-                      PAGE {page} OF {totalPages} ┬╖ {filtered.length} ARTICLES
+                      PAGE {page} OF {totalPages} · {filtered.length} ARTICLES
                     </span>
                   </div>
                 )}

@@ -67,7 +67,7 @@ export default function Contact() {
                     style={{ alignSelf:"flex-start", background:status==="loading"?"#6B6560":"#0F0E0D", color:"#fff", border:"none", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:status==="loading"?"not-allowed":"pointer" }}
                     onMouseEnter={e => { if(status!=="loading") e.target.style.background="#E8521A"; }}
                     onMouseLeave={e => { if(status!=="loading") e.target.style.background="#0F0E0D"; }}>
-                    {status==="loading" ? "SENDING..." : "SEND MESSAGE ΓåÆ"}
+                    {status==="loading" ? "SENDING..." : "SEND MESSAGE →"}
                   </button>
                 </form>
               )}
@@ -85,7 +85,7 @@ export default function Contact() {
               ))}
               <div style={{ background:"#E8521A", padding:24 }}>
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#0F0E0D", letterSpacing:"0.15em", display:"block", marginBottom:10 }}>// POWERED BY</span>
-                <a href="https://revlyn.io" target="_blank" rel="noreferrer" style={{ fontFamily:"'DM Serif Display',serif", fontSize:20, color:"#fff", transition:"opacity 0.2s", textDecoration:"none" }} onMouseEnter={e => e.target.style.opacity="0.7"} onMouseLeave={e => e.target.style.opacity="1"}>Revlyn.io Γåù</a>
+                <a href="https://revlyn.io" target="_blank" rel="noreferrer" style={{ fontFamily:"'DM Serif Display',serif", fontSize:20, color:"#fff", transition:"opacity 0.2s", textDecoration:"none" }} onMouseEnter={e => e.target.style.opacity="0.7"} onMouseLeave={e => e.target.style.opacity="1"}>Revlyn.io ←</a>
                 <p style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#0F0E0D", marginTop:6 }}>CRM & RevOps Agency</p>
               </div>
             </div>

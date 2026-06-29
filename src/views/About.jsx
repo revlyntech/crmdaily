@@ -89,7 +89,7 @@ export default function About() {
                   style={{ display:"inline-block", border:"1px solid rgba(242,237,228,0.2)", color:"#F2EDE4", padding:"12px 24px", fontFamily:"'Space Mono',monospace", fontSize:10, letterSpacing:"0.1em", textDecoration:"none", transition:"all 0.2s" }}
                   onMouseEnter={e => { e.currentTarget.style.background="#E8521A"; e.currentTarget.style.borderColor="#E8521A"; }}
                   onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.borderColor="rgba(242,237,228,0.2)"; }}>
-                  VISIT REVLYN.IO Γåù
+                  VISIT REVLYN.IO ←
                 </a>
               </div>
               <div style={{ background:"#E8521A", padding:40 }}>
@@ -98,7 +98,7 @@ export default function About() {
                 <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:24 }}>5,000+ CRM managers, RevOps leads, and GTM teams get the digest every morning.</p>
                 <Link href="/newsletter" style={{ display:"inline-block", background:"#0F0E0D", color:"#fff", padding:"14px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", textDecoration:"none" }}
                   onMouseEnter={e => e.currentTarget.style.background="#1A1917"} onMouseLeave={e => e.currentTarget.style.background="#0F0E0D"}>
-                  SUBSCRIBE FREE ΓåÆ
+                  SUBSCRIBE FREE →
                 </Link>
               </div>
             </div>

@@ -44,7 +44,7 @@ export default function Newsletter() {
                 <button type="submit" disabled={status==="loading"}
                   style={{ background:"#E8521A", color:"#fff", border:"none", padding:"16px 28px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", cursor:"pointer", flexShrink:0, transition:"background 0.2s" }}
                   onMouseEnter={e => e.target.style.background="#D4481A"} onMouseLeave={e => e.target.style.background="#E8521A"}>
-                  {status==="loading" ? "..." : "JOIN FREE ΓåÆ"}
+                  {status==="loading" ? "..." : "JOIN FREE →"}
                 </button>
               </form>
             )}

@@ -1,5 +1,3 @@
-
-
 import "./globals.css";
 import Script from "next/script";
 import TopBar from "../components/TopBar";
@@ -7,16 +5,7 @@ import Navbar from "../components/Navbar";
 import Ticker from "../components/Ticker";
 import StockTicker from "../components/StockTicker";
 import Footer from "../components/Footer";
-
 import ScrollToTop from "../components/ScrollToTop";
-
-function ScrollToTop() {
-  const pathname = usePathname();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
 
 export default function RootLayout({ children }) {
   return (
@@ -34,10 +23,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-3MQK3D6CK8"
-          strategy="afterInteractive"
-        />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-3MQK3D6CK8" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];

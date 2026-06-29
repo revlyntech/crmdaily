@@ -1,8 +1,7 @@
 export const dynamic = 'force-dynamic';
-import { getPostBySlug } from '../../../../src/lib/wordpress';
+import { getPostBySlug } from '../../../src/lib/wordpress';
 import ArticleClient from './ArticleClient';
 
-// Generate per-article meta tags
 export async function generateMetadata({ params }) {
   try {
     const article = await getPostBySlug(params.slug);
@@ -38,41 +37,8 @@ export default async function ArticlePage({ params }) {
   try {
     article = await getPostBySlug(params.slug);
   } catch {
-    // handled in client component
+    // ArticleClient handles null article with a 404 UI
   }
 
-  const schema = article ? {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": article.title,
-    "description": article.excerpt || "",
-    "image": [article.featuredImage || "https://www.crmdaily.co/og-image.png"],
-    "datePublished": article.datePublished ? new Date(article.datePublished).toISOString() : new Date().toISOString(),
-    "dateModified": article.dateModified ? new Date(article.dateModified).toISOString() : new Date().toISOString(),
-    "author": { "@type": "Organization", "name": "CRM Daily", "url": "https://www.crmdaily.co" },
-    "publisher": {
-      "@type": "Organization",
-      "name": "CRM Daily",
-      "url": "https://www.crmdaily.co",
-      "logo": { "@type": "ImageObject", "url": "https://www.crmdaily.co/favicon-192.png" }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://www.crmdaily.co/article/${params.slug}`
-    },
-    "articleSection": article.category,
-    "url": `https://www.crmdaily.co/article/${params.slug}`
-  } : null;
-
-  return (
-    <>
-      {schema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      )}
-      <ArticleClient slug={params.slug} />
-    </>
-  );
+  return <ArticleClient initialArticle={article} slug={params.slug} />;
 }

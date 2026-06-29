@@ -1,5 +1,6 @@
 const WP_GRAPHQL_URL = 'https://cms.crmdaily.co/graphql';
 
+// In-memory cache (per serverless instance — resets on cold start, that's fine)
 const cache = {
   posts: null,
   fetchedAt: null,
@@ -49,6 +50,9 @@ function transformPost(post) {
     excerpt: cleanExcerpt(post.excerpt),
     content: post.content,
     date: formatDate(post.date),
+    // Keep raw ISO dates for schema markup
+    datePublished: post.date || null,
+    dateModified: post.modified || post.date || null,
     category: categoryName,
     color: getColor(categoryName),
     readTime: '3 min read',
@@ -60,7 +64,7 @@ async function fetchWithTimeout(url, options, timeout = 8000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
-    const res = await fetch(url, { ...options, signal: controller.signal });
+    const res = await fetch(url, { ...options, signal: controller.signal, cache: 'no-store' });
     clearTimeout(timer);
     return res;
   } catch (err) {
@@ -81,6 +85,7 @@ export async function getPosts(first = 100) {
           title
           excerpt
           date
+          modified
           featuredImage { node { sourceUrl } }
           categories { nodes { name } }
         }
@@ -105,9 +110,7 @@ export async function getPosts(first = 100) {
   }
 }
 
-// Fetch by SLUG (used for /article/:slug routes)
 export async function getPostBySlug(slug) {
-  // Check cache first
   if (isCacheValid()) {
     const cached = cache.posts.find(p => p.slug === slug);
     if (cached && cached.content) return cached;
@@ -122,6 +125,7 @@ export async function getPostBySlug(slug) {
         excerpt
         content
         date
+        modified
         featuredImage { node { sourceUrl } }
         categories { nodes { name } }
       }
@@ -135,6 +139,10 @@ export async function getPostBySlug(slug) {
       body: JSON.stringify({ query }),
     });
     const data = await res.json();
+    if (data?.errors) {
+      console.error('GraphQL errors:', JSON.stringify(data.errors));
+      return null;
+    }
     const post = data?.data?.post;
     return post ? transformPost(post) : null;
   } catch (err) {
@@ -143,12 +151,8 @@ export async function getPostBySlug(slug) {
   }
 }
 
-// Keep old getPostById for backward compatibility
 export async function getPostById(id) {
-  // If it looks like a slug (has letters), use slug lookup
-  if (isNaN(id)) {
-    return getPostBySlug(id);
-  }
+  if (isNaN(id)) return getPostBySlug(id);
 
   if (isCacheValid()) {
     const cached = cache.posts.find(p => p.id === parseInt(id));
@@ -164,6 +168,7 @@ export async function getPostById(id) {
         excerpt
         content
         date
+        modified
         featuredImage { node { sourceUrl } }
         categories { nodes { name } }
       }

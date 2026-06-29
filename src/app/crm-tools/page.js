@@ -1,3 +1,3 @@
 'use client';
-import CRMTools from '../../pages/CRMTools';
+import CRMTools from '../../views/CRMTools';
 export default function CRMToolsPage() { return <CRMTools />; }

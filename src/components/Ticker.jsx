@@ -1,3 +1,4 @@
+'use client';
 import { tickerItems } from "../data/articles";
 
 export default function Ticker() {

@@ -1,5 +1,5 @@
 export const dynamic = 'force-dynamic';
-import { getPostBySlug } from '../../lib/wordpress';
+import { getPostBySlug } from '../../../lib/wordpress';
 import ArticleClient from './ArticleClient';
 
 export async function generateMetadata({ params }) {

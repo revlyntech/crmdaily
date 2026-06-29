@@ -1,6 +1,6 @@
-const WP_GRAPHQL_URL = 'https://www.crmdaily.co/api/graphql';
+﻿const WP_GRAPHQL_URL = 'https://www.crmdaily.co/api/graphql';
 
-// In-memory cache (per serverless instance — resets on cold start, that's fine)
+// In-memory cache (per serverless instance â€” resets on cold start, that's fine)
 const cache = {
   posts: null,
   fetchedAt: null,
@@ -31,12 +31,12 @@ function cleanExcerpt(html) {
   if (!html) return '';
   let text = html.replace(/<[^>]+>/g, '');
   text = text
-    .replace(/&hellip;/g, '…').replace(/&amp;/g, '&')
+    .replace(/&hellip;/g, 'â€¦').replace(/&amp;/g, '&')
     .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
     .replace(/&#8217;/g, "'").replace(/&#8216;/g, "'")
     .replace(/&#8220;/g, '"').replace(/&#8221;/g, '"')
-    .replace(/&#8211;/g, '–').replace(/&#8212;/g, '—')
-    .replace(/\[&hellip;\]/g, '').replace(/\[…\]/g, '').trim();
+    .replace(/&#8211;/g, 'â€“').replace(/&#8212;/g, 'â€”')
+    .replace(/\[&hellip;\]/g, '').replace(/\[â€¦\]/g, '').trim();
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
   return sentences.slice(0, 2).join(' ').trim() || text.slice(0, 200);
 }

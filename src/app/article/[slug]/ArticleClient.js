@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getPostBySlug, getPosts } from "../../../src/lib/wordpress";
-import { subscribeEmail } from "../../../src/utils/beehiiv";
+import { getPostBySlug, getPosts } from "../../lib/wordpress";
+import { subscribeEmail } from "../../utils/beehiiv";
 
 const fallbackImgs = {
   blue:   "https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200&q=80",

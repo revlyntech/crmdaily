@@ -99,7 +99,7 @@ export async function getPosts(first = 100) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
     const data = await res.json();
     const posts = (data?.data?.posts?.nodes || []).map(transformPost);
     cache.posts = posts;
@@ -139,7 +139,7 @@ export async function getPostBySlug(slug) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
     const data = await res.json();
     if (data?.errors) {
       console.error('GraphQL errors:', JSON.stringify(data.errors));
@@ -183,7 +183,7 @@ export async function getPostById(id) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return getPostBySlug(slug); }
+    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
     const data = await res.json();
     const post = data?.data?.post;
     return post ? transformPost(post) : null;

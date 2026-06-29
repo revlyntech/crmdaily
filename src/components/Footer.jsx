@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import Link from "next/link";
 import { useState } from "react";
 import { subscribeEmail } from "../utils/beehiiv";
@@ -47,12 +47,12 @@ export default function Footer() {
           </p>
           {done ? (
             <div style={{ fontFamily:"'Space Mono',monospace", color:"#fff", fontSize:12, letterSpacing:"0.1em", padding:"14px 28px", border:"1px solid rgba(255,255,255,0.4)", display:"inline-block" }}>
-              SUBSCRIBED SUCCESSFULLY ✓
+              SUBSCRIBED SUCCESSFULLY ?
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="footer-form">
               <input type="email" placeholder="your@company.io" required value={email} onChange={e => setEmail(e.target.value)} />
-              <button type="submit">JOIN FREE →</button>
+              <button type="submit">JOIN FREE ?</button>
             </form>
           )}
           <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#0F0E0D", marginTop:12, letterSpacing:"0.1em" }}>NO SPAM. NO FLUFF. UNSUBSCRIBE ANYTIME.</p>
@@ -70,12 +70,12 @@ export default function Footer() {
               <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, color:"#E8521A", letterSpacing:"-0.02em" }}>daily</span>
               <span style={{ width:7, height:7, background:"#E8521A", borderRadius:"50%", marginLeft:2, marginBottom:3 }} />
             </div>
-            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.25)", letterSpacing:"0.1em", marginBottom:4 }}>EST. 2026 · INDIA → US + AU</p>
+            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.25)", letterSpacing:"0.1em", marginBottom:4 }}>EST. 2026 � INDIA ? US + AU</p>
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"rgba(242,237,228,0.4)", lineHeight:1.8, maxWidth:260, marginTop:16 }}>
               Your daily source of CRM, GTM & RevOps intelligence. No vendor bias. No commissions. Just expert reporting.
             </p>
             <div style={{ marginTop:24, display:"flex", gap:12 }}>
-              {[{label:"LinkedIn",href:"https://www.linkedin.com/company/78777881/"},{label:"Twitter",href:"https://twitter.com"},{label:"RSS",href:"/news"}].map(s => (
+              {[{label:"LinkedIn",href:"https://www.linkedin.com/company/78777881/"},{label:"Facebook",href:"https://www.facebook.com/profile.php?id=61591584532423"},{label:"RSS",href:"/news"}].map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
                   style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.35)", letterSpacing:"0.08em", cursor:"pointer", transition:"color 0.2s", textDecoration:"none" }}
                   onMouseEnter={e => e.target.style.color="#E8521A"}
@@ -121,7 +121,7 @@ export default function Footer() {
                 style={{ fontFamily:"'DM Serif Display',serif", fontSize:16, color:"rgba(242,237,228,0.5)", transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E8521A"}
                 onMouseLeave={e => e.target.style.color="rgba(242,237,228,0.5)"}>
-                Revlyn.io ↗
+                Revlyn.io ?
               </a>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.25)", marginTop:6, lineHeight:1.7 }}>CRM & RevOps Agency</p>
             </div>
@@ -130,7 +130,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.2)", letterSpacing:"0.06em" }}>
-            © 2026 CRM DAILY. ALL RIGHTS RESERVED.
+            � 2026 CRM DAILY. ALL RIGHTS RESERVED.
           </span>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E" }} className="blink" />

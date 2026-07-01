@@ -1,1 +1,12 @@
-{"date": "2026-06-30", "articles": [], "sent": true}
+{
+  "date": "2026-07-01",
+  "articles": [
+    {
+      "title": "Salesforce Ventures Bets Big on AI-Native Software Development",
+      "excerpt": "Salesforce Ventures leads a $135M Series A in 8090 Solutions, signaling a major shift in how CRM ecosystems are being built and automated.",
+      "slug": "salesforce-ventures-bets-big-on-ai-native-software-development",
+      "category": "CRM News",
+      "featured_image_url": "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80"
+    }
+  ]
+}

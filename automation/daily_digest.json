@@ -1,1 +1,12 @@
-{"date": "2026-07-01", "articles": [], "sent": true}
+{
+  "date": "2026-07-02",
+  "articles": [
+    {
+      "title": "RevOps in 2026: AI Signals Are Rewriting the Playbook",
+      "excerpt": "From HubSpot's Warmly acquisition to ZoomInfo's GTM.AI layer, revenue operations is being reshaped by AI intent data and agentic platforms.",
+      "slug": "revops-in-2026-ai-signals-are-rewriting-the-playbook",
+      "category": "RevOps Intelligence",
+      "featured_image_url": "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=1200&q=80"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Suspense } from 'react';
 import Tools from '../../views/Tools';
 export const dynamic = 'force-dynamic';

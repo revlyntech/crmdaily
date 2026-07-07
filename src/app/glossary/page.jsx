@@ -1,0 +1,162 @@
+﻿'use client';
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from '../../lib/glossary';
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const CATEGORY_META = {
+  Sales:     { code: '01', hint: 'Deal motion & methodology' },
+  RevOps:    { code: '02', hint: 'Systems, pipeline, forecast' },
+  GTM:       { code: '03', hint: 'Motion, fit, category' },
+  Metrics:   { code: '04', hint: 'Numbers the board sees' },
+  AI:        { code: '05', hint: 'Agents, copilots, RAG' },
+  Marketing: { code: '06', hint: 'Demand, brand, content' },
+};
+
+export default function GlossaryPage() {
+  const [q, setQ] = useState('');
+  const [cat, setCat] = useState('All');
+
+  const filtered = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    return GLOSSARY_TERMS
+      .filter(t => cat === 'All' ? true : t.category === cat)
+      .filter(t => {
+        if (!needle) return true;
+        return t.term.toLowerCase().includes(needle) ||
+          t.short.toLowerCase().includes(needle) ||
+          (t.aliases || []).some(a => a.toLowerCase().includes(needle));
+      })
+      .sort((a, b) => a.term.localeCompare(b.term));
+  }, [q, cat]);
+
+  const grouped = useMemo(() => {
+    const map = new Map();
+    for (const t of filtered) {
+      const letter = t.term[0].toUpperCase();
+      if (!map.has(letter)) map.set(letter, []);
+      map.get(letter).push(t);
+    }
+    return map;
+  }, [filtered]);
+
+  const availableLetters = new Set(grouped.keys());
+  const categoryCounts = useMemo(() => {
+    const m = { All: GLOSSARY_TERMS.length };
+    for (const c of GLOSSARY_CATEGORIES) m[c] = GLOSSARY_TERMS.filter(t => t.category === c).length;
+    return m;
+  }, []);
+
+  let idx = 0;
+
+  return (
+    <div style={{ minHeight:'100vh', background:'#FAFBFC', color:'#0F172A', fontFamily:"'Inter',sans-serif" }}>
+      <style>{`
+        @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        .gmarquee { display:inline-flex; animation:marquee 40s linear infinite; }
+        .gterm-card { transition:transform 0.2s,box-shadow 0.2s; border:2px solid #0F172A; background:#FAFBFC; padding:20px; display:block; text-decoration:none; color:#0F172A; }
+        .gterm-card:hover { transform:translateY(-2px); box-shadow:4px 4px 0 0 #E85D3A; }
+        .gletter:hover { background:#E85D3A; color:#fff; }
+      `}</style>
+
+      <div style={{ background:'#0F172A', color:'#FAFBFC' }}>
+        <div style={{ maxWidth:1400, margin:'0 auto', padding:'12px 32px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <Link href="/" style={{ color:'#FAFBFC', textDecoration:'none', fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase' }}>← CRM Daily</Link>
+          <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:'rgba(250,251,252,0.5)', letterSpacing:'0.2em', textTransform:'uppercase' }}>CRM 101 · Glossary · Vol. 01</span>
+        </div>
+      </div>
+
+      <div style={{ borderBottom:'2px solid #0F172A' }}>
+        <div style={{ maxWidth:1400, margin:'0 auto', padding:'80px 32px', display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:48 }}>
+          <div>
+            <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:96, fontWeight:700, lineHeight:0.95, color:'#0F172A', margin:'16px 0' }}>The<br/>Glossary<span style={{ color:'#E85D3A' }}>.</span></h1>
+            <p style={{ fontSize:18, lineHeight:1.7, color:'rgba(15,23,42,0.7)', maxWidth:520, marginBottom:40 }}><strong>{GLOSSARY_TERMS.length} terms</strong> every CRM, RevOps and GTM operator should know. Written by the desk, updated weekly.</p>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:16, borderTop:'2px solid #0F172A', borderBottom:'2px solid #0F172A', padding:'24px 0' }}>
+              {[{l:'Terms',v:String(GLOSSARY_TERMS.length)},{l:'Categories',v:'6'},{l:'Letters',v:availableLetters.size+'/26'},{l:'Updated',v:'Jul 2026'}].map(s=>(
+                <div key={s.l}>
+                  <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'rgba(15,23,42,0.5)', letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:4 }}>{s.l}</div>
+                  <div style={{ fontFamily:"'DM Serif Display',serif", fontSize:36, fontWeight:700 }}>{s.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ border:'2px solid #0F172A', padding:32 }}>
+            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:'#E85D3A', letterSpacing:'0.25em', textTransform:'uppercase' }}>// Sections</div>
+            <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:24, fontWeight:700, margin:'8px 0 24px' }}>Six beats, one book.</h2>
+            {GLOSSARY_CATEGORIES.map(c=>(
+              <button key={c} onClick={()=>setCat(cat===c?'All':c)} style={{ display:'flex', width:'100%', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid '+(cat===c?'#E85D3A':'rgba(15,23,42,0.1)'), background:'none', cursor:'pointer', textAlign:'left' }}>
+                <span style={{ display:'flex', gap:12, alignItems:'baseline' }}>
+                  <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:cat===c?'#E85D3A':'rgba(15,23,42,0.4)' }}>{CATEGORY_META[c].code}</span>
+                  <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:18, fontWeight:700, color:cat===c?'#E85D3A':'#0F172A' }}>{c}</span>
+                  <span style={{ fontSize:12, color:'rgba(15,23,42,0.5)' }}>{CATEGORY_META[c].hint}</span>
+                </span>
+                <span style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:'rgba(15,23,42,0.5)' }}>{String(categoryCounts[c]).padStart(3,'0')}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ position:'sticky', top:0, zIndex:30, borderBottom:'2px solid #0F172A', background:'rgba(250,251,252,0.97)' }}>
+        <div style={{ maxWidth:1400, margin:'0 auto', padding:'20px 32px' }}>
+          <div style={{ display:'flex', gap:12 }}>
+            <div style={{ position:'relative', flex:1 }}>
+              <span style={{ position:'absolute', left:16, top:'50%', transform:'translateY(-50%)', fontFamily:"'Space Mono',monospace", fontSize:12, color:'#E85D3A', fontWeight:700 }}>&gt;_</span>
+              <input type="search" value={q} onChange={e=>setQ(e.target.value)} placeholder={"Search "+GLOSSARY_TERMS.length+" terms..."} style={{ width:'100%', border:'2px solid #0F172A', background:'#FAFBFC', padding:'14px 120px 14px 44px', fontFamily:"'DM Serif Display',serif", fontSize:18, outline:'none', boxSizing:'border-box' }}/>
+              <span style={{ position:'absolute', right:16, top:'50%', transform:'translateY(-50%)', fontFamily:"'Space Mono',monospace", fontSize:11, color:'rgba(15,23,42,0.5)', fontWeight:700 }}>{String(filtered.length).padStart(3,'0')} / {String(GLOSSARY_TERMS.length).padStart(3,'0')}</span>
+            </div>
+            {(q||cat!=='All')&&(<button onClick={()=>{setQ('');setCat('All');}} style={{ border:'2px solid #0F172A', background:'#0F172A', color:'#FAFBFC', padding:'12px 16px', fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, textTransform:'uppercase', cursor:'pointer' }}>Clear X</button>)}
+          </div>
+          <div style={{ marginTop:16, display:'flex', flexWrap:'wrap', alignItems:'center', gap:8, justifyContent:'space-between' }}>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+              {['All',...GLOSSARY_CATEGORIES].map(c=>(
+                <button key={c} onClick={()=>setCat(c)} style={{ border:'2px solid', borderColor:cat===c?'#E85D3A':'#CBD5E1', background:cat===c?'#E85D3A':'#FAFBFC', color:cat===c?'#fff':'rgba(15,23,42,0.7)', padding:'6px 12px', fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, textTransform:'uppercase', cursor:'pointer', display:'inline-flex', gap:6 }}>
+                  {c} <span style={{ opacity:0.7 }}>{categoryCounts[c]||GLOSSARY_TERMS.length}</span>
+                </button>
+              ))}
+            </div>
+            <nav style={{ display:'flex', flexWrap:'wrap', gap:2 }}>
+              {LETTERS.map(L=>{const has=availableLetters.has(L);return(<a key={L} href={has?"#letter-"+L:undefined} className={has?'gletter':''} style={{ width:28, padding:'4px 0', textAlign:'center', fontFamily:"'DM Serif Display',serif", fontSize:14, fontWeight:700, color:has?'#0F172A':'rgba(15,23,42,0.2)', cursor:has?'pointer':'not-allowed', textDecoration:'none', display:'inline-block' }}>{L}</a>);})}
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth:1400, margin:'0 auto', padding:'64px 32px' }}>
+        {filtered.length===0&&(<div style={{ textAlign:'center', padding:'80px 0' }}><div style={{ fontFamily:"'DM Serif Display',serif", fontSize:96, fontWeight:700, color:'rgba(232,93,58,0.2)' }}>404</div><p style={{ fontSize:18, color:'rgba(15,23,42,0.6)', marginTop:16 }}>No terms match "{q}"</p><button onClick={()=>{setQ('');setCat('All');}} style={{ marginTop:24, border:'2px solid #0F172A', background:'none', padding:'10px 24px', fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, textTransform:'uppercase', cursor:'pointer' }}>Reset</button></div>)}
+        {[...grouped.entries()].map(([letter,terms])=>(
+          <div key={letter} id={"letter-"+letter} style={{ marginBottom:80, scrollMarginTop:160 }}>
+            <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', alignItems:'end', gap:24, borderBottom:'2px solid #0F172A', paddingBottom:16, marginBottom:32 }}>
+              <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:120, fontWeight:700, lineHeight:0.85, color:'#0F172A' }}>{letter}</span>
+              <div style={{ textAlign:'right', paddingBottom:12 }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, color:'rgba(15,23,42,0.5)', textTransform:'uppercase', letterSpacing:'0.15em' }}>{String(terms.length).padStart(2,'0')} {terms.length===1?'term':'terms'}</span><div style={{ marginTop:4, height:4, width:96, background:'#E85D3A', marginLeft:'auto' }}/></div>
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:24 }}>
+              {terms.map(t=>{idx+=1;const cm=CATEGORY_META[t.category];return(
+                <Link key={t.slug} href={"/glossary/"+t.slug} className="gterm-card">
+                  <div style={{ display:'flex', justifyContent:'space-between', gap:12 }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, color:'rgba(15,23,42,0.4)' }}>No {String(idx).padStart(3,'0')}</span><span style={{ border:'1px solid #CBD5E1', padding:'2px 8px', fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, textTransform:'uppercase', color:'rgba(15,23,42,0.6)' }}>{cm.code} {t.category}</span></div>
+                  <div style={{ fontFamily:"'DM Serif Display',serif", fontSize:22, fontWeight:700, margin:'12px 0 4px' }}>{t.term}</div>
+                  {t.aliases&&t.aliases.length>0&&(<div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, textTransform:'uppercase', letterSpacing:'0.15em', color:'rgba(15,23,42,0.4)', marginBottom:8 }}>aka {t.aliases.slice(0,2).join(' · ')}</div>)}
+                  <div style={{ fontSize:13, lineHeight:1.7, color:'rgba(15,23,42,0.65)', display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{t.short}</div>
+                  <div style={{ marginTop:16, paddingTop:12, borderTop:'1px solid #E8ECF1', display:'flex', justifyContent:'space-between' }}><span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.1em', color:'rgba(15,23,42,0.4)' }}>Read definition</span><span style={{ fontFamily:"'DM Serif Display',serif", fontSize:18, color:'rgba(15,23,42,0.4)' }}>→</span></div>
+                </Link>
+              );})}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ borderTop:'2px solid #0F172A', background:'#0F172A', color:'#FAFBFC', padding:'80px 32px' }}>
+        <div style={{ maxWidth:1400, margin:'0 auto', display:'grid', gridTemplateColumns:'2fr 1fr', gap:32, alignItems:'end' }}>
+          <div>
+            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:900, color:'#E85D3A', letterSpacing:'0.25em', textTransform:'uppercase' }}>// Suggest a term</div>
+            <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:64, fontWeight:700, margin:'12px 0 16px', lineHeight:1.1 }}>Missing a term<span style={{ color:'#E85D3A' }}>?</span></h2>
+            <p style={{ fontSize:18, color:'rgba(250,251,252,0.7)', maxWidth:520, lineHeight:1.7 }}>If it's in a deal review, a board deck or an AE Slack thread and it's not here yet, the desk wants to know.</p>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+            <a href="mailto:hello@crmdaily.co?subject=Glossary%20suggestion" style={{ display:'flex', justifyContent:'space-between', border:'2px solid #FAFBFC', background:'#E85D3A', padding:'16px 24px', fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, textTransform:'uppercase', color:'#fff', textDecoration:'none' }}>Email the desk <span>→</span></a>
+            <Link href="/" style={{ display:'flex', justifyContent:'space-between', border:'2px solid rgba(250,251,252,0.3)', padding:'16px 24px', fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, textTransform:'uppercase', color:'rgba(250,251,252,0.7)', textDecoration:'none' }}>← Back to CRM Daily</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

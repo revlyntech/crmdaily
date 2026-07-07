@@ -22,7 +22,7 @@ export default function TopBar() {
   return (
     <>
       <style>{`
-        .topbar { background: #0F0E0D; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 8px 0; }
+        .topbar { background: #0F172A; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 8px 0; }
         .topbar-inner { max-width: 1400px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; }
         .topbar-right { display: flex; align-items: center; gap: 8px; }
         @media (max-width: 768px) {
@@ -40,8 +40,8 @@ export default function TopBar() {
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(255,255,255,0.7)", letterSpacing:"0.06em" }}>{date}</span>
             <span style={{ width:1, height:10, background:"rgba(255,255,255,0.2)" }} />
             <div style={{ display:"flex", alignItems:"center", gap:6, background:"rgba(232,82,26,0.12)", border:"1px solid rgba(232,82,26,0.25)", padding:"2px 10px", borderRadius:2 }}>
-              <span style={{ width:5, height:5, background:"#E8521A", borderRadius:"50%" }} className="blink" />
-              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E8521A", letterSpacing:"0.08em", fontWeight:700 }}>{time} IST</span>
+              <span style={{ width:5, height:5, background:"#E85D3A", borderRadius:"50%" }} className="blink" />
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E85D3A", letterSpacing:"0.08em", fontWeight:700 }}>{time} IST</span>
             </div>
           </div>
         </div>

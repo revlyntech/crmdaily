@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { getPosts } from './wordpress';
 import { articles as staticArticles } from '../data/articles';
 

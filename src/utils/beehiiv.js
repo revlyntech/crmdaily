@@ -1,4 +1,4 @@
-// Calls WordPress REST API proxy instead of Beehiiv directly
+﻿// Calls WordPress REST API proxy instead of Beehiiv directly
 // This bypasses CORS — WordPress handles the Beehiiv API call server-side
 const WP_PROXY_URL = 'https://cms.crmdaily.co/wp-json/crmdaily/v1/subscribe';
 

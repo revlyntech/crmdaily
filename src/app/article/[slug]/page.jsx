@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+﻿export const dynamic = 'force-dynamic';
 import ArticleClient from './ArticleClient';
 
 export default async function ArticlePage({ params }) {

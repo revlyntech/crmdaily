@@ -8,7 +8,7 @@ const navLinks = [
   { label: "News",       to: "/news" },
   { label: "Guides",     to: "/guides" },
   { label: "Tools",      to: "/tools" },
-  { label: "Newsletter", to: "/newsletter" },
+  { label: "Newsletter", to: "/newsletter" },{ label: "Glossary", to: "/glossary" },
   { label: "About",      to: "/about" },
 ];
 
@@ -26,7 +26,7 @@ export default function Navbar() {
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   const linkStyle = (active) => ({
-    color: active ? "#E8521A" : "#0F0E0D",
+    color: active ? "#E85D3A" : "#0F172A",
     fontSize: 11, fontFamily: "'Space Mono',monospace", fontWeight: 700,
     letterSpacing: "0.1em", textTransform: "uppercase",
     padding: "0 18px", opacity: active ? 1 : 0.65,
@@ -45,14 +45,14 @@ export default function Navbar() {
           .nav-header-inner { padding: 0 16px !important; }
         }
       `}</style>
-      <header style={{ background:"#F2EDE4", borderBottom:"1px solid rgba(0,0,0,0.1)", position:"sticky", top:0, zIndex:100, boxShadow:scrolled?"0 2px 20px rgba(0,0,0,0.08)":"none", transition:"box-shadow 0.3s ease" }}>
+      <header style={{ background:"#FAFBFC", borderBottom:"1px solid rgba(0,0,0,0.1)", position:"sticky", top:0, zIndex:100, boxShadow:scrolled?"0 2px 20px rgba(0,0,0,0.08)":"none", transition:"box-shadow 0.3s ease" }}>
         <div className="nav-header-inner" style={{ maxWidth:1400, margin:"0 auto", padding:"0 32px", display:"flex", alignItems:"center", justifyContent:"space-between", height:68 }}>
 
           <Link href="/" style={{ display:"flex", flexDirection:"column", textDecoration:"none", gap:2 }}>
             <div style={{ display:"flex", alignItems:"baseline", gap:1 }}>
-              <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, fontWeight:400, color:"#0F0E0D", letterSpacing:"-0.03em", lineHeight:1 }}>crm</span>
-              <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, fontWeight:400, color:"#E8521A", letterSpacing:"-0.03em", lineHeight:1 }}>daily</span>
-              <span style={{ width:7, height:7, background:"#E8521A", borderRadius:"50%", marginLeft:2, marginBottom:3, flexShrink:0 }} className="pulse" />
+              <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, fontWeight:400, color:"#0F172A", letterSpacing:"-0.03em", lineHeight:1 }}>crm</span>
+              <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, fontWeight:400, color:"#E85D3A", letterSpacing:"-0.03em", lineHeight:1 }}>daily</span>
+              <span style={{ width:7, height:7, background:"#E85D3A", borderRadius:"50%", marginLeft:2, marginBottom:3, flexShrink:0 }} className="pulse" />
             </div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:7, color:"rgba(0,0,0,0.3)", letterSpacing:"0.18em", textTransform:"uppercase" }}>CRM & GTM Intelligence Daily</span>
           </Link>
@@ -63,26 +63,26 @@ export default function Navbar() {
               const active = pathname === l.to;
               return (
                 <Link key={l.to} href={l.to} style={linkStyle(active)}
-                  onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity=active?"1":"0.65"; e.currentTarget.style.color=active?"#E8521A":"#0F0E0D"; }}>
+                  onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity=active?"1":"0.65"; e.currentTarget.style.color=active?"#E85D3A":"#0F172A"; }}>
                   {l.label}
                 </Link>
               );
             })}
             <Link href="/crm-tools" style={linkStyle(pathname==="/crm-tools")}
-              onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity=pathname==="/crm-tools"?"1":"0.65"; e.currentTarget.style.color=pathname==="/crm-tools"?"#E8521A":"#0F0E0D"; }}>
+              onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity=pathname==="/crm-tools"?"1":"0.65"; e.currentTarget.style.color=pathname==="/crm-tools"?"#E85D3A":"#0F172A"; }}>
               CRM Tools
             </Link>
             <Link href="/contact" style={linkStyle(pathname==="/contact")}
-              onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E8521A"; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity="0.65"; e.currentTarget.style.color="#0F0E0D"; }}>
+              onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity="0.65"; e.currentTarget.style.color="#0F172A"; }}>
               Contact
             </Link>
             <Link href="/newsletter"
-              style={{ marginLeft:16, background:"#E8521A", color:"#fff", padding:"0 22px", height:42, display:"flex", alignItems:"center", fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", transition:"background 0.2s", textDecoration:"none" }}
-              onMouseEnter={e => e.currentTarget.style.background="#0F0E0D"}
-              onMouseLeave={e => e.currentTarget.style.background="#E8521A"}>
+              style={{ marginLeft:16, background:"#E85D3A", color:"#fff", padding:"0 22px", height:42, display:"flex", alignItems:"center", fontFamily:"'Space Mono',monospace", fontSize:10, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", transition:"background 0.2s", textDecoration:"none" }}
+              onMouseEnter={e => e.currentTarget.style.background="#0F172A"}
+              onMouseLeave={e => e.currentTarget.style.background="#E85D3A"}>
               SUBSCRIBE FREE
             </Link>
           </nav>
@@ -90,7 +90,7 @@ export default function Navbar() {
           {/* Hamburger */}
           <button onClick={() => setMobileOpen(!mobileOpen)} className="nav-hamburger" aria-label="Menu">
             {[0,1,2].map(i => (
-              <span key={i} style={{ display:"block", width:22, height:2, background:"#0F0E0D", transition:"all 0.2s",
+              <span key={i} style={{ display:"block", width:22, height:2, background:"#0F172A", transition:"all 0.2s",
                 transform:mobileOpen&&i===0?"rotate(45deg) translateY(7px)":mobileOpen&&i===2?"rotate(-45deg) translateY(-7px)":"none",
                 opacity:mobileOpen&&i===1?0:1 }} />
             ))}
@@ -101,16 +101,16 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}}
-              style={{ borderTop:"1px solid rgba(0,0,0,0.08)", background:"#F2EDE4", overflow:"hidden" }}>
+              style={{ borderTop:"1px solid rgba(0,0,0,0.08)", background:"#FAFBFC", overflow:"hidden" }}>
               <div style={{ padding:"16px 20px 24px" }}>
                 {[...navLinks, {label:"CRM Tools",to:"/crm-tools"},{label:"Contact",to:"/contact"}].map(l => (
                   <Link key={l.to} href={l.to}
-                    style={{ display:"block", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F0E0D", textDecoration:"none" }}>
+                    style={{ display:"block", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", textDecoration:"none" }}>
                     {l.label}
                   </Link>
                 ))}
                 <Link href="/newsletter"
-                  style={{ display:"block", marginTop:16, background:"#E8521A", color:"#fff", padding:"14px 20px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", textAlign:"center", textDecoration:"none" }}>
+                  style={{ display:"block", marginTop:16, background:"#E85D3A", color:"#fff", padding:"14px 20px", fontFamily:"'Space Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:"0.1em", textAlign:"center", textDecoration:"none" }}>
                   SUBSCRIBE FREE →
                 </Link>
               </div>

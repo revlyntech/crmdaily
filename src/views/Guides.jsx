@@ -34,21 +34,21 @@ export default function Guides() {
       `}</style>
       <div className="fade-in">
         <SEOMeta title={pageTitle} description={pageDesc} url="https://www.crmdaily.co/guides" type="website" />
-        <div className="guides-hero" style={{ background:"#0F0E0D", padding:"64px 32px" }}>
+        <div className="guides-hero" style={{ background:"#0F172A", padding:"64px 32px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
             <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
-              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E8521A", letterSpacing:"0.15em", display:"block", marginBottom:16 }}>// TECHNICAL_GUIDES</span>
-              <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:56, color:"#F2EDE4", letterSpacing:"-0.02em", lineHeight:1.05 }}>{pageTitle}</h1>
+              <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E85D3A", letterSpacing:"0.15em", display:"block", marginBottom:16 }}>// TECHNICAL_GUIDES</span>
+              <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:56, color:"#FAFBFC", letterSpacing:"-0.02em", lineHeight:1.05 }}>{pageTitle}</h1>
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.45)", marginTop:16 }}>{pageDesc}</p>
             </motion.div>
           </div>
         </div>
-        <div className="grid-bg guides-body" style={{ background:"#F2EDE4", padding:"64px 32px 96px" }}>
+        <div className="grid-bg guides-body" style={{ background:"#FAFBFC", padding:"64px 32px 96px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
             <div className="guides-layout">
               <div className="guides-grid">
-                {loading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>Loading guides...</span>
-                  : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#9B958F" }}>No guides yet - check back soon.</span>
+                {loading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading guides...</span>
+                  : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>No guides yet - check back soon.</span>
                   : articles.map((a,i) => <ArticleCard key={a.id} article={a} index={i} />)}
               </div>
               <div className="guides-sidebar"><Sidebar /></div>

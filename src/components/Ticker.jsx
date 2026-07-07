@@ -21,7 +21,7 @@ export default function Ticker() {
 
   return (
     <div style={{
-      background: "#0F0E0D",
+      background: "#0F172A",
       borderBottom: "1px solid rgba(255,255,255,0.05)",
       padding: "9px 0",
       overflow: "hidden",
@@ -41,7 +41,7 @@ export default function Ticker() {
             {doubled.map((item, i) => (
               <span key={i} onClick={() => router.push(`/article/${item.slug}`)}
                 style={{ whiteSpace: "nowrap", cursor: "pointer" }}
-                onMouseEnter={e => e.target.style.color = "#E8521A"}
+                onMouseEnter={e => e.target.style.color = "#E85D3A"}
                 onMouseLeave={e => e.target.style.color = "rgba(242,237,228,0.75)"}>
                 {item.title} &nbsp;&nbsp;�&nbsp;&nbsp;{" "}
               </span>

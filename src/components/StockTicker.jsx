@@ -41,7 +41,7 @@ export default function StockTicker() {
   }, []);
 
   return (
-    <div style={{ background: "#0F0E0D", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+    <div style={{ background: "#0F172A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 32px 0" }}>
         <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 8, color: "rgba(242,237,228,0.3)", letterSpacing: "0.15em", textTransform: "uppercase" }}>// CRM_STOCKS_LIVE</span>
         <span style={{ width: 6, height: 6, background: "#22C55E", borderRadius: "50%", boxShadow: "0 0 6px #22C55E", display: "inline-block" }} className="blink" />

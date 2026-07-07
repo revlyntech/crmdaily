@@ -1,4 +1,4 @@
-import "./globals.css";
+﻿import "./globals.css";
 import Script from "next/script";
 import TopBar from "../components/TopBar";
 import Navbar from "../components/Navbar";

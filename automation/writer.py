@@ -51,13 +51,29 @@ CATEGORY_ROTATION = [
     "AI in Sales",
 ]
 
-# Internal pages for linking — Claude will pick relevant ones
+# Internal pages for linking - Claude will pick relevant ones
 INTERNAL_PAGES = [
-    { "url": "https://www.crmdaily.co/crm-tools", "label": "CRM Tools Directory" },
-    { "url": "https://www.crmdaily.co/news",      "label": "CRM News" },
-    { "url": "https://www.crmdaily.co/guides",    "label": "CRM Guides" },
-    { "url": "https://www.crmdaily.co/tools",     "label": "Tool Reviews" },
-    { "url": "https://www.crmdaily.co/newsletter","label": "CRM Daily Newsletter" },
+    { "url": "https://www.crmdaily.co/crm-tools",              "label": "CRM Tools Directory" },
+    { "url": "https://www.crmdaily.co/news",                   "label": "CRM News" },
+    { "url": "https://www.crmdaily.co/guides",                 "label": "CRM Guides" },
+    { "url": "https://www.crmdaily.co/tools",                  "label": "Tool Reviews" },
+    { "url": "https://www.crmdaily.co/newsletter",             "label": "CRM Daily Newsletter" },
+    { "url": "https://www.crmdaily.co/glossary",               "label": "CRM Glossary" },
+    { "url": "https://www.crmdaily.co/glossary/arr",           "label": "Annual Recurring Revenue (ARR)" },
+    { "url": "https://www.crmdaily.co/glossary/churn-rate",    "label": "Churn Rate" },
+    { "url": "https://www.crmdaily.co/glossary/forecast",      "label": "Sales Forecast" },
+    { "url": "https://www.crmdaily.co/glossary/meddic",        "label": "MEDDIC" },
+    { "url": "https://www.crmdaily.co/glossary/nrr",           "label": "Net Revenue Retention (NRR)" },
+    { "url": "https://www.crmdaily.co/glossary/pipeline",      "label": "Sales Pipeline" },
+    { "url": "https://www.crmdaily.co/glossary/revops",        "label": "RevOps" },
+    { "url": "https://www.crmdaily.co/glossary/icp",           "label": "Ideal Customer Profile (ICP)" },
+    { "url": "https://www.crmdaily.co/glossary/cac",           "label": "Customer Acquisition Cost (CAC)" },
+    { "url": "https://www.crmdaily.co/glossary/ltv",           "label": "Customer Lifetime Value (LTV)" },
+    { "url": "https://www.crmdaily.co/glossary/sales-cycle",   "label": "Sales Cycle" },
+    { "url": "https://www.crmdaily.co/glossary/win-rate",      "label": "Win Rate" },
+    { "url": "https://www.crmdaily.co/glossary/plg",           "label": "Product-Led Growth (PLG)" },
+    { "url": "https://www.crmdaily.co/glossary/gtm",           "label": "Go-to-Market (GTM)" },
+    { "url": "https://www.crmdaily.co/glossary/mrr",           "label": "Monthly Recurring Revenue (MRR)" },
 ]
 
 CATEGORY_LOG = "category_log.json"
@@ -69,11 +85,9 @@ def get_next_category():
         last_index = data.get("last_index", -1)
     except Exception:
         last_index = -1
-
     next_index = (last_index + 1) % len(CATEGORY_ROTATION)
     with open(CATEGORY_LOG, "w", encoding="utf-8") as f:
         json.dump({"last_index": next_index}, f)
-
     return CATEGORY_ROTATION[next_index]
 
 def save_category_log(category):
@@ -85,7 +99,7 @@ def save_category_log(category):
 def get_relevant_image(category, index=0):
     images = TOPIC_IMAGES.get(category, TOPIC_IMAGES["default"])
     chosen = images[index % len(images)]
-    print(f"   📸 Image selected for '{category}': {chosen[:50]}...")
+    print(f"   Image selected for '{category}': {chosen[:50]}...")
     return chosen
 
 def load_news():
@@ -100,30 +114,27 @@ def generate_article(news_items):
         for item in news_items
     ])
 
-    today       = datetime.now().strftime("%B %d, %Y")
-    hour_index  = datetime.now().hour
-
+    today          = datetime.now().strftime("%B %d, %Y")
+    hour_index     = datetime.now().hour
     forced_category = get_next_category()
-    print(f"   📂 Forced category for this run: {forced_category}")
+    print(f"   Category for this run: {forced_category}")
 
-    # Internal links to include naturally in the article
     internal_links_text = "\n".join([
         f"- {p['label']}: {p['url']}" for p in INTERNAL_PAGES
     ])
 
     category_instructions = {
-        "CRM News":           "Write a news article about the most significant CRM industry development in the news items.",
-        "GTM Strategy":       "Write a strategic guide about go-to-market strategy, pipeline building, or revenue team alignment. Use the news as context but make it a practical strategy piece.",
-        "Tool Reviews":       "Write a detailed review or comparison of a CRM/sales tool mentioned in the news. Focus on features, use cases, pros and cons for RevOps teams.",
-        "RevOps Intelligence":"Write an analytical piece about revenue operations trends, metrics, or best practices. Use the news as context.",
-        "Sales Tech":         "Write about sales technology, automation tools, or the sales tech stack. Use the news as context.",
-        "AI in Sales":        "Write about AI applications in sales, CRM automation, or AI-powered GTM. Use the news as context.",
+        "CRM News":            "Write a news article about the most significant CRM industry development in the news items.",
+        "GTM Strategy":        "Write a strategic guide about go-to-market strategy, pipeline building, or revenue team alignment. Use the news as context but make it a practical strategy piece.",
+        "Tool Reviews":        "Write a detailed review or comparison of a CRM/sales tool mentioned in the news. Focus on features, use cases, pros and cons for RevOps teams.",
+        "RevOps Intelligence": "Write an analytical piece about revenue operations trends, metrics, or best practices. Use the news as context.",
+        "Sales Tech":          "Write about sales technology, automation tools, or the sales tech stack. Use the news as context.",
+        "AI in Sales":         "Write about AI applications in sales, CRM automation, or AI-powered GTM. Use the news as context.",
     }
 
     writing_instruction = category_instructions.get(forced_category, category_instructions["CRM News"])
 
     prompt = f"""You are a senior editor at CRM Daily, a leading publication for CRM and GTM professionals.
-
 Today is {today}. Based on the following news items, write ONE comprehensive, original article for CRM Daily.
 
 NEWS ITEMS:
@@ -132,39 +143,49 @@ NEWS ITEMS:
 WRITING TASK: {writing_instruction}
 
 INTERNAL LINKS TO INCLUDE:
-Naturally include 2-3 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags:
+Naturally include 5-7 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags.
+Prioritise glossary links where you mention a CRM/GTM concept. For example if you mention ARR, link it to the ARR glossary page.
 {internal_links_text}
 
-Example of how to use them:
+Example usage:
+- "...the company reported strong <a href="https://www.crmdaily.co/glossary/arr">Annual Recurring Revenue (ARR)</a> growth..."
+- "...improving your <a href="https://www.crmdaily.co/glossary/win-rate">win rate</a> requires..."
 - "...visit our <a href="https://www.crmdaily.co/crm-tools">CRM Tools Directory</a> for comparisons..."
-- "...read our latest <a href="https://www.crmdaily.co/guides">CRM Guides</a> for step-by-step help..."
+- "...read our <a href="https://www.crmdaily.co/guides">CRM Guides</a> for step-by-step help..."
 
 IMPORTANT RULES:
 - The article MUST be categorised as: {forced_category}
 - Always use a simple hyphen (-) instead of an em dash or en dash
 - Write in plain, direct English
 - No em dashes anywhere
-- Include 2-3 internal links naturally — do NOT force them, only add where they make sense
+- Include 5-7 internal links naturally - do NOT force them, only add where they make sense
+- Never describe CRM tools as struggling, failing, under pressure, or in trouble
+- Write objectively and neutrally about all vendors
+
+SEO RULES:
+- FOCUS_KEYWORD: Pick ONE primary keyword phrase (2-5 words) that best describes what this article is about. It should be something people actually search for.
+- SEO_TITLE: Write an SEO-optimised title (50-60 characters) that includes the focus keyword. Can differ slightly from the main TITLE.
+- SEO_META_DESCRIPTION: Write a compelling meta description (140-155 characters) that includes the focus keyword and encourages clicks.
+- ALT_TEXT: Write a descriptive alt text for the featured image (10-15 words describing what a relevant photo would show).
 
 Follow this EXACT format:
 
-TITLE: [Compelling SEO-optimised headline - max 70 characters, use hyphen not em dash]
-
+TITLE: [Compelling headline - max 70 characters, use hyphen not em dash]
 EXCERPT: [2-3 sentence summary for the article card - max 160 characters]
-
 CATEGORY: {forced_category}
-
 TAGS: [5 comma-separated tags relevant to {forced_category}]
-
+FOCUS_KEYWORD: [primary keyword phrase, 2-5 words]
+SEO_TITLE: [SEO title, 50-60 characters, includes focus keyword]
+SEO_META_DESCRIPTION: [meta description, 140-155 characters, includes focus keyword]
+ALT_TEXT: [featured image alt text, 10-15 words]
 CONTENT:
-[Write 700-900 words in HTML format using:
+[Write 800-1000 words in HTML format using:
 - <p> for paragraphs
 - <h2> for section headings (3-4 sections)
 - <strong> for key terms
 - <ul><li> for bullet points
 - <blockquote> for stats or key quotes
-- <a href="URL">anchor text</a> for 2-3 internal links
-
+- <a href="URL">anchor text</a> for 5-7 internal links - spread throughout the article
 Requirements:
 - Strong opening hook paragraph
 - 3-4 sections with H2 headings
@@ -175,45 +196,64 @@ Requirements:
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags
 - Use hyphen (-) not em dash everywhere
-- Internal links must be real URLs from the list above]"""
+- Internal links must be real URLs from the list above
+- Link glossary terms naturally when you first mention them in the article]"""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=2000,
+        max_tokens=2500,
         messages=[{"role": "user", "content": prompt}]
     )
 
     response = message.content[0].text
     response = response.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
 
-    article        = {}
-    title_match   = re.search(r"TITLE:\s*(.+)",          response)
-    excerpt_match = re.search(r"EXCERPT:\s*(.+)",         response)
-    tags_match    = re.search(r"TAGS:\s*(.+)",            response)
-    content_match = re.search(r"CONTENT:\s*([\s\S]+)",   response)
+    article = {}
 
-    article["title"]    = title_match.group(1).strip()   if title_match   else f"CRM Intelligence Report - {today}"
-    article["excerpt"]  = excerpt_match.group(1).strip() if excerpt_match else ""
-    article["category"] = forced_category
-    article["tags"]     = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
+    title_match        = re.search(r"TITLE:\s*(.+)",                response)
+    excerpt_match      = re.search(r"EXCERPT:\s*(.+)",               response)
+    tags_match         = re.search(r"TAGS:\s*(.+)",                  response)
+    focus_kw_match     = re.search(r"FOCUS_KEYWORD:\s*(.+)",         response)
+    seo_title_match    = re.search(r"SEO_TITLE:\s*(.+)",             response)
+    seo_meta_match     = re.search(r"SEO_META_DESCRIPTION:\s*(.+)",  response)
+    alt_text_match     = re.search(r"ALT_TEXT:\s*(.+)",              response)
+    content_match      = re.search(r"CONTENT:\s*([\s\S]+)",          response)
+
+    article["title"]               = title_match.group(1).strip()        if title_match        else f"CRM Intelligence Report - {today}"
+    article["excerpt"]             = excerpt_match.group(1).strip()      if excerpt_match      else ""
+    article["category"]            = forced_category
+    article["tags"]                = [t.strip() for t in tags_match.group(1).split(",")] if tags_match else ["CRM", "GTM"]
+    article["focus_keyword"]       = focus_kw_match.group(1).strip()     if focus_kw_match     else ""
+    article["seo_title"]           = seo_title_match.group(1).strip()    if seo_title_match    else article["title"]
+    article["seo_meta_description"]= seo_meta_match.group(1).strip()     if seo_meta_match     else article["excerpt"]
+    article["alt_text"]            = alt_text_match.group(1).strip()     if alt_text_match     else article["title"]
 
     content = content_match.group(1).strip() if content_match else response
     content = content.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
     article["content"] = content
 
     article["featured_image_url"] = get_relevant_image(article["category"], hour_index)
-
     save_category_log(article["category"])
 
-    print(f"✅ Generated: {article['title']}")
+    print(f"Generated: {article['title']}")
     print(f"   Category: {article['category']}")
+    print(f"   Focus Keyword: {article['focus_keyword']}")
+    print(f"   SEO Title: {article['seo_title']}")
     print(f"   Tags: {article['tags']}")
-
-    with open("generated_article.json", "w") as f:
-        json.dump(article, f, indent=2, ensure_ascii=False)
 
     return article
 
+def main():
+    print("Loading news...")
+    news_items = load_news()
+    if not news_items:
+        print("No news items found.")
+        return
+    print(f"Generating article from {len(news_items)} news items...")
+    article = generate_article(news_items)
+    with open("generated_article.json", "w", encoding="utf-8") as f:
+        json.dump(article, f, ensure_ascii=False, indent=2)
+    print("Article saved to generated_article.json")
+
 if __name__ == "__main__":
-    news = load_news()
-    generate_article(news)
+    main()

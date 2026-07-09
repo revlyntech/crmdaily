@@ -8,10 +8,12 @@ import SEOMeta from "../components/SEOMeta";
 
 const GUIDE_CATEGORIES = ['how-to guide', 'gtm strategy', 'revops', 'how-to-guide'];
 
-export default function Guides() {
+export default function Guides({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get('category') || '';
-  const { articles: all, loading } = usePosts(100);
+  const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 100);
+  const all = prefetchedArticles || fetched;
+  const isLoading = prefetchedArticles ? false : loading;
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
     : all.filter(a => GUIDE_CATEGORIES.includes(a.category.toLowerCase()));
@@ -47,7 +49,7 @@ export default function Guides() {
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
             <div className="guides-layout">
               <div className="guides-grid">
-                {loading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading guides...</span>
+                {isLoading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading guides...</span>
                   : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>No guides yet - check back soon.</span>
                   : articles.map((a,i) => <ArticleCard key={a.id} article={a} index={i} />)}
               </div>

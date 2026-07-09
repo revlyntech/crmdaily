@@ -1,4 +1,5 @@
-﻿import { motion } from "framer-motion";
+﻿'use client';
+import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
@@ -7,11 +8,13 @@ import SEOMeta from "../components/SEOMeta";
 
 const TOOL_CATEGORIES = ['tool review', 'tools'];
 
-export default function Tools() {
+export default function Tools({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const params = searchParams;
   const categoryFilter = searchParams.get('category') || '';
-  const { articles: all, loading } = usePosts(100);
+  const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 100);
+  const all = prefetchedArticles || fetched;
+  const isLoading = prefetchedArticles ? false : loading;
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
     : all.filter(a => TOOL_CATEGORIES.includes(a.category.toLowerCase()));
@@ -48,7 +51,7 @@ export default function Tools() {
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
             <div className="tools-layout">
               <div className="tools-grid">
-                {loading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading tools...</span>
+                {isLoading ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading tools...</span>
                   : articles.length === 0 ? <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>No tool reviews yet — check back soon.</span>
                   : articles.map((a,i) => <ArticleCard key={a.id} article={a} index={i} />)}
               </div>

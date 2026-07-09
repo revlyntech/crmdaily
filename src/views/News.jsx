@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+﻿'use client';
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
@@ -8,11 +9,13 @@ import SEOMeta from "../components/SEOMeta";
 
 const ARTICLES_PER_PAGE = 12;
 
-export default function News() {
+export default function News({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const params = searchParams;
   const categoryFilter = searchParams.get('category') || '';
-  const { articles: all, loading } = usePosts(100);
+  const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 100);
+  const all = prefetchedArticles || fetched;
+  const isLoading = prefetchedArticles ? false : loading;
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -101,7 +104,7 @@ export default function News() {
                 )}
 
                 <div className="news-articles-grid">
-                  {loading ? (
+                  {isLoading ? (
                     <span style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"#94A3B8" }}>Loading articles...</span>
                   ) : paginated.length === 0 ? (
                     <div style={{ gridColumn:"1/-1", textAlign:"center", padding:"48px 0" }}>
@@ -112,7 +115,7 @@ export default function News() {
                 </div>
 
                 {/* Pagination */}
-                {!loading && totalPages > 1 && (
+                {!isLoading && totalPages > 1 && (
                   <div className="pagination">
                     <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>ΓåÉ PREV</button>
 

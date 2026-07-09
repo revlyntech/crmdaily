@@ -14,8 +14,8 @@ export default function News({ prefetchedArticles = null }) {
   const params = searchParams;
   const categoryFilter = searchParams.get('category') || '';
   const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 100);
-  const all = prefetchedArticles || fetched;
-  const isLoading = prefetchedArticles ? false : loading;
+  const all = (prefetchedArticles && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
+  const isLoading = (prefetchedArticles && prefetchedArticles.length > 0) ? false : loading;
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 

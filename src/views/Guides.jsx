@@ -12,8 +12,8 @@ export default function Guides({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get('category') || '';
   const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 100);
-  const all = prefetchedArticles || fetched;
-  const isLoading = prefetchedArticles ? false : loading;
+  const all = (prefetchedArticles && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
+  const isLoading = (prefetchedArticles && prefetchedArticles.length > 0) ? false : loading;
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
     : all.filter(a => GUIDE_CATEGORIES.includes(a.category.toLowerCase()));

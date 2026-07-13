@@ -43,7 +43,7 @@ export default function Ticker() {
                 style={{ whiteSpace: "nowrap", cursor: "pointer" }}
                 onMouseEnter={e => e.target.style.color = "#E85D3A"}
                 onMouseLeave={e => e.target.style.color = "rgba(242,237,228,0.75)"}>
-                {item.title} &nbsp;&nbsp;�&nbsp;&nbsp;{" "}
+                {item.title} &nbsp;&nbsp;&bull;&nbsp;&nbsp;{" "}
               </span>
             ))}
           </div>

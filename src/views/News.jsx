@@ -79,7 +79,7 @@ export default function News({ prefetchedArticles = null }) {
                 <input type="text" placeholder="Search articles — HubSpot, RevOps, GTM..." value={search} onChange={e => handleSearch(e.target.value)}
                   style={{ width:"100%", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", color:"#FAFBFC", fontFamily:"'Space Mono',monospace", fontSize:11, padding:"14px 20px 14px 44px", outline:"none", boxSizing:"border-box", letterSpacing:"0.04em", transition:"border-color 0.2s" }}
                   onFocus={e => e.target.style.borderColor="#E85D3A"} onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />
-                {search && <button onClick={() => handleSearch("")} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:"rgba(242,237,228,0.4)", cursor:"pointer", fontSize:16, lineHeight:1 }}>Γ£ò</button>}
+                {search && <button onClick={() => handleSearch("")} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:"rgba(242,237,228,0.4)", cursor:"pointer", fontSize:16, lineHeight:1 }}>×</button>}
               </div>
               {search && <p style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"rgba(242,237,228,0.4)", marginTop:12, letterSpacing:"0.08em" }}>{filtered.length} result{filtered.length!==1?"s":""} for "{search}"</p>}
             </motion.div>

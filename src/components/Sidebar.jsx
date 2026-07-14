@@ -49,7 +49,7 @@ export default function Sidebar() {
         @media (max-width: 640px) {
           .sidebar-wrapper { margin-top: 32px; }
           .sidebar-popular { display: none !important; }
-          .sidebar-stats { display: none !important; }
+          .sidebar-stats { display: block; }
         }
       `}</style>
       <aside className="sidebar-wrapper">
@@ -129,9 +129,9 @@ export default function Sidebar() {
             <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E" }} className="blink" />
           </div>
           {[
-            { label:"ARTICLES PUBLISHED", value:loading?"...":String(totalArticles), sub:"Live from CRM Daily" },
-            { label:"TOPICS COVERED",     value:loading?"...":String(topicsCount),   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
-            { label:"TOOLS REVIEWED",     value:loading?"...":String(toolsCount),    sub:toolsCount>0?"Tool reviews live":"" },
+            { label:"ARTICLES PUBLISHED", value:String(totalArticles || articles.length || 0), sub:"Live from CRM Daily" },
+            { label:"TOPICS COVERED",     value:String(topicsCount || 6),   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
+            { label:"TOOLS REVIEWED",     value:String(toolsCount || 0),    sub:"Tool reviews & comparisons" },
           ].map(s => (
             <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

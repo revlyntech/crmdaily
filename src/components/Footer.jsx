@@ -70,7 +70,7 @@ export default function Footer() {
               <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:26, color:"#E85D3A", letterSpacing:"-0.02em" }}>daily</span>
               <span style={{ width:7, height:7, background:"#E85D3A", borderRadius:"50%", marginLeft:2, marginBottom:3 }} />
             </div>
-            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.25)", letterSpacing:"0.1em", marginBottom:4 }}>EST. 2026 &copy; INDIA &middot; US &middot; AU</p>
+            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"rgba(242,237,228,0.25)", letterSpacing:"0.1em", marginBottom:4 }}>EST. 2026 © INDIA · US · AU</p>
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:"rgba(242,237,228,0.4)", lineHeight:1.8, maxWidth:260, marginTop:16 }}>
               Your daily source of CRM, GTM & RevOps intelligence. No vendor bias. No commissions. Just expert reporting.
             </p>
@@ -109,7 +109,7 @@ export default function Footer() {
           {/* Company */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E85D3A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>COMPANY</span>
-            {[["About CRM Daily","/about"],["Contact Us","/contact"],["Privacy Policy","/privacy"],["Terms of Service","/terms"]].map(([label,href]) => (
+            {[["About CRM Daily","/about"],["Contact Us","/contact"],["Privacy Policy","/privacy"],].map(([label,href]) => (
               <Link key={label} href={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E85D3A"}

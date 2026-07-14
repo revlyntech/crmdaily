@@ -17,7 +17,7 @@ export default function Tools({ prefetchedArticles = null }) {
   const isLoading = (prefetchedArticles != null && prefetchedArticles.length > 0) ? false : fetchLoading;
   const articles = categoryFilter
     ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
-    : all.filter(a => TOOL_CATEGORIES.includes(a.category.toLowerCase()));
+    : all;
 
   const pageTitle = categoryFilter ? `${categoryFilter} Reviews` : 'CRM Tools & Reviews';
   const pageDesc = categoryFilter ? `Honest ${categoryFilter} reviews and comparisons from CRM Daily.` : 'Honest, unbiased CRM tool reviews and comparisons. HubSpot, Salesforce, Pipedrive and more.';

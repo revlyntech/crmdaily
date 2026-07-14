@@ -89,7 +89,7 @@ export default function Sidebar() {
           style={{ background:"#FAFBFC", border:"1px solid rgba(0,0,0,0.08)", borderTop:"none", padding:28, marginBottom:2 }}>
           <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E85D3A", letterSpacing:"0.18em", display:"block", marginBottom:18 }}>// POPULAR TODAY</span>
           {loading ? (
-            <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#94A3B8" }}>Loading...</span>
+            <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#94A3B8" }}></span>
           ) : articles.slice(0,5).map((a,i) => (
             <div key={a.id} onClick={() => router.push(`/article/${a.slug}`)}
               style={{ display:"flex", gap:16, padding:"13px 0", borderBottom:i<4?"1px solid rgba(0,0,0,0.06)":"none", cursor:"pointer", transition:"opacity 0.2s" }}
@@ -131,7 +131,7 @@ export default function Sidebar() {
           {[
             { label:"ARTICLES PUBLISHED", value:loading?"...":String(totalArticles), sub:"Live from CRM Daily" },
             { label:"TOPICS COVERED",     value:loading?"...":String(topicsCount),   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
-            { label:"TOOLS REVIEWED",     value:loading?"...":String(toolsCount),    sub:toolsCount>0?"Tool reviews live":"Coming soon" },
+            { label:"TOOLS REVIEWED",     value:loading?"...":String(toolsCount),    sub:toolsCount>0?"Tool reviews live":"" },
           ].map(s => (
             <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

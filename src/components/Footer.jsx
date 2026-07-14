@@ -109,7 +109,7 @@ export default function Footer() {
           {/* Company */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E85D3A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>COMPANY</span>
-            {[["About CRM Daily","/about"],["Contact Us","/contact"],["Privacy Policy","/privacy"],["Terms of Service","/privacy"]].map(([label,href]) => (
+            {[["About CRM Daily","/about"],["Contact Us","/contact"],["Privacy Policy","/privacy"],["Terms of Service","/terms"]].map(([label,href]) => (
               <Link key={label} href={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E85D3A"}

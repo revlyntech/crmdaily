@@ -117,7 +117,7 @@ export default function News({ prefetchedArticles = null }) {
                 {/* Pagination */}
                 {!isLoading && totalPages > 1 && (
                   <div className="pagination">
-                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>ΓåÉ PREV</button>
+                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>← PREV</button>
 
                     {Array.from({ length: totalPages }, (_, i) => i + 1)
                       .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 1)

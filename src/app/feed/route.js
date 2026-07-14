@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getPosts } from '../../lib/wordpress';
 
 export const revalidate = 300;

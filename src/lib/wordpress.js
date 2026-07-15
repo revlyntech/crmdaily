@@ -39,6 +39,9 @@ function cleanExcerpt(html) {
     .replace(/&#8220;/g, '"').replace(/&#8221;/g, '"')
     .replace(/&#8211;/g, '–').replace(/&#8212;/g, '—')
     .replace(/\[&hellip;\]/g, '').replace(/\[…\]/g, '').trim();
+  // Skip if excerpt is just a category name
+  if (CATEGORY_NAMES.includes(text.toLowerCase().trim())) return '';
+  if (text.trim().length < 20) return '';
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
   return sentences.slice(0, 2).join(' ').trim() || text.slice(0, 200);
 }

@@ -12,7 +12,7 @@ export default function Tools({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const params = searchParams;
   const categoryFilter = searchParams.get('category') || '';
-  const { articles: fetched, loading: fetchLoading } = usePosts(prefetchedArticles ? 0 : 100);
+  const { articles: fetched, loading: fetchLoading } = usePosts(100);
   const all = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
   const isLoading = (prefetchedArticles != null && prefetchedArticles.length > 0) ? false : fetchLoading;
   const articles = categoryFilter

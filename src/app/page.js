@@ -1,8 +1,8 @@
-﻿import { getPosts } from '../lib/wordpress';
+import { getPosts } from '../lib/wordpress';
 import HomeClient from '../views/Home';
 import { Suspense } from 'react';
 
-
+export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 export const metadata = {

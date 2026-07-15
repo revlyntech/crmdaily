@@ -25,7 +25,7 @@ export default function Sidebar() {
   const router = useRouter();
   const { articles, loading } = usePosts(20);
 
-  const totalArticles = articles.length > 0 ? articles.length : null;
+  const totalArticles = articles.length;
   const uniqueCategories = [...new Set(articles.map(a => a.category))];
   const topicsCount = uniqueCategories.length;
   const toolsCount = articles.filter(a => a.category === "Tool Review" || a.category === "Tools").length;
@@ -129,9 +129,9 @@ export default function Sidebar() {
             <span style={{ width:6, height:6, background:"#22C55E", borderRadius:"50%", boxShadow:"0 0 6px #22C55E" }} className="blink" />
           </div>
           {[
-            { label:"ARTICLES PUBLISHED", value:totalArticles ? String(totalArticles) + "+" : "70+", sub:"Live from CRM Daily" },
-            { label:"TOPICS COVERED",     value:topicsCount > 0 ? String(topicsCount) : "6",   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
-            { label:"TOOLS REVIEWED",     value:toolsCount > 0 ? String(toolsCount) : "10+",    sub:"Tool reviews & comparisons" },
+            { label:"ARTICLES PUBLISHED", value:String(totalArticles || articles.length || 0), sub:"Live from CRM Daily" },
+            { label:"TOPICS COVERED",     value:String(topicsCount || 6),   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
+            { label:"TOOLS REVIEWED",     value:String(toolsCount || 0),    sub:"Tool reviews & comparisons" },
           ].map(s => (
             <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

@@ -1,9 +1,10 @@
 'use client';
+﻿'use client';
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
-
+import { articles as staticArticles } from "../data/articles";
 import CategoryBadge from "../components/CategoryBadge";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
@@ -16,11 +17,11 @@ const fallbackImages = {
   red:    "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1200&q=80",
 };
 
-export default function HomeClient({ prefetchedArticles = null }) {
+export default function Home({ prefetchedArticles = null }) {
   const router = useRouter();
   const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 20);
   const wpArticles = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
-  const articles = wpArticles;
+  const articles = wpArticles.length > 0 ? wpArticles : [];
   const featured = articles.find(a => a.featured) || articles[0];
   const topStories = articles.filter(a => a.id !== featured?.id).slice(0, 4);
   const gridArticles = articles.filter(a => a.id !== featured?.id);

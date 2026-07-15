@@ -183,7 +183,6 @@ function SidebarTopics() {
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 export default function ArticleClient({ initialArticle, slug }) {
   // If server pre-fetched the article, use it immediately (no flash)
-  // category fix already applied
   const [article, setArticle] = useState(initialArticle ? {...initialArticle, title: initialArticle.title.replace(/\s*-?\s*category:?\s*$/i, '').trim()} : null);
   const [loading, setLoading] = useState(!initialArticle);
   const [headings, setHeadings] = useState([]);

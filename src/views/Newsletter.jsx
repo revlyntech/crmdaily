@@ -34,7 +34,7 @@ export default function Newsletter() {
           <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.8}} style={{position:"relative"}}>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E85D3A", letterSpacing:"0.2em" }}>// DAILY DIGEST</span>
             <h1 style={{ fontFamily:"'DM Serif Display',serif", fontSize:72, color:"#FAFBFC", marginTop:16, marginBottom:16, letterSpacing:"-0.03em", lineHeight:1 }}>CRM Daily Digest</h1>
-            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:13, color:"rgba(242,237,228,0.5)", maxWidth:480, margin:"0 auto 40px", lineHeight:1.85 }}>Your morning CRM & GTM briefing. Top stories, tool updates, and actionable insights — every weekday.</p>
+            <p style={{ fontFamily:"'Space Mono',monospace", fontSize:13, color:"rgba(242,237,228,0.5)", maxWidth:480, margin:"0 auto 40px", lineHeight:1.85 }}>Your morning CRM & GTM briefing. Top stories, tool updates, and actionable insights - every weekday.</p>
             {status === "success" ? (
               <motion.div initial={{scale:0.9,opacity:0}} animate={{scale:1,opacity:1}} style={{ fontFamily:"'Space Mono',monospace", color:"#22C55E", fontSize:12, letterSpacing:"0.1em", padding:"16px 32px", border:"1px solid rgba(34,197,94,0.3)", display:"inline-block" }}>
                 SUBSCRIBED SUCCESSFULLY ✓
@@ -58,7 +58,7 @@ export default function Newsletter() {
             <div className="nl-content-grid">
               {[
                 { n:"01", icon:"📰", title:"Top CRM Stories", desc:"The 5 most important CRM & GTM developments of the day, curated and explained." },
-                { n:"02", icon:"🔦", title:"Tool Spotlight", desc:"One CRM tool reviewed briefly — what it does, who it's for, and whether it's worth it." },
+                { n:"02", icon:"🔦", title:"Tool Spotlight", desc:"One CRM tool reviewed briefly - what it does, who it's for, and whether it's worth it." },
                 { n:"03", icon:"📊", title:"Market Pulse", desc:"HubSpot and Salesforce ecosystem updates, pricing changes, and partnership news." },
                 { n:"04", icon:"💡", title:"GTM Insight", desc:"One actionable GTM or RevOps strategy you can implement immediately." },
               ].map((b,i) => (

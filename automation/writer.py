@@ -78,6 +78,119 @@ INTERNAL_PAGES = [
 
 CATEGORY_LOG = "category_log.json"
 
+# ── Comparison topics ──
+COMPARISON_TOPICS = [
+    ("HubSpot", "Salesforce", "B2B sales teams"),
+    ("Pipedrive", "HubSpot", "small and mid-size businesses"),
+    ("Salesforce", "Monday CRM", "enterprise RevOps teams"),
+    ("Zoho CRM", "Pipedrive", "startups and growing teams"),
+    ("HubSpot", "Zoho CRM", "marketing-led growth teams"),
+    ("Freshsales", "Pipedrive", "field sales teams"),
+    ("Salesforce", "HubSpot", "RevOps and operations leaders"),
+    ("Monday CRM", "Zoho CRM", "project-driven sales teams"),
+]
+
+# ── Explainer topics ──
+EXPLAINER_TOPICS = [
+    ("What is RevOps", "revenue operations", "RevOps"),
+    ("What is a GTM Motion", "go-to-market strategy", "GTM"),
+    ("What is ARR", "Annual Recurring Revenue", "ARR"),
+    ("What is ICP", "Ideal Customer Profile", "ICP"),
+    ("What is Sales Velocity", "sales velocity formula", "sales velocity"),
+    ("What is MEDDIC", "MEDDIC sales qualification", "MEDDIC"),
+    ("What is NRR", "Net Revenue Retention", "NRR"),
+    ("What is Pipeline Coverage", "pipeline coverage ratio", "pipeline coverage"),
+    ("What is a Sales Cycle", "sales cycle length", "sales cycle"),
+    ("What is Account-Based Marketing", "ABM strategy B2B", "ABM"),
+]
+
+# ── Deep Guide topics ──
+GUIDE_TOPICS = [
+    ("How to Build a RevOps Function from Scratch", "RevOps setup guide", "RevOps"),
+    ("The Complete GTM Strategy Guide for 2026", "GTM strategy 2026", "GTM strategy"),
+    ("How to Reduce Churn Rate for SaaS Teams", "churn reduction SaaS", "churn rate"),
+    ("CRM Implementation Guide for B2B Teams", "CRM implementation guide", "CRM setup"),
+    ("How to Forecast Sales Accurately in 2026", "sales forecasting methods", "sales forecast"),
+    ("The RevOps Tech Stack Guide for 2026", "RevOps tech stack 2026", "RevOps tools"),
+    ("How to Build a Sales Pipeline That Converts", "sales pipeline management", "pipeline"),
+    ("Account-Based Marketing Playbook for B2B", "ABM playbook B2B", "ABM strategy"),
+]
+
+# ── Best Tools topics ──
+BEST_TOOLS_TOPICS = [
+    ("Best CRM for Startups in 2026", "best CRM startup 2026", "startup CRM"),
+    ("Best CRM for Enterprise Sales Teams", "best enterprise CRM 2026", "enterprise CRM"),
+    ("Best Sales Automation Tools for RevOps", "sales automation tools 2026", "sales automation"),
+    ("Best CRM for Real Estate Teams in 2026", "best real estate CRM 2026", "real estate CRM"),
+    ("Best GTM Tools for B2B SaaS in 2026", "GTM tools B2B SaaS 2026", "GTM tools"),
+    ("Best Pipeline Management Tools in 2026", "pipeline management software", "pipeline tools"),
+]
+
+import random
+
+USED_TOPICS_LOG = "used_topics.json"
+
+def get_used_topics():
+    try:
+        with open(USED_TOPICS_LOG, "r") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_used_topic(category, topic_name):
+    used = get_used_topics()
+    if category not in used:
+        used[category] = []
+    if topic_name not in used[category]:
+        used[category].append(topic_name)
+    # Keep last 50 used topics per category
+    used[category] = used[category][-50:]
+    with open(USED_TOPICS_LOG, "w") as f:
+        json.dump(used, f)
+
+def pick_unused_topic(topics, category, name_fn):
+    used = get_used_topics()
+    used_for_cat = used.get(category, [])
+    unused = [t for t in topics if name_fn(t) not in used_for_cat]
+    if not unused:
+        # All used - reset and start fresh
+        used[category] = []
+        with open(USED_TOPICS_LOG, "w") as f:
+            json.dump(used, f)
+        unused = topics
+    chosen = random.choice(unused)
+    save_used_topic(category, name_fn(chosen))
+    return chosen
+
+def get_extra_context(category):
+    if category == "Tool Comparison":
+        topic = pick_unused_topic(
+            COMPARISON_TOPICS, "Tool Comparison",
+            lambda t: t[0] + " vs " + t[1]
+        )
+        return f"Write a detailed comparison of {topic[0]} vs {topic[1]} for {topic[2]}. Compare features, pricing, integrations and use cases. Be objective and fair to both tools.", topic[0] + " vs " + topic[1]
+    elif category == "Explainer":
+        topic = pick_unused_topic(
+            EXPLAINER_TOPICS, "Explainer",
+            lambda t: t[0]
+        )
+        return f"Write a clear, practical explainer on: {topic[0]}. Define the term, explain why it matters, give real examples and actionable takeaways.", topic[0]
+    elif category == "Deep Guide":
+        topic = pick_unused_topic(
+            GUIDE_TOPICS, "Deep Guide",
+            lambda t: t[0]
+        )
+        return f"Write a detailed, actionable guide on: {topic[0]}. Include frameworks, steps, examples and common mistakes to avoid. This should be genuinely useful, not generic.", topic[0]
+    elif category == "Best Tools":
+        topic = pick_unused_topic(
+            BEST_TOOLS_TOPICS, "Best Tools",
+            lambda t: t[0]
+        )
+        return f"Write a best tools article: {topic[0]}. Give honest, specific opinions on each tool. Include pros, cons, pricing and who each tool is best for.", topic[0]
+    return "", ""
+
+
+
 def get_next_category():
     try:
         with open(CATEGORY_LOG, "r", encoding="utf-8-sig") as f:
@@ -153,6 +266,19 @@ Example usage:
 - "...visit our <a href="https://www.crmdaily.co/crm-tools">CRM Tools Directory</a> for comparisons..."
 - "...read our <a href="https://www.crmdaily.co/guides">CRM Guides</a> for step-by-step help..."
 
+HEADLINE DIVERSITY RULES:
+- NEVER start the title with "AI Is Reshaping" or "AI is Reshaping"
+- NEVER use em dashes (- or &mdash;) anywhere. Use hyphens (-) only.
+- Vary headline formulas: use questions, "How to", "Why", numbers like "5 Ways", comparisons "X vs Y", "What Is X"
+- Make each headline feel fresh and specific, not generic
+
+PROFESSIONAL TONE RULES:
+- NEVER describe any tool as failing, struggling, under pressure, dying or losing market share
+- Compare tools on features and fit, not on financial health or market position
+- Write objectively. No vendor bias.
+- No exclamation marks in body text.
+- No filler phrases like "In today's fast-paced landscape" or "In the ever-evolving world of"
+
 IMPORTANT RULES:
 - The article MUST be categorised as: {forced_category}
 - Always use a simple hyphen (-) instead of an em dash or en dash
@@ -206,7 +332,7 @@ Requirements:
     )
 
     response = message.content[0].text
-    response = response.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
+    response = response.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-').replace('&#8212;', '-').replace('&#8211;', '-')
 
     article = {}
 

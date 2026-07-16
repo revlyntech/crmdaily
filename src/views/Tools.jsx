@@ -1,6 +1,6 @@
 ﻿'use client';
 import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
+
 import { usePosts } from "../lib/usePosts";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
@@ -9,18 +9,15 @@ import SEOMeta from "../components/SEOMeta";
 const TOOL_CATEGORIES = ['tool review', 'tools'];
 
 export default function Tools({ prefetchedArticles = null }) {
-  const searchParams = useSearchParams();
-  const params = searchParams;
-  const categoryFilter = searchParams.get('category') || '';
+  
+  const categoryFilter = '';
   const { articles: fetched, loading: fetchLoading } = usePosts(prefetchedArticles ? 0 : 100);
   const all = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
   const isLoading = (prefetchedArticles != null && prefetchedArticles.length > 0) ? false : fetchLoading;
-  const articles = categoryFilter
-    ? all.filter(a => a.category.toLowerCase() === categoryFilter.toLowerCase() || a.title.toLowerCase().includes(categoryFilter.toLowerCase()))
-    : all;
+  const articles = all;
 
-  const pageTitle = categoryFilter ? `${categoryFilter} Reviews` : 'CRM Tools & Reviews';
-  const pageDesc = categoryFilter ? `Honest ${categoryFilter} reviews and comparisons from CRM Daily.` : 'Honest, unbiased CRM tool reviews and comparisons. HubSpot, Salesforce, Pipedrive and more.';
+  const pageTitle = 'CRM Tools & Reviews';
+  const pageDesc = 'Honest, unbiased CRM tool reviews and comparisons. HubSpot, Salesforce, Pipedrive and more.';
 
   return (
     <>

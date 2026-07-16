@@ -23,12 +23,12 @@ export default function Sidebar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const router = useRouter();
-  const { articles, loading } = usePosts(20);
+  const { articles, loading } = usePosts(100);
 
   const totalArticles = articles.length;
   const uniqueCategories = [...new Set(articles.map(a => a.category))];
   const topicsCount = uniqueCategories.length;
-  const toolsCount = articles.filter(a => a.category === "Tool Review" || a.category === "Tools").length;
+  const toolsCount = articles.filter(a => ["Tool Reviews","Tool Review","Tools","RevOps Intelligence","Sales Tech","AI in Sales","GTM Strategy"].includes(a.category)).length;
   const topCategoryNames = uniqueCategories.slice(0, 4).join(", ");
 
   async function handleSubmit(e) {

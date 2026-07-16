@@ -20,7 +20,7 @@ export default function News({ prefetchedArticles = null }) {
   const [page, setPage] = useState(1);
 
   const filtered = all.filter(a => {
-    const matchCat = !categoryFilter || a.category.toLowerCase() === categoryFilter.toLowerCase();
+    const matchCat = !categoryFilter || a.category.toLowerCase().includes(categoryFilter.toLowerCase()) || a.title.toLowerCase().includes(categoryFilter.toLowerCase());
     const matchSearch = !search ||
       a.title.toLowerCase().includes(search.toLowerCase()) ||
       a.excerpt.toLowerCase().includes(search.toLowerCase()) ||

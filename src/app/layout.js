@@ -25,12 +25,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name="msvalidate.01" content="2867C58B06CE8D9FE5C1532DBDC7B34D" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
         <link rel="apple-touch-icon" href="/favicon-192.png" />
-        <meta name="msvalidate.01" content="2867C58B06CE8D9FE5C1532DBDC7B34D" />
-        <meta name="robots" content="index, follow" />
+                <meta name="robots" content="index, follow" />
         <meta property="og:site_name" content="CRM Daily" />
         <meta name="twitter:site" content="@crmdailyco" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

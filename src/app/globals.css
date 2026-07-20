@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
 
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -140,7 +140,7 @@ a { text-decoration: none; color: inherit; }
 .article-body pre, .article-body .wp-block-code { background: #0F0E0D !important; padding: 20px 24px !important; border-radius: 4px !important; overflow-x: auto !important; margin: 24px 0 !important; font-family: 'Space Mono', monospace !important; font-size: 13px !important; color: #F2EDE4 !important; }
 
 @keyframes ticker-slow { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.ticker-animate-slow { animation: ticker-slow 60s linear infinite; white-space: nowrap; display: inline-block; }
+.ticker-animate-slow { animation: ticker-slow 120s linear infinite; white-space: nowrap; display: inline-block; }
 
 /* ============================================
    RESPONSIVE — DESKTOP UNCHANGED, MOBILE FIXED

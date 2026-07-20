@@ -6,7 +6,7 @@
 const cache = {
   posts: null,
   fetchedAt: null,
-  TTL: 5 * 60 * 1000,
+  TTL: 30 * 60 * 1000,
 };
 
 function isCacheValid() {

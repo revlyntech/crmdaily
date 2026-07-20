@@ -25,10 +25,10 @@ export default function Sidebar() {
   const router = useRouter();
   const { articles, loading } = usePosts(100);
 
-  const totalArticles = articles.length;
-  const uniqueCategories = [...new Set(articles.map(a => a.category))];
+  const totalArticles = articles ? articles.length : 0;
+  const uniqueCategories = articles ? [...new Set(articles.map(a => a.category))] : [];
   const topicsCount = uniqueCategories.length;
-  const toolsCount = articles.filter(a => ["Tool Reviews","Tool Review","Tools","RevOps Intelligence","Sales Tech","AI in Sales","GTM Strategy"].includes(a.category)).length;
+  const toolsCount = articles ? articles.filter(a => ["Tool Reviews","Tool Review","Tools","RevOps Intelligence","Sales Tech","AI in Sales","GTM Strategy"].includes(a.category)).length : 0;
   const topCategoryNames = uniqueCategories.slice(0, 4).join(", ");
 
   async function handleSubmit(e) {

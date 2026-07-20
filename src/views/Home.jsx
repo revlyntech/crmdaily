@@ -22,9 +22,9 @@ export default function Home({ prefetchedArticles = null }) {
   const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 20);
   const wpArticles = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
   const articles = wpArticles.length > 0 ? wpArticles : [];
-  const featured = articles.find(a => a.featured) || articles[0];
-  const topStories = articles.filter(a => a.id !== featured?.id).slice(0, 4);
-  const gridArticles = articles.filter(a => a.id !== featured?.id);
+  const featured = articles && articles.length > 0 ? (articles.find(a => a.featured) || articles[0]) : null;
+  const topStories = articles && featured ? articles.filter(a => a.id !== featured.id).slice(0, 4) : [];
+  const gridArticles = articles && featured ? articles.filter(a => a.id !== featured.id) : [];
 
   if (!featured) return null;
   const heroImage = featured.featuredImage || fallbackImages[featured.color] || fallbackImages.blue;

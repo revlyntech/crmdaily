@@ -1,19 +1,12 @@
 {
-  "date": "2026-06-26",
+  "date": "2026-07-21",
   "articles": [
     {
-      "title": "Sales Tech Stack Signals: What's Shifting in 2026",
-      "excerpt": "From Salesforce upgrades to smarter B2B event tools, the sales tech landscape is evolving fast. Here's what RevOps teams need to know.",
-      "slug": "sales-tech-stack-signals-whats-shifting-in-2026",
-      "category": "Sales Tech",
-      "featured_image_url": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80"
-    },
-    {
-      "title": "Why AI in Sales Requires a Completely Different Playbook",
-      "excerpt": "AI is reshaping sales and CRM faster than any previous technology shift. Here's why old automation thinking will hold your team back.",
-      "slug": "why-ai-in-sales-requires-a-completely-different-playbook",
-      "category": "AI in Sales",
-      "featured_image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80"
+      "title": "What Is a GTM Motion? Definition, Examples and How to Pick Yours",
+      "excerpt": "Your GTM motion is the engine behind how you win customers. Here is what it means, why it matters, and how to choose the right one for your business.",
+      "slug": "what-is-a-gtm-motion-definition-examples-and-how-to-pick-yours",
+      "category": "Explainer",
+      "featured_image_url": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80"
     }
   ]
 }

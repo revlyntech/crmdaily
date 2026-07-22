@@ -1,1 +1,12 @@
-{"date": "2026-07-21", "articles": [], "sent": true}
+{
+  "date": "2026-07-22",
+  "articles": [
+    {
+      "title": "What Is ARR? The Metric Every SaaS Leader Must Understand",
+      "excerpt": "ARR is the backbone of SaaS revenue measurement. Here is what it means, why investors and operators care deeply about it, and how to use it well.",
+      "slug": "what-is-arr-the-metric-every-saas-leader-must-understand",
+      "category": "Explainer",
+      "featured_image_url": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80"
+    }
+  ]
+}

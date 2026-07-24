@@ -1,1 +1,12 @@
-{"date": "2026-07-23", "articles": [], "sent": true}
+{
+  "date": "2026-07-24",
+  "articles": [
+    {
+      "title": "How to Build a GTM Stack That Actually Closes Deals",
+      "excerpt": "From vertical sales software to unified SMB dashboards, the GTM stack is evolving fast. Here is how revenue teams should respond.",
+      "slug": "how-to-build-a-gtm-stack-that-actually-closes-deals",
+      "category": "GTM Strategy",
+      "featured_image_url": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80"
+    }
+  ]
+}

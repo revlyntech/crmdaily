@@ -195,15 +195,34 @@ export async function getPostById(id) {
   }
 }
 
+
 export async function getTotalPostsCount() {
   try {
-    const query = '{ posts(first: 1000, where: { status: PUBLISH }) { pageInfo { total } } }';
-    const res = await fetch(
-      typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : 'https://www.crmdaily.co/api/graphql',
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }), cache: 'no-store' }
-    );
-    const data = await res.json();
-    return data?.data?.posts?.pageInfo?.total || 0;
+    const BASE = typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : 'https://www.crmdaily.co/api/graphql';
+    let total = 0;
+    let hasMore = true;
+    let cursor = null;
+    let safetyLimit = 20; // max 20 pages x 100 = 2000 articles
+
+    while (hasMore && safetyLimit > 0) {
+      safetyLimit--;
+      const afterClause = cursor ? `, after: "${cursor}"` : '';
+      const query = `{ posts(first: 100, where: { status: PUBLISH }${afterClause}) { nodes { id } pageInfo { hasNextPage endCursor } } }`;
+      const res = await fetch(BASE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+        cache: 'no-store'
+      });
+      const data = await res.json();
+      const nodes = data?.data?.posts?.nodes || [];
+      const pageInfo = data?.data?.posts?.pageInfo || {};
+      total += nodes.length;
+      hasMore = pageInfo.hasNextPage || false;
+      cursor = pageInfo.endCursor || null;
+      if (!hasMore || !cursor) break;
+    }
+    return total;
   } catch {
     return 0;
   }

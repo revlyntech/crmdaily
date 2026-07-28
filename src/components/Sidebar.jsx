@@ -1,9 +1,11 @@
 ﻿'use client';
+import React from 'react';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
+import { getTotalPostsCount } from "../lib/wordpress";
 import { subscribeEmail } from "../utils/beehiiv";
 
 const topics = [
@@ -23,9 +25,13 @@ export default function Sidebar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const router = useRouter();
-  const { articles, loading } = usePosts(1000);
+  const { articles, loading } = usePosts(100);
+  const [realTotal, setRealTotal] = React.useState(0);
+  React.useEffect(() => {
+    getTotalPostsCount().then(count => { if(count > 0) setRealTotal(count); });
+  }, []);
 
-  const totalArticles = articles ? articles.length : 0;
+  const totalArticles = realTotal > 0 ? realTotal : (articles ? articles.length : 0);
   const uniqueCategories = articles ? [...new Set(articles.map(a => a.category))] : [];
   const topicsCount = uniqueCategories.length;
   const toolsCount = articles ? articles.filter(a => ["Tool Reviews","Tool Review","Tools","RevOps Intelligence","Sales Tech","AI in Sales","GTM Strategy"].includes(a.category)).length : 0;

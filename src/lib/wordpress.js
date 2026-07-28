@@ -194,3 +194,17 @@ export async function getPostById(id) {
     return null;
   }
 }
+
+export async function getTotalPostsCount() {
+  try {
+    const query = '{ posts(first: 1000, where: { status: PUBLISH }) { pageInfo { total } } }';
+    const res = await fetch(
+      typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : 'https://www.crmdaily.co/api/graphql',
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }), cache: 'no-store' }
+    );
+    const data = await res.json();
+    return data?.data?.posts?.pageInfo?.total || 0;
+  } catch {
+    return 0;
+  }
+}

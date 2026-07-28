@@ -134,6 +134,7 @@ BEST_TOOLS_TOPICS = [
 ]
 
 import random
+import requests
 
 USED_TOPICS_LOG = "used_topics.json"
 
@@ -373,7 +374,7 @@ Requirements:
     content = content.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
     article["content"] = content
 
-    article["featured_image_url"] = get_relevant_image(article["category"], hour_index)
+    article["featured_image_url"] = get_pexels_image(article["title"], article["category"])
     save_category_log(article["category"])
 
     print(f"Generated: {article['title']}")

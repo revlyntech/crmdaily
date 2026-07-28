@@ -1,4 +1,4 @@
-name: CRM Daily - Auto Publish Article
+﻿name: CRM Daily - Auto Publish Article
 
 on:
   schedule:
@@ -36,6 +36,7 @@ jobs:
           BEEHIIV_API_KEY:   ${{ secrets.BEEHIIV_API_KEY }}
           BEEHIIV_PUB_ID:    ${{ secrets.BEEHIIV_PUB_ID }}
           RESEND_API_KEY:    ${{ secrets.RESEND_API_KEY }}
+          PEXELS_API_KEY:    ${{ secrets.PEXELS_API_KEY }}
         run: python automation/main.py
 
       - name: Commit logs

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePosts } from "../lib/usePosts";
+import { useState as usePageState } from "react";
 import { articles as staticArticles } from "../data/articles";
 import CategoryBadge from "../components/CategoryBadge";
 import ArticleCard from "../components/ArticleCard";
@@ -19,12 +20,16 @@ const fallbackImages = {
 
 export default function Home({ prefetchedArticles = null }) {
   const router = useRouter();
-  const { articles: fetched, loading } = usePosts(prefetchedArticles ? 0 : 20);
+  const { articles: fetched, loading } = usePosts(20);
+  const [currentPage, setCurrentPage] = usePageState(1);
+  const ARTICLES_PER_PAGE = 12;
   const wpArticles = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
   const articles = wpArticles.length > 0 ? wpArticles : [];
   const featured = articles && articles.length > 0 ? (articles.find(a => a.featured) || articles[0]) : null;
   const topStories = articles && featured ? articles.filter(a => a.id !== featured.id).slice(0, 4) : [];
-  const gridArticles = articles && featured ? articles.filter(a => a.id !== featured.id) : [];
+  const allGridArticles = articles && featured ? articles.filter(a => a.id !== featured.id) : [];
+  const totalPages = Math.ceil(allGridArticles.length / ARTICLES_PER_PAGE);
+  const gridArticles = allGridArticles.slice((currentPage - 1) * ARTICLES_PER_PAGE, currentPage * ARTICLES_PER_PAGE);
 
   if (!featured) return null;
   const heroImage = featured.featuredImage || fallbackImages[featured.color] || fallbackImages.blue;

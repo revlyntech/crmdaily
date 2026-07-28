@@ -23,7 +23,7 @@ export default function Sidebar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const router = useRouter();
-  const { articles, loading } = usePosts(100);
+  const { articles, loading } = usePosts(1000);
 
   const totalArticles = articles ? articles.length : 0;
   const uniqueCategories = articles ? [...new Set(articles.map(a => a.category))] : [];
@@ -131,7 +131,7 @@ export default function Sidebar() {
           {[
             { label:"ARTICLES PUBLISHED", value:String(totalArticles || articles.length || 0), sub:"Live from CRM Daily" },
             { label:"TOPICS COVERED",     value:String(topicsCount || 6),   sub:topCategoryNames||"CRM, GTM, AI, RevOps" },
-            { label:"TOOLS REVIEWED",     value:String(toolsCount || 0),    sub:"Tool reviews & comparisons" },
+            { label:"TOOLS REVIEWED",     value:toolsCount > 0 ? String(toolsCount) : "...", sub:"Tool reviews & comparisons" },
           ].map(s => (
             <div key={s.label} style={{ marginBottom:16, paddingBottom:16, borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>

@@ -288,7 +288,7 @@ def search_pexels_query(query, api_key, used_ids):
         resp = requests.get(
             "https://api.pexels.com/v1/search",
             headers=headers,
-            params={"query": query, "per_page": 30, "orientation": "landscape", "size": "large"},
+            params={"query": query, "per_page": 30, "page": random.randint(1, 3), "orientation": "landscape", "size": "large"},
             timeout=10
         )
         if resp.status_code == 200:

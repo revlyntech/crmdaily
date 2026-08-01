@@ -1,1 +1,12 @@
-{"date": "2026-07-31", "articles": [], "sent": true}
+{
+  "date": "2026-08-01",
+  "articles": [
+    {
+      "title": "How to Build Relationship Infrastructure That Scales Revenue",
+      "excerpt": "Most revenue teams focus on tools and tactics, but the real pipeline advantage comes from treating every relationship as a long-term asset. Here is how to build the infrastructure that supports it.",
+      "slug": "how-to-build-relationship-infrastructure-that-scales-revenue",
+      "category": "GTM Strategy",
+      "featured_image_url": "https://images.pexels.com/photos/7219167/pexels-photo-7219167.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

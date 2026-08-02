@@ -1,1 +1,12 @@
-{"date": "2026-08-01", "articles": [], "sent": true}
+{
+  "date": "2026-08-02",
+  "articles": [
+    {
+      "title": "What Is MEDDIC? The B2B Sales Framework Explained",
+      "excerpt": "MEDDIC helps sales teams qualify deals faster and close more of them. Here is what each letter means and how to put it to work.",
+      "slug": "what-is-meddic-the-b2b-sales-framework-explained-2",
+      "category": "Explainer",
+      "featured_image_url": "https://images.pexels.com/photos/7693700/pexels-photo-7693700.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

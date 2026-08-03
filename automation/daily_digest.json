@@ -1,1 +1,12 @@
-{"date": "2026-08-02", "articles": [], "sent": true}
+{
+  "date": "2026-08-03",
+  "articles": [
+    {
+      "title": "Pipedrive vs HubSpot: Which CRM Fits SMBs Best in 2026?",
+      "excerpt": "Pipedrive and HubSpot both serve SMBs well, but they suit very different teams. Here is how to choose the right one for your business.",
+      "slug": "pipedrive-vs-hubspot-which-crm-fits-smbs-best-in-2026",
+      "category": "Tool Comparison",
+      "featured_image_url": "https://images.pexels.com/photos/3184323/pexels-photo-3184323.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

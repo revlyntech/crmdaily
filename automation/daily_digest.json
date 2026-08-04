@@ -1,19 +1,12 @@
 {
-  "date": "2026-08-03",
+  "date": "2026-08-04",
   "articles": [
     {
-      "title": "Pipedrive vs HubSpot: Which CRM Fits SMBs Best in 2026?",
-      "excerpt": "Pipedrive and HubSpot both serve SMBs well, but they suit very different teams. Here is how to choose the right one for your business.",
-      "slug": "pipedrive-vs-hubspot-which-crm-fits-smbs-best-in-2026",
-      "category": "Tool Comparison",
-      "featured_image_url": "https://images.pexels.com/photos/3184323/pexels-photo-3184323.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    },
-    {
-      "title": "What Is NRR and Why It Matters More Than New Sales",
-      "excerpt": "Net Revenue Retention reveals whether your existing customers are growing or shrinking in value. Here is what NRR means, how to calculate it, and how to act on it.",
-      "slug": "what-is-nrr-and-why-it-matters-more-than-new-sales",
-      "category": "Explainer",
-      "featured_image_url": "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "title": "How to Build a GTM Intelligence Stack That Actually Converts",
+      "excerpt": "From white-label prospecting tools to conversation intelligence plugins, GTM teams now have more signal than ever. Here is how to turn that signal into pipeline.",
+      "slug": "how-to-build-a-gtm-intelligence-stack-that-actually-converts",
+      "category": "GTM Strategy",
+      "featured_image_url": "https://images.pexels.com/photos/7794042/pexels-photo-7794042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

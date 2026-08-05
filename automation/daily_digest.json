@@ -1,1 +1,12 @@
-{"date": "2026-08-04", "articles": [], "sent": true}
+{
+  "date": "2026-08-05",
+  "articles": [
+    {
+      "title": "What Is Account-Based Marketing and Why Does It Work?",
+      "excerpt": "ABM flips the traditional funnel, targeting specific high-value accounts instead of broad audiences. Here is what it is, why it works, and how to run it well.",
+      "slug": "what-is-account-based-marketing-and-why-does-it-work",
+      "category": "Explainer",
+      "featured_image_url": "https://images.pexels.com/photos/7971364/pexels-photo-7971364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

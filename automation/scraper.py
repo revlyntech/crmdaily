@@ -1,12 +1,15 @@
 import requests
 import json
 import os
+import random
 from datetime import datetime, timedelta, timezone
 
 NEWS_API_KEY = os.environ["NEWS_API_KEY"]
 NEWS_API_URL = "https://newsapi.org/v2/everything"
 
-SEARCH_QUERIES = [
+# Larger pool - we randomly pick a subset each run so we're not always
+# hitting the exact same 7 queries in the exact same order every time.
+SEARCH_QUERY_POOL = [
     "HubSpot OR Salesforce OR Pipedrive",
     "CRM software sales",
     "RevOps GTM strategy",
@@ -14,6 +17,13 @@ SEARCH_QUERIES = [
     "sales intelligence outreach",
     "B2B SaaS sales tools",
     "Gong OR Clari OR Apollo OR Salesloft",
+    "sales pipeline management software",
+    "customer relationship management platform",
+    "sales enablement technology",
+    "revenue operations tools",
+    "CRM integration API",
+    "lead generation software B2B",
+    "sales forecasting software",
 ]
 
 BLOCKED_DOMAINS = [
@@ -57,37 +67,55 @@ BLOCKED_TITLE_KEYWORDS = [
 PUBLISHED_LOG  = "published_titles.json"
 PUBLISHED_URLS = "published_urls.json"
 
+MAX_STORED_TITLES = 150
+MAX_STORED_URLS   = 300
+
 def load_published_titles():
+    """Returns an ORDERED list (oldest first). Kept as list, not set,
+    so 'most recent N' actually means most recent."""
     if os.path.exists(PUBLISHED_LOG):
         try:
             with open(PUBLISHED_LOG, "r", encoding="utf-8-sig") as f:
-                return set(json.load(f))
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+                return list(data)
         except Exception:
-            return set()
-    return set()
+            return []
+    return []
 
 def load_published_urls():
+    """Returns an ORDERED list (oldest first)."""
     if os.path.exists(PUBLISHED_URLS):
         try:
             with open(PUBLISHED_URLS, "r", encoding="utf-8-sig") as f:
-                return set(json.load(f))
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+                return list(data)
         except Exception:
-            return set()
-    return set()
+            return []
+    return []
 
 def save_published_title(title):
     titles = load_published_titles()
-    titles.add(title.lower().strip())
-    titles_list = list(titles)[-100:]
+    clean = title.lower().strip()
+    if clean in titles:
+        titles.remove(clean)  # move to end (most recent) if re-seen
+    titles.append(clean)
+    titles = titles[-MAX_STORED_TITLES:]  # now this actually keeps the newest N
     with open(PUBLISHED_LOG, "w", encoding="utf-8") as f:
-        json.dump(titles_list, f)
+        json.dump(titles, f)
 
 def save_published_url(url):
     urls = load_published_urls()
-    urls.add(url.strip())
-    urls_list = list(urls)[-200:]
+    clean = url.strip()
+    if clean in urls:
+        urls.remove(clean)
+    urls.append(clean)
+    urls = urls[-MAX_STORED_URLS:]
     with open(PUBLISHED_URLS, "w", encoding="utf-8") as f:
-        json.dump(urls_list, f)
+        json.dump(urls, f)
 
 def is_blocked(url):
     if not url:
@@ -125,18 +153,23 @@ def scrape_news():
     articles         = []
     from_date        = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
     published_titles = load_published_titles()
-    published_urls   = load_published_urls()
+    published_urls   = set(load_published_urls())  # set is fine here, only used for lookup
+
+    # Pick a random subset of queries each run so we're not hammering the
+    # exact same narrow set of searches (which kept surfacing the same
+    # already-used top-relevancy evergreen articles).
+    queries = random.sample(SEARCH_QUERY_POOL, k=min(8, len(SEARCH_QUERY_POOL)))
 
     print("Fetching news from NewsAPI...")
 
-    for query in SEARCH_QUERIES:
+    for query in queries:
         try:
             response = requests.get(NEWS_API_URL, params={
                 "q":        query,
                 "from":     from_date,
-                "sortBy":   "relevancy",
+                "sortBy":   "publishedAt",  # freshest first, instead of relevancy
                 "language": "en",
-                "pageSize": 10,
+                "pageSize": 15,
                 "apiKey":   NEWS_API_KEY,
             })
 

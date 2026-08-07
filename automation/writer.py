@@ -96,6 +96,20 @@ COMPARISON_TOPICS = [
     ("Freshsales", "Pipedrive", "field sales teams"),
     ("Salesforce", "HubSpot", "RevOps and operations leaders"),
     ("Monday CRM", "Zoho CRM", "project-driven sales teams"),
+    ("Close", "Pipedrive", "small inside sales teams"),
+    ("Insightly", "HubSpot", "project-based sales teams"),
+    ("Copper", "HubSpot", "Google Workspace-based teams"),
+    ("Nimble", "Zoho CRM", "solopreneurs and small teams"),
+    ("Keap", "HubSpot", "service-based small businesses"),
+    ("Salesforce", "Zoho CRM", "cost-conscious enterprise teams"),
+    ("Freshsales", "Zoho CRM", "budget-conscious startups"),
+    ("Monday CRM", "Pipedrive", "visual pipeline teams"),
+    ("HubSpot", "ActiveCampaign", "marketing-first revenue teams"),
+    ("Salesforce", "Freshsales", "scaling sales teams"),
+    ("Pipedrive", "Copper", "relationship-driven sales teams"),
+    ("Zoho CRM", "Insightly", "teams combining projects and sales"),
+    ("Close", "HubSpot", "high-volume inside sales teams"),
+    ("Salesforce", "Pipedrive", "enterprise vs SMB needs"),
 ]
 
 # ── Explainer topics ──
@@ -110,6 +124,16 @@ EXPLAINER_TOPICS = [
     ("What is Pipeline Coverage", "pipeline coverage ratio", "pipeline coverage"),
     ("What is a Sales Cycle", "sales cycle length", "sales cycle"),
     ("What is Account-Based Marketing", "ABM strategy B2B", "ABM"),
+    ("What is CAC", "Customer Acquisition Cost", "CAC"),
+    ("What is LTV", "Customer Lifetime Value", "LTV"),
+    ("What is Win Rate", "sales win rate calculation", "win rate"),
+    ("What is MRR", "Monthly Recurring Revenue", "MRR"),
+    ("What is Product-Led Growth", "PLG strategy SaaS", "PLG"),
+    ("What is Churn Rate", "customer churn rate SaaS", "churn rate"),
+    ("What is a Sales Qualified Lead", "SQL sales qualified lead", "SQL"),
+    ("What is CRM Data Hygiene", "CRM data cleaning best practices", "data hygiene"),
+    ("What is Lead Scoring", "lead scoring model B2B", "lead scoring"),
+    ("What is a Sales Funnel", "sales funnel stages B2B", "sales funnel"),
 ]
 
 # ── Deep Guide topics ──
@@ -356,6 +380,40 @@ def load_news():
     with open("scraped_news.json", "r") as f:
         return json.load(f)
 
+def humanize_pass(content, client):
+    """Second-pass edit to break up uniform AI cadence before publishing."""
+    try:
+        edit_prompt = f"""Do a quick human editor's pass on this HTML article body. Do not summarize or shorten it meaningfully - keep the same length, facts, HTML tags, and internal links exactly as they are.
+
+Your only job is to vary the rhythm so it reads like a person edited it, not a model:
+- Break up any run of same-length sentences - combine two short ones or split a long one
+- Cut redundant hedging words (somewhat, generally, often, tends to) where they add nothing
+- Swap in a contraction here and there if it reads naturally (it's, doesn't, that's)
+- If two sentences in a row start the same way (e.g. both start with "This" or both start with "The"), reword one
+- Leave all <a href> links, <h2> tags, and <blockquote> content untouched - do not remove or alter any link or URL
+
+Reply with ONLY the revised HTML, no preamble, no explanation.
+
+ARTICLE HTML:
+{content}"""
+        msg = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=2500,
+            messages=[{"role": "user", "content": edit_prompt}]
+        )
+        revised = msg.content[0].text.strip()
+        # Safety check: don't accept a pass that dropped links or shrank drastically
+        original_links = len(re.findall(r'<a\s+href=', content))
+        revised_links = len(re.findall(r'<a\s+href=', revised))
+        if revised_links < original_links or len(revised) < len(content) * 0.7:
+            print("   Humanize pass looked unsafe (lost links or too short) - keeping original draft")
+            return content
+        print("   Applied humanize pass")
+        return revised
+    except Exception as e:
+        print(f"   Humanize pass error, keeping original draft: {e}")
+        return content
+
 def generate_article(news_items):
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
@@ -392,6 +450,21 @@ def generate_article(news_items):
     if extra_instruction and forced_category in ["Tool Comparison", "Explainer", "Deep Guide", "Best Tools"]:
         writing_instruction = extra_instruction
 
+    opening_styles = [
+        "Open with a short, blunt one-sentence statement (under 10 words) before expanding.",
+        "Open with a specific concrete scenario or example, not a general statement.",
+        "Open with a direct question the reader is likely asking themselves.",
+        "Open by stating the most surprising fact from the news items first.",
+    ]
+    closing_styles = [
+        "End on a specific, concrete takeaway or action item - not a generic summary.",
+        "End by naming a tradeoff or open question, not a tidy resolution.",
+        "End with a short punchy closing line (under 12 words).",
+        "End by circling back to the opening example or scenario.",
+    ]
+    opening_style = random.choice(opening_styles)
+    closing_style = random.choice(closing_styles)
+
     prompt = f"""You are a senior editor at CRM Daily, a leading publication for CRM and GTM professionals.
 Today is {today}. Based on the following news items, write ONE comprehensive, original article for CRM Daily.
 
@@ -399,6 +472,17 @@ NEWS ITEMS:
 {news_context}
 
 WRITING TASK: {writing_instruction}
+
+HUMAN WRITING STYLE RULES (critical):
+- Vary sentence length deliberately: mix short 4-8 word sentences with longer 20-30 word sentences in the same paragraph. Do not let every sentence be roughly the same length.
+- Use contractions naturally throughout: it's, don't, you'll, that's, doesn't, can't.
+- Never use these overused words/phrases: delve, boast/boasts, robust, seamless, leverage (as a verb), elevate, unlock, game-changer, landscape, realm, tapestry, testament, moreover, furthermore, additionally, in conclusion, it's worth noting, when it comes to, at the end of the day, navigating, dive into, plays a crucial role, cannot be overstated, in today's world.
+- Do not use the "X, Y, and Z" triplet list pattern more than once in the entire article.
+- Never use "not only X but also Y" constructions.
+- Write with a mild, specific point of view rather than neutral encyclopedia tone - it's fine to say what actually matters more and why.
+- {opening_style}
+- {closing_style}
+- Do NOT invent direct quotes attributed to named people or companies. If the news items don't contain a real quote, describe the development in your own analytical voice instead - do not fabricate attributed statements.
 
 INTERNAL LINKS TO INCLUDE:
 Naturally include 5-7 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags.
@@ -455,15 +539,14 @@ CONTENT:
 - <h2> for section headings (3-4 sections)
 - <strong> for key terms
 - <ul><li> for bullet points
-- <blockquote> for stats or key quotes
+- <blockquote> for a real stat or data point from the news items (not an invented quote)
 - <a href="URL">anchor text</a> for 5-7 internal links - spread throughout the article
 Requirements:
-- Strong opening hook paragraph
+- Vary paragraph length - some 1-2 sentences, some 4-5 sentences
 - 3-4 sections with H2 headings
 - Actionable insights for CRM/RevOps professionals
 - Reference real tools where relevant
-- Professional but engaging tone
-- Forward-looking conclusion
+- Confident, specific tone with a clear point of view - avoid hedging every claim
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags
 - Use hyphen (-) not em dash everywhere
@@ -501,6 +584,10 @@ Requirements:
 
     content = content_match.group(1).strip() if content_match else response
     content = content.replace('\u2014', '-').replace('\u2013', '-').replace('&mdash;', '-').replace('&ndash;', '-')
+
+    # Second pass: human editor-style rewrite to break up uniform AI cadence
+    content = humanize_pass(content, client)
+
     article["content"] = content
 
     article["featured_image_url"] = get_pexels_image(article["title"], article["category"], client)

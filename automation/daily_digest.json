@@ -1,1 +1,12 @@
-{"date": "2026-08-06", "articles": [], "sent": true}
+{
+  "date": "2026-08-07",
+  "articles": [
+    {
+      "title": "Salesforce vs Monday CRM: Which Wins for Enterprise RevOps?",
+      "excerpt": "Enterprise RevOps teams face a real choice between Salesforce and Monday CRM. Here is a clear breakdown of features, pricing, integrations, and fit.",
+      "slug": "salesforce-vs-monday-crm-which-wins-for-enterprise-revops",
+      "category": "Tool Comparison",
+      "featured_image_url": "https://images.pexels.com/photos/7964413/pexels-photo-7964413.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

@@ -236,13 +236,6 @@ def get_next_category():
         json.dump({"last_index": next_index}, f)
     return CATEGORY_ROTATION[next_index]
 
-def save_category_log(category):
-    if category in CATEGORY_ROTATION:
-        index = CATEGORY_ROTATION.index(category)
-        with open(CATEGORY_LOG, "w", encoding="utf-8") as f:
-            json.dump({"last_index": index}, f)
-
-
 def get_used_image_ids():
     """Load list of recently used Pexels image IDs."""
     try:
@@ -591,7 +584,6 @@ Requirements:
     article["content"] = content
 
     article["featured_image_url"] = get_pexels_image(article["title"], article["category"], client)
-    save_category_log(article["category"])
 
     print(f"Generated: {article['title']}")
     print(f"   Category: {article['category']}")

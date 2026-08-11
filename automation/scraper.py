@@ -33,6 +33,22 @@ BLOCKED_DOMAINS = [
     "nbcnews.com", "abcnews.com", "cbsnews.com",
     "espn.com", "sports.yahoo.com", "nfl.com", "nba.com",
     "prtimes.jp", "marketbeat.com", "krones.com",
+    # Low-quality aggregators / job boards / content mills that let
+    # generic keyword matches (like "sales") through on off-topic content
+    "newsbreak.com", "wordupnews.com", "indeed.com", "ziprecruiter.com",
+    "glassdoor.com", "linkedin.com/jobs", "simplyhired.com",
+    "careerbuilder.com", "monster.com",
+]
+
+# Specific CRM/sales-tech terms. If ANY of these appear, the article is
+# relevant regardless of anything else.
+STRONG_KEYWORDS = [
+    "CRM", "HubSpot", "Salesforce", "Pipedrive", "RevOps",
+    "Zoho CRM", "Freshsales", "Monday CRM", "Gong.io", "Gong",
+    "Clari", "Apollo.io", "Salesloft", "Outreach.io", "Clay",
+    "Smartlead", "sales pipeline", "sales automation",
+    "sales enablement", "customer relationship management",
+    "go-to-market", "GTM strategy", "sales tech", "martech",
 ]
 
 BLOCKED_IMAGE_DOMAINS = [
@@ -131,7 +147,17 @@ def is_relevant(title, summary=""):
     title   = title or ""
     summary = summary or ""
     text    = (title + " " + summary).lower()
-    return any(kw.lower() in text for kw in REQUIRED_KEYWORDS)
+
+    # A single specific, unambiguous CRM/sales-tech term is enough on its own
+    if any(kw.lower() in text for kw in STRONG_KEYWORDS):
+        return True
+
+    # Otherwise require at least 2 distinct generic keyword matches -
+    # a single generic word like "sales" or "B2B" appearing once is too
+    # weak a signal on its own and lets unrelated content (job listings,
+    # generic business guides) through.
+    matches = sum(1 for kw in REQUIRED_KEYWORDS if kw.lower() in text)
+    return matches >= 2
 
 def is_blocked_topic(title):
     title_lower = title.lower()

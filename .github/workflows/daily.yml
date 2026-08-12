@@ -43,7 +43,20 @@ jobs:
         run: |
           git config user.name "CRM Daily Bot"
           git config user.email "bot@crmdaily.co"
-          git add -f automation/published_titles.json automation/category_log.json automation/published_urls.json automation/daily_digest.json automation/used_topics.json automation/used_images.json 2>/dev/null || true
+
+          # Add each log file individually - if git add is given multiple
+          # paths in one command and ANY one is missing, it aborts staging
+          # of ALL of them. Checking existence per-file avoids that trap.
+          LOG_FILES="automation/published_titles.json automation/category_log.json automation/published_urls.json automation/daily_digest.json automation/used_topics.json automation/used_images.json"
+          for f in $LOG_FILES; do
+            if [ -f "$f" ]; then
+              git add -f "$f"
+              echo "Staged: $f"
+            else
+              echo "Skipped (does not exist yet): $f"
+            fi
+          done
+
           if git diff --staged --quiet; then
             echo "No log changes to commit"
           else

@@ -1,1 +1,12 @@
-{"date": "2026-08-14", "articles": [], "sent": true}
+{
+  "date": "2026-08-15",
+  "articles": [
+    {
+      "title": "What Is NRR and Why It Beats ARR for Measuring Growth",
+      "excerpt": "NRR tells you whether your existing customers are growing or shrinking in value. Here's what it means, how to calculate it, and why it matters more than you think.",
+      "slug": "what-is-nrr-and-why-it-beats-arr-for-measuring-growth",
+      "category": "Explainer",
+      "featured_image_url": "https://images.pexels.com/photos/7580639/pexels-photo-7580639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

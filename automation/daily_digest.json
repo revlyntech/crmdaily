@@ -1,12 +1,1 @@
-{
-  "date": "2026-08-16",
-  "articles": [
-    {
-      "title": "How to Implement a CRM That Actually Works for B2B Teams",
-      "excerpt": "Most B2B CRM implementations fail quietly. Here's a practical, framework-driven guide to getting it right the first time.",
-      "slug": "how-to-implement-a-crm-that-actually-works-for-b2b-teams",
-      "category": "Deep Guide",
-      "featured_image_url": "https://images.pexels.com/photos/7709115/pexels-photo-7709115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
-  ]
-}
+{"date": "2026-08-16", "articles": [], "sent": true}

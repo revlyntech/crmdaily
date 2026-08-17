@@ -47,6 +47,11 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-3MQK3D6CK8');
           `}
         </Script>
+        <Script
+          id="hs-script-loader"
+          src="https://js.hs-scripts.com/50824762.js"
+          strategy="afterInteractive"
+        />
         <ScrollToTop />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',

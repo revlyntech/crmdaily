@@ -1,1 +1,12 @@
-{"date": "2026-08-19", "articles": [], "sent": true}
+{
+  "date": "2026-08-20",
+  "articles": [
+    {
+      "title": "Salesforce vs Freshsales: Which CRM Scales Better?",
+      "excerpt": "Salesforce and Freshsales take very different approaches to scaling sales teams. Here's how they compare on features, pricing, and real-world fit.",
+      "slug": "salesforce-vs-freshsales-which-crm-scales-better",
+      "category": "Tool Comparison",
+      "featured_image_url": "https://images.pexels.com/photos/7793171/pexels-photo-7793171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

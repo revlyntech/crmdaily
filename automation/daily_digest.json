@@ -1,1 +1,12 @@
-{"date": "2026-08-20", "articles": [], "sent": true}
+{
+  "date": "2026-08-21",
+  "articles": [
+    {
+      "title": "How to Reduce Churn Rate for SaaS Teams (That Actually Works)",
+      "excerpt": "Churn is a revenue problem, not a support problem. Here's a practical, framework-driven guide to fixing it where it starts.",
+      "slug": "how-to-reduce-churn-rate-for-saas-teams-that-actually-works",
+      "category": "Deep Guide",
+      "featured_image_url": "https://images.pexels.com/photos/8837512/pexels-photo-8837512.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

@@ -7,6 +7,13 @@
       "slug": "why-your-crm-buying-process-is-already-broken-by-ai",
       "category": "AI in Sales",
       "featured_image_url": "https://images.pexels.com/photos/3183126/pexels-photo-3183126.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+      "title": "Why Gong's New PyAirbyte Plugin Matters for RevOps Teams",
+      "excerpt": "A new ContextBase plugin for Gong, backed by PyAirbyte, makes it easier to pipe conversation intelligence data into broader data workflows. Here's what RevOps teams should know.",
+      "slug": "why-gongs-new-pyairbyte-plugin-matters-for-revops-teams",
+      "category": "CRM News",
+      "featured_image_url": "https://images.pexels.com/photos/8068695/pexels-photo-8068695.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

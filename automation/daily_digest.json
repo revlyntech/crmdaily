@@ -1,1 +1,12 @@
-{"date": "2026-08-22", "articles": [], "sent": true}
+{
+  "date": "2026-08-23",
+  "articles": [
+    {
+      "title": "How to Build a GTM Pipeline That Actually Repeats",
+      "excerpt": "Most GTM teams build pipelines by instinct. Here's why treating pipeline like a factory changes everything.",
+      "slug": "how-to-build-a-gtm-pipeline-that-actually-repeats",
+      "category": "GTM Strategy",
+      "featured_image_url": "https://images.pexels.com/photos/7433851/pexels-photo-7433851.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

@@ -1,12 +1,1 @@
-{
-  "date": "2026-08-24",
-  "articles": [
-    {
-      "title": "What Is ARR and Why Every SaaS Team Should Track It",
-      "excerpt": "ARR is one of the most important metrics in SaaS. Here's what it means, why it matters, and how to use it to make smarter revenue decisions.",
-      "slug": "what-is-arr-and-why-every-saas-team-should-track-it",
-      "category": "Explainer",
-      "featured_image_url": "https://images.pexels.com/photos/7948037/pexels-photo-7948037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
-  ]
-}
+{"date": "2026-08-24", "articles": [], "sent": true}

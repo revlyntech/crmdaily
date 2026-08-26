@@ -1,1 +1,12 @@
-{"date": "2026-08-25", "articles": [], "sent": true}
+{
+  "date": "2026-08-26",
+  "articles": [
+    {
+      "title": "Why OpenAI's Sales Exodus Tells You Something About Your Stack",
+      "excerpt": "Two senior OpenAI sales leaders returned to Salesforce in a week. Here's what that talent shift reveals about enterprise sales tech priorities in 2026.",
+      "slug": "why-openais-sales-exodus-tells-you-something-about-your-stack",
+      "category": "Sales Tech",
+      "featured_image_url": "https://images.pexels.com/photos/7845232/pexels-photo-7845232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

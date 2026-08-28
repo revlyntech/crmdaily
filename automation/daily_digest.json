@@ -1,1 +1,12 @@
-{"date": "2026-08-27", "articles": [], "sent": true}
+{
+  "date": "2026-08-28",
+  "articles": [
+    {
+      "title": "What Is Lead Scoring - And Why Your Pipeline Depends on It",
+      "excerpt": "Lead scoring tells your sales team who to call first. Here's how it works, why it matters, and how to build a system that actually improves conversion.",
+      "slug": "what-is-lead-scoring-and-why-your-pipeline-depends-on-it",
+      "category": "Explainer",
+      "featured_image_url": "https://images.pexels.com/photos/7681091/pexels-photo-7681091.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

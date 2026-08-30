@@ -1,1 +1,12 @@
-{"date": "2026-08-29", "articles": [], "sent": true}
+{
+  "date": "2026-08-30",
+  "articles": [
+    {
+      "title": "The Complete GTM Strategy Guide for 2026",
+      "excerpt": "GTM strategy in 2026 looks nothing like it did three years ago. Here's the framework that actually works now.",
+      "slug": "the-complete-gtm-strategy-guide-for-2026",
+      "category": "Deep Guide",
+      "featured_image_url": "https://images.pexels.com/photos/5324982/pexels-photo-5324982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

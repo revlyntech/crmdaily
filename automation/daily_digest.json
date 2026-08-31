@@ -1,1 +1,12 @@
-{"date": "2026-08-30", "articles": [], "sent": true}
+{
+  "date": "2026-08-31",
+  "articles": [
+    {
+      "title": "Why Salesforce's 23% Stock Surge Actually Matters for CRM Teams",
+      "excerpt": "Salesforce shares jumped 22.6% on August 27 after strong Q2 results driven by Agentforce AI. Here's what the numbers mean for CRM and RevOps professionals.",
+      "slug": "why-salesforces-23-stock-surge-actually-matters-for-crm-teams",
+      "category": "CRM News",
+      "featured_image_url": "https://images.pexels.com/photos/6519364/pexels-photo-6519364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

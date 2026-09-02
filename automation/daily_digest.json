@@ -1,1 +1,12 @@
-{"date": "2026-09-01", "articles": [], "sent": true}
+{
+  "date": "2026-09-02",
+  "articles": [
+    {
+      "title": "HubSpot vs ActiveCampaign: Which Wins for Revenue Teams?",
+      "excerpt": "Marketing-first revenue teams face a real fork in the road between HubSpot and ActiveCampaign. Here's how to choose based on what actually matters.",
+      "slug": "hubspot-vs-activecampaign-which-wins-for-revenue-teams",
+      "category": "Tool Comparison",
+      "featured_image_url": "https://images.pexels.com/photos/7793136/pexels-photo-7793136.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

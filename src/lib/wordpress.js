@@ -1,6 +1,6 @@
 ﻿const WP_GRAPHQL_URL = typeof window === 'undefined'
   ? 'https://cms.crmdaily.co/graphql'
-  : 'https://www.crmdaily.co/api/graphql';
+  : '/api/graphql';
 
 // In-memory cache (per serverless instance — resets on cold start, that's fine)
 const cache = {
@@ -198,7 +198,7 @@ export async function getPostById(id) {
 
 export async function getTotalPostsCount() {
   try {
-    const BASE = typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : 'https://www.crmdaily.co/api/graphql';
+    const BASE = typeof window === 'undefined' ? 'https://cms.crmdaily.co/graphql' : '/api/graphql';
     let total = 0;
     let hasMore = true;
     let cursor = null;

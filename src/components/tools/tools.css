@@ -1,0 +1,218 @@
+/* Shared styles for CRM Daily's Tools suite.
+   Matches the real site palette found in src/views/*.jsx and globals.css:
+   dark navy hero (#0F172A), light body (#FAFBFC), orange accent (#E85D3A),
+   fonts: DM Serif Display / Inter / Space Mono (already loaded globally). */
+
+.cd-tool-hero {
+  background: #0F172A;
+  padding: 56px 32px;
+}
+
+.cd-tool-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cd-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: #E85D3A;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.cd-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  color: #FAFBFC;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+.cd-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: rgba(250, 251, 252, 0.65);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 60ch;
+}
+
+.cd-tool-body {
+  background: #FAFBFC;
+  padding: 56px 32px 96px;
+}
+
+.cd-tool-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cd-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E1DA;
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.cd-btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  background: #E85D3A;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.cd-btn:hover {
+  background: #d14e2c;
+}
+
+.cd-btn-secondary {
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1px solid #D9D4CB;
+}
+
+.cd-btn-secondary:hover {
+  background: #F3F1EC;
+}
+
+.cd-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #8A8680;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cd-input,
+.cd-select {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #D9D4CB;
+  color: #0F172A;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.cd-field {
+  margin-bottom: 20px;
+}
+
+.cd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.cd-pill {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 6px 14px;
+  border: 1px solid #D9D4CB;
+  border-radius: 20px;
+  color: #6B6862;
+  margin: 0 8px 8px 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: #FFFFFF;
+}
+
+.cd-pill.active {
+  border-color: #E85D3A;
+  color: #E85D3A;
+  background: #FDF1EC;
+}
+
+.cd-result-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: #0F172A;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.cd-result-meta {
+  color: #8A8680;
+  font-size: 13px;
+  margin: 0 0 12px;
+}
+
+.cd-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: #3D3A36;
+  line-height: 1.6;
+}
+
+.cd-strength {
+  color: #1E8E5A;
+}
+
+.cd-watch {
+  color: #B5720C;
+}
+
+.cd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.cd-table th,
+.cd-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E1DA;
+  vertical-align: top;
+  color: #3D3A36;
+}
+
+.cd-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #8A8680;
+  font-weight: 400;
+}
+
+.cd-big-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 40px;
+  color: #E85D3A;
+  margin: 0;
+}
+
+.cd-progress-bar {
+  height: 4px;
+  background: #E5E1DA;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.cd-progress-fill {
+  height: 100%;
+  background: #E85D3A;
+  transition: width 0.2s ease;
+}
+
+.cd-muted {
+  color: #8A8680;
+}
+
+.cd-body-text {
+  color: #3D3A36;
+}

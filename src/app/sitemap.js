@@ -1,5 +1,5 @@
 ﻿export const dynamic = "force-dynamic";
-const WP_GRAPHQL_URL = "https://www.crmdaily.co/api/graphql";
+const WP_GRAPHQL_URL = "https://cms.crmdaily.co/graphql";
 const GLOSSARY_SLUGS = ["arr","mrr","nrr","churn-rate","forecast","pipeline","win-rate","sales-cycle","cac","ltv","icp","revops","gtm","plg","meddic","deal-velocity","lead-scoring","sales-qualified-lead","marketing-qualified-lead","customer-success","expansion-revenue","net-dollar-retention","gross-dollar-retention","account-executive","sales-development-representative","business-development-representative","annual-contract-value","total-addressable-market","serviceable-addressable-market","product-led-growth","community-led-growth","sales-led-growth","outbound-sales","inbound-sales","account-based-marketing","demand-generation","revenue-operations","sales-operations","customer-acquisition-cost","customer-lifetime-value","sales-velocity","quota-attainment","ramp-time","sales-cycle-length","conversion-rate","close-rate","average-deal-size","sales-funnel","buyer-journey","ideal-customer-profile"];
 
 export default async function sitemap() {
@@ -13,6 +13,21 @@ export default async function sitemap() {
     { url: "https://www.crmdaily.co/newsletter",   lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: "https://www.crmdaily.co/about",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: "https://www.crmdaily.co/contact",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+  ];
+
+  // The interactive CRM tools suite - added once these pages went live.
+  // These are static Next.js pages, not WordPress content, so they need
+  // to be listed here manually rather than pulled from the WP query below.
+  const toolPages = [
+    { url: "https://www.crmdaily.co/tools/crm-matcher",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: "https://www.crmdaily.co/tools/do-you-need-a-crm",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: "https://www.crmdaily.co/tools/roi-calculator",           lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: "https://www.crmdaily.co/tools/stack-recommender",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: "https://www.crmdaily.co/tools/categories",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: "https://www.crmdaily.co/tools/compare",                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: "https://www.crmdaily.co/tools/alternatives",             lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: "https://www.crmdaily.co/tools/directory",                lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: "https://www.crmdaily.co/tools/add-ons",                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const glossaryPages = GLOSSARY_SLUGS.map(slug => ({
@@ -38,8 +53,8 @@ export default async function sitemap() {
       changeFrequency: "weekly",
       priority: 0.8,
     }));
-    return [...staticPages, ...glossaryPages, ...articlePages];
+    return [...staticPages, ...toolPages, ...glossaryPages, ...articlePages];
   } catch (err) {
-    return [...staticPages, ...glossaryPages];
+    return [...staticPages, ...toolPages, ...glossaryPages];
   }
 }

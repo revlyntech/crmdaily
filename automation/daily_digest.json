@@ -1,12 +1,1 @@
-{
-  "date": "2026-09-03",
-  "articles": [
-    {
-      "title": "The RevOps Tech Stack Guide for 2026",
-      "excerpt": "Which tools actually belong in your RevOps stack this year, and which are just noise? A practical guide for GTM teams building for scale.",
-      "slug": "the-revops-tech-stack-guide-for-2026",
-      "category": "Deep Guide",
-      "featured_image_url": "https://images.pexels.com/photos/34803995/pexels-photo-34803995.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
-  ]
-}
+{"date": "2026-09-03", "articles": [], "sent": true}

@@ -1,1 +1,12 @@
-{"date": "2026-09-04", "articles": [], "sent": true}
+{
+  "date": "2026-09-05",
+  "articles": [
+    {
+      "title": "What Is Churn Rate and Why Should You Care?",
+      "excerpt": "Churn rate tells you how fast you're losing customers. Here's what it means, how to calculate it, and what to do when it's too high.",
+      "slug": "what-is-churn-rate-and-why-should-you-care",
+      "category": "Explainer",
+      "featured_image_url": "https://images.pexels.com/photos/34494571/pexels-photo-34494571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

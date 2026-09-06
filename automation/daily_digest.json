@@ -1,1 +1,12 @@
-{"date": "2026-09-05", "articles": [], "sent": true}
+{
+  "date": "2026-09-06",
+  "articles": [
+    {
+      "title": "Freshsales vs Zoho CRM: Which Wins for Startups?",
+      "excerpt": "Two strong CRM options, one tight budget. Here's how Freshsales and Zoho CRM actually compare for early-stage startups watching every dollar.",
+      "slug": "freshsales-vs-zoho-crm-which-wins-for-startups",
+      "category": "Tool Comparison",
+      "featured_image_url": "https://images.pexels.com/photos/7792836/pexels-photo-7792836.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

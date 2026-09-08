@@ -35,6 +35,11 @@ TOPIC_IMAGES = {
         "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80",
         "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=80",
     ],
+    "CRM Fundamentals": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80",
+        "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+    ],
     "default": [
         "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
         "https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200&q=80",
@@ -42,20 +47,24 @@ TOPIC_IMAGES = {
     ],
 }
 
+# CRM Fundamentals is forced every morning run (see generate_article) and
+# picked in exact sequential order (Day 1 -> Day 30, then repeats) rather
+# than randomly - see pick_sequential_topic. The other 13 categories below
+# still pick randomly and now only advance once/day (evening slot only).
 CATEGORY_ROTATION = [
-    "CRM News",            # Day 1 - slot 1
-    "Tool Comparison",     # Day 1 - slot 2
-    "Explainer",           # Day 2 - slot 1
-    "GTM Strategy",        # Day 2 - slot 2
-    "CRM News",            # Day 3 - slot 1
-    "Tool Comparison",     # Day 3 - slot 2
-    "Explainer",           # Day 4 - slot 1
-    "Tool Reviews",        # Day 4 - slot 2
-    "RevOps Intelligence", # Day 5 - slot 1
-    "Deep Guide",          # Day 5 - slot 2
-    "Sales Tech",          # Day 6 - slot 1
-    "Best Tools",          # Day 6 - slot 2
-    "AI in Sales",         # Day 7
+    "CRM News",            # slot 1
+    "Tool Comparison",     # slot 2
+    "Explainer",           # slot 3
+    "GTM Strategy",        # slot 4
+    "CRM News",            # slot 5
+    "Tool Comparison",     # slot 6
+    "Explainer",           # slot 7
+    "Tool Reviews",        # slot 8
+    "RevOps Intelligence", # slot 9
+    "Deep Guide",          # slot 10
+    "Sales Tech",          # slot 11
+    "Best Tools",          # slot 12
+    "AI in Sales",         # slot 13
 ]
 
 # Internal pages for linking - Claude will pick relevant ones
@@ -85,6 +94,24 @@ INTERNAL_PAGES = [
 
 CATEGORY_LOG = "category_log.json"
 USED_IMAGES_LOG = "used_images.json"
+WP_GRAPHQL_URL = "https://cms.crmdaily.co/graphql"
+
+# Categories treated as "evergreen" - preferred when ranking which past
+# articles to surface for internal linking, since these are far more
+# likely to be genuine long-term search performers than time-sensitive
+# news posts. This is a heuristic, NOT real Google Search Console
+# ranking data - there's no live analytics feed wired into this script.
+EVERGREEN_CATEGORIES = {"Tool Comparison", "Explainer", "CRM Fundamentals", "Deep Guide", "Best Tools"}
+
+# Known high-value terms worth checking for when deciding what to search
+# the site for. If any of these appear in today's topic or source news,
+# we search the live site for past articles mentioning the same terms.
+KNOWN_SEARCH_TERMS = [
+    "HubSpot", "Salesforce", "Pipedrive", "Zoho CRM", "Monday CRM", "Freshsales",
+    "Close", "Copper", "Keap", "Insightly", "Nimble", "ActiveCampaign",
+    "RevOps", "GTM", "ARR", "MRR", "NRR", "CAC", "LTV", "ICP", "MEDDIC",
+    "churn", "pipeline", "forecast", "win rate", "lead scoring", "PLG", "ABM",
+]
 
 # ── Comparison topics ──
 COMPARISON_TOPICS = [
@@ -113,6 +140,9 @@ COMPARISON_TOPICS = [
 ]
 
 # ── Explainer topics ──
+# Note: "What is a Sales Funnel" and "What is Lead Scoring" were removed -
+# they're now covered (better, with more specific angles) by the new
+# sequential CRM_FUNDAMENTALS_TOPICS list below (Day 14 and Day 15).
 EXPLAINER_TOPICS = [
     ("What is RevOps", "revenue operations", "RevOps"),
     ("What is a GTM Motion", "go-to-market strategy", "GTM"),
@@ -132,8 +162,7 @@ EXPLAINER_TOPICS = [
     ("What is Churn Rate", "customer churn rate SaaS", "churn rate"),
     ("What is a Sales Qualified Lead", "SQL sales qualified lead", "SQL"),
     ("What is CRM Data Hygiene", "CRM data cleaning best practices", "data hygiene"),
-    ("What is Lead Scoring", "lead scoring model B2B", "lead scoring"),
-    ("What is a Sales Funnel", "sales funnel stages B2B", "sales funnel"),
+    ("What is a CRM Audit", "CRM health check basics", "CRM audit"),
 ]
 
 # ── Deep Guide topics ──
@@ -156,6 +185,41 @@ BEST_TOOLS_TOPICS = [
     ("Best CRM for Real Estate Teams in 2026", "best real estate CRM 2026", "real estate CRM"),
     ("Best GTM Tools for B2B SaaS in 2026", "GTM tools B2B SaaS 2026", "GTM tools"),
     ("Best Pipeline Management Tools in 2026", "pipeline management software", "pipeline tools"),
+]
+
+# ── CRM Fundamentals topics ── forced every morning run, picked in this
+# EXACT order (Day 1 -> Day 30) via pick_sequential_topic, then repeats.
+CRM_FUNDAMENTALS_TOPICS = [
+    ("What Is CRM? A Complete Beginner's Guide to Customer Relationship Management", "what is CRM beginner guide", "CRM basics"),
+    ("How Does a CRM Work? The Complete CRM Workflow Explained", "how does a CRM work", "CRM workflow"),
+    ("CRM vs ERP: What's the Difference and Which One Does Your Business Need?", "CRM vs ERP difference", "CRM comparison"),
+    ("What Are the Different Types of CRM? Operational, Analytical and Collaborative CRM Explained", "types of CRM operational analytical", "CRM types"),
+    ("What Are the Core Components of a CRM System?", "CRM system components", "CRM architecture"),
+    ("What Is CRM Software? Features, Benefits and How It Works", "CRM software features benefits", "CRM software"),
+    ("CRM Database Explained: Contacts, Companies, Deals and Activities", "CRM database structure", "CRM data"),
+    ("What Is a Contact in a CRM? Contacts, Leads and Customers Explained", "CRM contact vs lead vs customer", "Contact management"),
+    ("What Is an Account in CRM? Companies, Contacts and Account Hierarchy Explained", "CRM account hierarchy", "Accounts"),
+    ("What Is a Lead in CRM? Lead Management From Capture to Conversion", "CRM lead management", "Lead management"),
+    ("What Is an Opportunity in CRM? A Complete Guide to Sales Opportunities", "CRM sales opportunity", "Opportunities"),
+    ("What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained", "CRM pipeline stages", "Pipeline"),
+    ("CRM Pipeline Stages: How to Build the Right Sales Process", "CRM pipeline stage design", "Pipeline design"),
+    ("What Is a Sales Funnel? CRM Pipeline vs Sales Funnel Explained", "sales funnel vs CRM pipeline", "Funnel"),
+    ("What Is Lead Scoring? How CRM Teams Prioritize the Right Leads", "CRM lead scoring", "Lead scoring"),
+    ("What Is Lead Routing? How CRM Systems Assign Leads to Sales Reps", "CRM lead routing", "Lead routing"),
+    ("What Is CRM Automation? 15 Processes Every Business Should Automate", "CRM automation processes", "Automation"),
+    ("What Is a CRM Workflow? Triggers, Actions and Automation Explained", "CRM workflow triggers actions", "Workflows"),
+    ("CRM Data Management: How to Keep Your Customer Data Clean and Accurate", "CRM data management", "Data quality"),
+    ("CRM Data Hygiene: 15 Problems That Destroy CRM Data Quality", "CRM data hygiene problems", "Data hygiene"),
+    ("What Is CRM Integration? How CRMs Connect With Email, Marketing and Other Tools", "CRM integrations explained", "Integrations"),
+    ("CRM Reporting Explained: The Most Important Reports Every Sales Team Needs", "CRM reporting basics", "Reporting"),
+    ("CRM Dashboards Explained: What Should Your Sales Dashboard Track?", "CRM dashboard metrics", "Dashboards"),
+    ("CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track", "CRM metrics KPIs", "Metrics"),
+    ("What Is CRM Adoption? Why Employees Stop Using CRMs and How to Fix It", "CRM user adoption problem", "Adoption"),
+    ("How to Choose a CRM: The Complete CRM Buying Guide for Businesses", "how to choose a CRM", "CRM selection"),
+    ("How to Implement a CRM: Step-by-Step CRM Implementation Guide", "CRM implementation steps", "Implementation"),
+    ("CRM Migration Explained: How to Move From One CRM to Another Without Losing Data", "CRM migration guide", "Migration"),
+    ("CRM Customization vs CRM Configuration: What Should You Actually Change?", "CRM customization vs configuration", "Configuration"),
+    ("CRM Best Practices: The Complete Guide to Building a High-Performing CRM", "CRM best practices guide", "Master guide"),
 ]
 
 import random
@@ -182,6 +246,8 @@ def save_used_topic(category, topic_name):
         json.dump(used, f)
 
 def pick_unused_topic(topics, category, name_fn):
+    """Random pick, excluding already-used - used by categories where
+    order doesn't matter (Tool Comparison, Explainer, Deep Guide, Best Tools)."""
     used = get_used_topics()
     used_for_cat = used.get(category, [])
     unused = [t for t in topics if name_fn(t) not in used_for_cat]
@@ -194,6 +260,23 @@ def pick_unused_topic(topics, category, name_fn):
     chosen = random.choice(unused)
     save_used_topic(category, name_fn(chosen))
     return chosen
+
+def pick_sequential_topic(topics, category, name_fn):
+    """Picks topics IN LIST ORDER (Day 1 -> Day N), not randomly. Used for
+    CRM Fundamentals so the deliberately-sequenced curriculum publishes in
+    the intended order. Resets to the start once the full list is used."""
+    used = get_used_topics()
+    used_for_cat = used.get(category, [])
+    for t in topics:
+        if name_fn(t) not in used_for_cat:
+            save_used_topic(category, name_fn(t))
+            return t
+    # Whole list has been used - reset and restart from Day 1
+    used[category] = []
+    with open(USED_TOPICS_LOG, "w") as f:
+        json.dump(used, f)
+    save_used_topic(category, name_fn(topics[0]))
+    return topics[0]
 
 def get_extra_context(category):
     if category == "Tool Comparison":
@@ -220,6 +303,12 @@ def get_extra_context(category):
             lambda t: t[0]
         )
         return f"Write a best tools article: {topic[0]}. Give honest, specific opinions on each tool. Include pros, cons, pricing and who each tool is best for.", topic[0]
+    elif category == "CRM Fundamentals":
+        topic = pick_sequential_topic(
+            CRM_FUNDAMENTALS_TOPICS, "CRM Fundamentals",
+            lambda t: t[0]
+        )
+        return f"Write a clear, beginner-friendly, in-depth explainer titled: {topic[0]}. Assume the reader is new to CRM software. Define the concept plainly, explain why it matters day to day, and give a concrete example of it in practice.", topic[0]
     return "", ""
 
 
@@ -296,6 +385,7 @@ CATEGORY_IMAGE_QUERIES = {
     "Explainer":           ["business education presentation whiteboard","team learning office discussion","professional explaining strategy board","business concept presentation","office teaching training session"],
     "Deep Guide":          ["business guide strategy planning","detailed planning office documents","professional reading business report","strategy roadmap planning meeting","business blueprint planning desk"],
     "Best Tools":          ["productivity tools workspace organized","best business software laptop","professional tools technology desk","organized workspace productivity","business efficiency technology"],
+    "CRM Fundamentals":    ["laptop crm software screen","beginner learning office desk","simple business software interface","new employee training laptop","clean office desk computer"],
 }
 
 def search_pexels_query(query, api_key, used_ids):
@@ -373,6 +463,77 @@ def load_news():
     with open("scraped_news.json", "r") as f:
         return json.load(f)
 
+def get_search_keywords_for_topic(category, extra_topic, news_items):
+    """Figure out which known high-value terms are relevant to today's
+    article, so we know what to search the live site for."""
+    text_pool = (extra_topic or "") + " " + " ".join([
+        (n.get("title", "") + " " + n.get("summary", "")) for n in (news_items or [])
+    ])
+    text_lower = text_pool.lower()
+    found = [term for term in KNOWN_SEARCH_TERMS if term.lower() in text_lower]
+    return found[:5]  # cap to keep the number of search calls reasonable
+
+def search_site_for_related_articles(keywords):
+    """Search the LIVE WordPress site (not a local cache) for existing
+    published articles matching today's key terms - e.g. if today's
+    article discusses HubSpot and Salesforce, this finds any past
+    article already covering that comparison, anywhere in site history,
+    not just recently published ones."""
+    if not keywords:
+        return []
+
+    results = {}
+    query = """
+    query($search: String!) {
+      posts(first: 3, where: {search: $search, status: PUBLISH}) {
+        nodes {
+          title
+          slug
+          categories { nodes { name } }
+        }
+      }
+    }
+    """
+    for kw in keywords:
+        try:
+            resp = requests.post(
+                WP_GRAPHQL_URL,
+                json={"query": query, "variables": {"search": kw}},
+                timeout=8
+            )
+            data = resp.json()
+            nodes = (data.get("data") or {}).get("posts", {}).get("nodes", []) or []
+            for n in nodes:
+                slug = n.get("slug")
+                if slug and slug not in results:
+                    cats = n.get("categories", {}).get("nodes", []) or []
+                    cat_name = cats[0].get("name", "") if cats else ""
+                    results[slug] = {
+                        "title": n.get("title", ""),
+                        "slug": slug,
+                        "category": cat_name,
+                    }
+        except Exception as e:
+            print(f"   Site search error for '{kw}': {e}")
+
+    # Prefer evergreen categories first (best available proxy for "likely
+    # ranks well" without real Search Console data)
+    ranked = sorted(
+        results.values(),
+        key=lambda a: 0 if a.get("category") in EVERGREEN_CATEGORIES else 1
+    )
+    print(f"   Found {len(ranked)} related past article(s) via live site search")
+    return ranked[:8]
+
+def build_related_articles_prompt_block(related):
+    if not related:
+        return ""
+    lines = [
+        f'- "{a["title"]}" - https://www.crmdaily.co/article/{a["slug"]}'
+        for a in related if a.get("slug") and a.get("title")
+    ]
+    return "\n".join(lines)
+
 def humanize_pass(content, client):
     """Second-pass edit to break up uniform AI cadence before publishing."""
     try:
@@ -383,6 +544,7 @@ Your only job is to vary the rhythm so it reads like a person edited it, not a m
 - Cut redundant hedging words (somewhat, generally, often, tends to) where they add nothing
 - Swap in a contraction here and there if it reads naturally (it's, doesn't, that's)
 - If two sentences in a row start the same way (e.g. both start with "This" or both start with "The"), reword one
+- Vary explanatory analogies - if the draft leans on an overused CRM cliche (e.g. calling a CRM "a digital filing cabinet" or "a rolodex on steroids"), replace it with something fresher
 - Leave all <a href> links, <h2> tags, and <blockquote> content untouched - do not remove or alter any link or URL
 
 Reply with ONLY the revised HTML, no preamble, no explanation.
@@ -391,7 +553,7 @@ ARTICLE HTML:
 {content}"""
         msg = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=2500,
+            max_tokens=3800,
             messages=[{"role": "user", "content": edit_prompt}]
         )
         revised = msg.content[0].text.strip()
@@ -416,8 +578,18 @@ def generate_article(news_items):
     ])
 
     today          = datetime.now().strftime("%B %d, %Y")
-    hour_index     = datetime.now().hour
-    forced_category = get_next_category()
+    current_hour   = datetime.now().hour
+
+    # CRM Fundamentals is forced on the morning run (matches emailer.py's
+    # own "current_hour < 10" check for the 8am IST / UTC 2:30 slot) so it
+    # publishes every single day, in sequence. The evening run keeps
+    # consuming the normal 13-category rotation, once a day instead of
+    # twice - total articles/day stays at 2.
+    if current_hour < 10:
+        forced_category = "CRM Fundamentals"
+    else:
+        forced_category = get_next_category()
+
     print(f"   Category for this run: {forced_category}")
 
     internal_links_text = "\n".join([
@@ -425,6 +597,13 @@ def generate_article(news_items):
     ])
 
     extra_instruction, extra_topic = get_extra_context(forced_category)
+
+    # Search the LIVE site (not a local cache) for existing articles
+    # relevant to today's topic, so we can link to genuinely matching
+    # past content - regardless of how long ago it was published.
+    search_keywords = get_search_keywords_for_topic(forced_category, extra_topic, news_items)
+    related_articles = search_site_for_related_articles(search_keywords)
+    related_articles_block = build_related_articles_prompt_block(related_articles)
 
     category_instructions = {
         "CRM News":            "Write a news article about the most significant CRM industry development in the news items. Be factual and neutral.",
@@ -437,10 +616,11 @@ def generate_article(news_items):
         "Explainer":           extra_instruction or "Write a clear explainer on a key CRM or GTM term. Define it, explain why it matters, give examples.",
         "Deep Guide":          extra_instruction or "Write a detailed, actionable guide on a RevOps or GTM topic. Include frameworks, steps and examples.",
         "Best Tools":          extra_instruction or "Write a best tools roundup for a specific CRM use case. Be honest and specific about each tool.",
+        "CRM Fundamentals":    extra_instruction or "Write a beginner-friendly explainer about a core CRM concept. Assume no prior knowledge.",
     }
 
     writing_instruction = category_instructions.get(forced_category, category_instructions["CRM News"])
-    if extra_instruction and forced_category in ["Tool Comparison", "Explainer", "Deep Guide", "Best Tools"]:
+    if extra_instruction and forced_category in ["Tool Comparison", "Explainer", "Deep Guide", "Best Tools", "CRM Fundamentals"]:
         writing_instruction = extra_instruction
 
     opening_styles = [
@@ -448,6 +628,7 @@ def generate_article(news_items):
         "Open with a specific concrete scenario or example, not a general statement.",
         "Open with a direct question the reader is likely asking themselves.",
         "Open by stating the most surprising fact from the news items first.",
+        "Open by directly answering the core question in one clear sentence, then explain the reasoning after.",
     ]
     closing_styles = [
         "End on a specific, concrete takeaway or action item - not a generic summary.",
@@ -457,6 +638,13 @@ def generate_article(news_items):
     ]
     opening_style = random.choice(opening_styles)
     closing_style = random.choice(closing_styles)
+
+    related_articles_section = ""
+    if related_articles_block:
+        related_articles_section = f"""
+
+EXISTING ARTICLES ON THIS SITE THAT MAY BE RELEVANT (found via live site search on today's topic - link to ONE of these ONLY if it's a genuinely strong match, never force it, never fabricate a URL not listed here):
+{related_articles_block}"""
 
     prompt = f"""You are a senior editor at CRM Daily, a leading publication for CRM and GTM professionals.
 Today is {today}. Based on the following news items, write ONE comprehensive, original article for CRM Daily.
@@ -473,20 +661,29 @@ HUMAN WRITING STYLE RULES (critical):
 - Do not use the "X, Y, and Z" triplet list pattern more than once in the entire article.
 - Never use "not only X but also Y" constructions.
 - Write with a mild, specific point of view rather than neutral encyclopedia tone - it's fine to say what actually matters more and why.
+- Avoid cliche CRM analogies that have become overused (e.g. "digital filing cabinet," "rolodex on steroids") - find a fresher way to explain the concept.
 - {opening_style}
 - {closing_style}
 - Do NOT invent direct quotes attributed to named people or companies. If the news items don't contain a real quote, describe the development in your own analytical voice instead - do not fabricate attributed statements.
+- This article must not repeat the structure, phrasing, or angle of previous articles on this site - if the topic overlaps with something already covered, take a distinct angle rather than restating it.
+
+AEO RULES (important - this content also needs to work well when AI answer engines like ChatGPT, Perplexity, or Google AI Overviews extract and summarize it):
+- Answer the exact question posed in the title within the first 1-2 sentences, in plain, direct language, before adding nuance or context.
+- Use the FOCUS_KEYWORD naturally in the first paragraph, in at least one H2 heading, and once more later in the article.
+- Where the content is naturally a list, comparison, or set of steps, format it as an actual <ul><li> or numbered structure rather than a dense paragraph - AI answer engines and featured snippets favor extractable, well-structured chunks.
+- Keep each H2 section focused on one clear sub-question, written so it can be understood on its own if extracted out of context.
 
 INTERNAL LINKS TO INCLUDE:
 Naturally include 5-7 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags.
 Prioritise glossary links where you mention a CRM/GTM concept. For example if you mention ARR, link it to the ARR glossary page.
-{internal_links_text}
+{internal_links_text}{related_articles_section}
 
 Example usage:
 - "...the company reported strong <a href="https://www.crmdaily.co/glossary/arr">Annual Recurring Revenue (ARR)</a> growth..."
 - "...improving your <a href="https://www.crmdaily.co/glossary/win-rate">win rate</a> requires..."
 - "...visit our <a href="https://www.crmdaily.co/crm-tools">CRM Tools Directory</a> for comparisons..."
 - "...read our <a href="https://www.crmdaily.co/guides">CRM Guides</a> for step-by-step help..."
+- "...as we covered in <a href="https://www.crmdaily.co/article/some-real-slug">[real past article title]</a>..."
 
 HEADLINE DIVERSITY RULES:
 - NEVER start the title with "AI Is Reshaping" or "AI is Reshaping"
@@ -527,28 +724,28 @@ SEO_TITLE: [SEO title, 50-60 characters, includes focus keyword]
 SEO_META_DESCRIPTION: [meta description, 140-155 characters, includes focus keyword]
 ALT_TEXT: [featured image alt text, 10-15 words]
 CONTENT:
-[Write 800-1000 words in HTML format using:
+[Write 1300-1500 words in HTML format using:
 - <p> for paragraphs
-- <h2> for section headings (3-4 sections)
+- <h2> for section headings (4-6 sections)
 - <strong> for key terms
 - <ul><li> for bullet points
 - <blockquote> for a real stat or data point from the news items (not an invented quote)
 - <a href="URL">anchor text</a> for 5-7 internal links - spread throughout the article
 Requirements:
 - Vary paragraph length - some 1-2 sentences, some 4-5 sentences
-- 3-4 sections with H2 headings
+- 4-6 sections with H2 headings
 - Actionable insights for CRM/RevOps professionals
 - Reference real tools where relevant
 - Confident, specific tone with a clear point of view - avoid hedging every claim
 - Do NOT include the title in the content
 - Do NOT add any markdown, only HTML tags
 - Use hyphen (-) not em dash everywhere
-- Internal links must be real URLs from the list above
+- Internal links must be real URLs from the lists above - never invent a URL
 - Link glossary terms naturally when you first mention them in the article]"""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=2500,
+        max_tokens=3800,
         messages=[{"role": "user", "content": prompt}]
     )
 

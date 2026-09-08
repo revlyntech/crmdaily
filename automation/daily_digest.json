@@ -1,1 +1,12 @@
-{"date": "2026-09-07", "articles": [], "sent": true}
+{
+  "date": "2026-09-08",
+  "articles": [
+    {
+      "title": "Best GTM Tools for B2B SaaS in 2026",
+      "excerpt": "Not every GTM tool lives up to its pricing page. Here's an honest breakdown of what's actually worth your budget in 2026.",
+      "slug": "best-gtm-tools-for-b2b-saas-in-2026",
+      "category": "Best Tools",
+      "featured_image_url": "https://images.pexels.com/photos/3182795/pexels-photo-3182795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

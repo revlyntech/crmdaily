@@ -1,12 +1,19 @@
 {
-  "date": "2026-09-03",
+  "date": "2026-09-08",
   "articles": [
     {
-      "title": "The RevOps Tech Stack Guide for 2026",
-      "excerpt": "Which tools actually belong in your RevOps stack this year, and which are just noise? A practical guide for GTM teams building for scale.",
-      "slug": "the-revops-tech-stack-guide-for-2026",
-      "category": "Deep Guide",
-      "featured_image_url": "https://images.pexels.com/photos/34803995/pexels-photo-34803995.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "title": "Best GTM Tools for B2B SaaS in 2026",
+      "excerpt": "Not every GTM tool lives up to its pricing page. Here's an honest breakdown of what's actually worth your budget in 2026.",
+      "slug": "best-gtm-tools-for-b2b-saas-in-2026",
+      "category": "Best Tools",
+      "featured_image_url": "https://images.pexels.com/photos/3182795/pexels-photo-3182795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+      "title": "Why Docusign's MCP Move Changes AI Agent Sales Workflows",
+      "excerpt": "Docusign's Model Context Protocol server goes live September 30, letting AI agents across major platforms access agreement intelligence directly. Here's what that means for sales teams.",
+      "slug": "why-docusigns-mcp-move-changes-ai-agent-sales-workflows",
+      "category": "AI in Sales",
+      "featured_image_url": "https://images.pexels.com/photos/7477715/pexels-photo-7477715.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

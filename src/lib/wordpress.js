@@ -9,6 +9,13 @@ const cache = {
   TTL: 30 * 60 * 1000,
 };
 
+// Safety cap on how many posts getPosts() will ever fetch and cache in one
+// go. This isn't a display limit - it's just a ceiling so a runaway archive
+// can't make a single request loop forever. 1000 gives huge headroom over
+// current volume (2 articles/day) while still being a bounded, safe fetch.
+const MAX_FETCH = 1000;
+const PAGE_SIZE = 100;
+
 function isCacheValid() {
   return cache.posts && cache.fetchedAt && (Date.now() - cache.fetchedAt < cache.TTL);
 }
@@ -75,35 +82,66 @@ async function fetchWithTimeout(url, options, timeout = 8000) {
   }
 }
 
-export async function getPosts(first = 100) {
-  if (isCacheValid()) return cache.posts.slice(0, first);
+// Fetches every published post from WordPress, following cursor-based
+// pagination (the same pattern getTotalPostsCount already used correctly)
+// instead of a single request capped at 100 by both this code and
+// WPGraphQL's own per-request limit. Stops early once either the archive
+// is exhausted or MAX_FETCH is hit, whichever comes first.
+async function fetchAllPosts() {
+  const allNodes = [];
+  let cursor = null;
+  let hasMore = true;
 
-  const query = `
-    query GetPosts {
-      posts(first: 100, where: { status: PUBLISH }) {
-        nodes {
-          databaseId
-          slug
-          title
-          excerpt
-          date
-          modified
-          featuredImage { node { sourceUrl } }
-          categories { nodes { name } }
+  while (hasMore && allNodes.length < MAX_FETCH) {
+    const afterClause = cursor ? `, after: "${cursor}"` : '';
+    const query = `
+      query GetPosts {
+        posts(first: ${PAGE_SIZE}, where: { status: PUBLISH }${afterClause}) {
+          nodes {
+            databaseId
+            slug
+            title
+            excerpt
+            date
+            modified
+            featuredImage { node { sourceUrl } }
+            categories { nodes { name } }
+          }
+          pageInfo { hasNextPage endCursor }
         }
       }
-    }
-  `;
+    `;
 
-  try {
     const res = await fetchWithTimeout(WP_GRAPHQL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
+
+    if (res.status === 429) {
+      console.warn('Rate limited while fetching posts, stopping pagination early');
+      break;
+    }
+
     const data = await res.json();
-    const posts = (data?.data?.posts?.nodes || []).map(transformPost);
+    const nodes = data?.data?.posts?.nodes || [];
+    const pageInfo = data?.data?.posts?.pageInfo || {};
+
+    allNodes.push(...nodes);
+    hasMore = pageInfo.hasNextPage || false;
+    cursor = pageInfo.endCursor || null;
+    if (!hasMore || !cursor) break;
+  }
+
+  return allNodes;
+}
+
+export async function getPosts(first = 100) {
+  if (isCacheValid()) return cache.posts.slice(0, first);
+
+  try {
+    const nodes = await fetchAllPosts();
+    const posts = nodes.map(transformPost);
     cache.posts = posts;
     cache.fetchedAt = Date.now();
     return posts.slice(0, first);
@@ -202,7 +240,7 @@ export async function getTotalPostsCount() {
     let total = 0;
     let hasMore = true;
     let cursor = null;
-    let safetyLimit = 20; // max 20 pages x 100 = 2000 articles
+    let safetyLimit = 20; 
 
     while (hasMore && safetyLimit > 0) {
       safetyLimit--;

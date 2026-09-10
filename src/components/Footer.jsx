@@ -87,7 +87,7 @@ export default function Footer() {
           {/* Navigate */}
           <div>
             <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#E85D3A", letterSpacing:"0.18em", display:"block", marginBottom:20 }}>NAVIGATE</span>
-            {[["Home","/"],["CRM News","/news"],["Guides","/guides"],["Tool Reviews","/tools"],["Newsletter","/newsletter"],["About","/about"],["Contact","/contact"]].map(([label,href]) => (
+            {[["Home","/"],["CRM News","/news"],["Guides","/guides"],["Tool Reviews","/tools"],["Industries","/industries"],["CRM Tools","/crm-tools"],["Newsletter","/newsletter"],["About","/about"],["Contact","/contact"]].map(([label,href]) => (
               <Link key={label} href={href}
                 style={{ display:"block", fontFamily:"'DM Serif Display',serif", fontSize:15, color:"rgba(242,237,228,0.6)", marginBottom:10, transition:"color 0.2s", textDecoration:"none" }}
                 onMouseEnter={e => e.target.style.color="#E85D3A"}

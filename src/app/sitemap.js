@@ -1,4 +1,5 @@
 ﻿export const dynamic = "force-dynamic";
+import { INDUSTRIES } from "@/data/industriesData";
 const WP_GRAPHQL_URL = "https://cms.crmdaily.co/graphql";
 const GLOSSARY_SLUGS = ["arr","mrr","nrr","churn-rate","forecast","pipeline","win-rate","sales-cycle","cac","ltv","icp","revops","gtm","plg","meddic","deal-velocity","lead-scoring","sales-qualified-lead","marketing-qualified-lead","customer-success","expansion-revenue","net-dollar-retention","gross-dollar-retention","account-executive","sales-development-representative","business-development-representative","annual-contract-value","total-addressable-market","serviceable-addressable-market","product-led-growth","community-led-growth","sales-led-growth","outbound-sales","inbound-sales","account-based-marketing","demand-generation","revenue-operations","sales-operations","customer-acquisition-cost","customer-lifetime-value","sales-velocity","quota-attainment","ramp-time","sales-cycle-length","conversion-rate","close-rate","average-deal-size","sales-funnel","buyer-journey","ideal-customer-profile"];
 
@@ -9,15 +10,14 @@ export default async function sitemap() {
     { url: "https://www.crmdaily.co/guides",       lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: "https://www.crmdaily.co/tools",        lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: "https://www.crmdaily.co/crm-tools",    lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
+    { url: "https://www.crmdaily.co/industries",   lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: "https://www.crmdaily.co/glossary",     lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     { url: "https://www.crmdaily.co/newsletter",   lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: "https://www.crmdaily.co/about",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: "https://www.crmdaily.co/contact",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
   ];
 
-  // The interactive CRM tools suite - added once these pages went live.
-  // These are static Next.js pages, not WordPress content, so they need
-  // to be listed here manually rather than pulled from the WP query below.
+  
   const toolPages = [
     { url: "https://www.crmdaily.co/tools/crm-matcher",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: "https://www.crmdaily.co/tools/do-you-need-a-crm",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
@@ -29,6 +29,13 @@ export default async function sitemap() {
     { url: "https://www.crmdaily.co/tools/directory",                lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: "https://www.crmdaily.co/tools/add-ons",                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
+
+  const industryPages = INDUSTRIES.map((ind) => ({
+    url: `https://www.crmdaily.co/industries/${ind.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
 
   const glossaryPages = GLOSSARY_SLUGS.map(slug => ({
     url: "https://www.crmdaily.co/glossary/" + slug,
@@ -53,8 +60,8 @@ export default async function sitemap() {
       changeFrequency: "weekly",
       priority: 0.8,
     }));
-    return [...staticPages, ...toolPages, ...glossaryPages, ...articlePages];
+    return [...staticPages, ...toolPages, ...industryPages, ...glossaryPages, ...articlePages];
   } catch (err) {
-    return [...staticPages, ...toolPages, ...glossaryPages];
+    return [...staticPages, ...toolPages, ...industryPages, ...glossaryPages];
   }
 }

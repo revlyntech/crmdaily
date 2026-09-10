@@ -13,7 +13,8 @@ export const metadata = {
 export default async function HomePage() {
   let articles = [];
   try {
-    articles = await getPosts(100);
+   
+    articles = await getPosts(1000);
     console.log('SSR homepage: fetched', articles.length, 'articles');
   } catch (e) {
     console.error('SSR homepage error:', e.message);

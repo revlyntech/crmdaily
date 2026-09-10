@@ -45,9 +45,9 @@ export default function Navbar() {
         .nav-dropdown-panel {
           position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
           background: #FAFBFC; border: 1px solid rgba(15,23,42,0.1); border-top: 2px solid #E85D3A;
-          box-shadow: 0 20px 40px -12px rgba(15,23,42,0.25); padding: 20px;
-          display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 24px;
-          width: 640px; z-index: 200;
+          box-shadow: 0 20px 40px -12px rgba(15,23,42,0.25); padding: 18px;
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px 20px;
+          width: 480px; max-width: calc(100vw - 48px); z-index: 200;
         }
         .nav-dropdown-item {
           font-family: 'Inter',sans-serif; font-size: 12.5px; color: #0F172A; text-decoration: none;
@@ -82,44 +82,48 @@ export default function Navbar() {
             {navLinks.map(l => {
               const active = pathname === l.to;
               return (
-                <Link key={l.to} href={l.to} style={linkStyle(active)}
-                  onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity=active?"1":"0.65"; e.currentTarget.style.color=active?"#E85D3A":"#0F172A"; }}>
-                  {l.label}
-                </Link>
+                <span key={l.to} style={{ display: "contents" }}>
+                  <Link href={l.to} style={linkStyle(active)}
+                    onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity=active?"1":"0.65"; e.currentTarget.style.color=active?"#E85D3A":"#0F172A"; }}>
+                    {l.label}
+                  </Link>
+                  {l.label === "Tools" && (
+                    <div
+                      className="nav-dropdown-wrap"
+                      onMouseEnter={() => setIndustriesOpen(true)}
+                      onMouseLeave={() => setIndustriesOpen(false)}
+                    >
+                      <Link href="/industries" style={linkStyle(pathname.startsWith("/industries"))}
+                        onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
+                        onMouseLeave={e => { e.currentTarget.style.opacity=pathname.startsWith("/industries")?"1":"0.65"; e.currentTarget.style.color=pathname.startsWith("/industries")?"#E85D3A":"#0F172A"; }}>
+                        Industries {industriesOpen ? "▲" : "▼"}
+                      </Link>
+                      <AnimatePresence>
+                        {industriesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -6 }}
+                            transition={{ duration: 0.15 }}
+                            className="nav-dropdown-panel"
+                          >
+                            {INDUSTRIES.map((ind) => (
+                              <Link key={ind.slug} href={`/industries/${ind.slug}`} className="nav-dropdown-item">
+                                {ind.name}
+                              </Link>
+                            ))}
+                            <Link href="/industries" className="nav-dropdown-viewall">
+                              VIEW ALL INDUSTRIES →
+                            </Link>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+                </span>
               );
             })}
-            <div
-              className="nav-dropdown-wrap"
-              onMouseEnter={() => setIndustriesOpen(true)}
-              onMouseLeave={() => setIndustriesOpen(false)}
-            >
-              <Link href="/industries" style={linkStyle(pathname.startsWith("/industries"))}
-                onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
-                onMouseLeave={e => { e.currentTarget.style.opacity=pathname.startsWith("/industries")?"1":"0.65"; e.currentTarget.style.color=pathname.startsWith("/industries")?"#E85D3A":"#0F172A"; }}>
-                Industries {industriesOpen ? "▲" : "▼"}
-              </Link>
-              <AnimatePresence>
-                {industriesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.15 }}
-                    className="nav-dropdown-panel"
-                  >
-                    {INDUSTRIES.map((ind) => (
-                      <Link key={ind.slug} href={`/industries/${ind.slug}`} className="nav-dropdown-item">
-                        {ind.name}
-                      </Link>
-                    ))}
-                    <Link href="/industries" className="nav-dropdown-viewall">
-                      VIEW ALL INDUSTRIES →
-                    </Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
             <Link href="/crm-tools" style={linkStyle(pathname==="/crm-tools")}
               onMouseEnter={e => { e.currentTarget.style.opacity="1"; e.currentTarget.style.color="#E85D3A"; }}
               onMouseLeave={e => { e.currentTarget.style.opacity=pathname==="/crm-tools"?"1":"0.65"; e.currentTarget.style.color=pathname==="/crm-tools"?"#E85D3A":"#0F172A"; }}>
@@ -155,30 +159,36 @@ export default function Navbar() {
               style={{ borderTop:"1px solid rgba(0,0,0,0.08)", background:"#FAFBFC", overflow:"hidden" }}>
               <div style={{ padding:"16px 20px 24px" }}>
                 {navLinks.map(l => (
-                  <Link key={l.to} href={l.to}
-                    style={{ display:"block", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", textDecoration:"none" }}>
-                    {l.label}
-                  </Link>
+                  <span key={l.to} style={{ display: "contents" }}>
+                    <Link href={l.to}
+                      style={{ display:"block", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", textDecoration:"none" }}>
+                      {l.label}
+                    </Link>
+                    {l.label === "Tools" && (
+                      <>
+                        <button
+                          onClick={() => setIndustriesOpen(!industriesOpen)}
+                          style={{ display:"flex", justifyContent:"space-between", alignItems:"center", width:"100%", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", background:"none", border:"none", borderBottomColor:"rgba(0,0,0,0.06)", borderBottomWidth:1, borderBottomStyle:"solid", cursor:"pointer" }}>
+                          Industries <span>{industriesOpen ? "▲" : "▼"}</span>
+                        </button>
+                        <AnimatePresence>
+                          {industriesOpen && (
+                            <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}} style={{ overflow:"hidden" }}>
+                              <div style={{ padding:"8px 0 8px 16px" }}>
+                                {INDUSTRIES.map(ind => (
+                                  <Link key={ind.slug} href={`/industries/${ind.slug}`}
+                                    style={{ display:"block", padding:"8px 0", fontFamily:"'Inter',sans-serif", fontSize:13, color:"rgba(15,23,42,0.7)", textDecoration:"none" }}>
+                                    {ind.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    )}
+                  </span>
                 ))}
-                <button
-                  onClick={() => setIndustriesOpen(!industriesOpen)}
-                  style={{ display:"flex", justifyContent:"space-between", alignItems:"center", width:"100%", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", background:"none", border:"none", borderBottomColor:"rgba(0,0,0,0.06)", borderBottomWidth:1, borderBottomStyle:"solid", cursor:"pointer" }}>
-                  Industries <span>{industriesOpen ? "▲" : "▼"}</span>
-                </button>
-                <AnimatePresence>
-                  {industriesOpen && (
-                    <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}} style={{ overflow:"hidden" }}>
-                      <div style={{ padding:"8px 0 8px 16px" }}>
-                        {INDUSTRIES.map(ind => (
-                          <Link key={ind.slug} href={`/industries/${ind.slug}`}
-                            style={{ display:"block", padding:"8px 0", fontFamily:"'Inter',sans-serif", fontSize:13, color:"rgba(15,23,42,0.7)", textDecoration:"none" }}>
-                            {ind.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
                 {[{label:"CRM Tools",to:"/crm-tools"},{label:"Contact",to:"/contact"}].map(l => (
                   <Link key={l.to} href={l.to}
                     style={{ display:"block", padding:"14px 0", fontFamily:"'Space Mono',monospace", fontSize:13, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", borderBottom:"1px solid rgba(0,0,0,0.06)", color:"#0F172A", textDecoration:"none" }}>

@@ -11,6 +11,7 @@ export const metadata = {
 
 export default async function NewsPage() {
   let articles = [];
-  try { articles = await getPosts(100); } catch (e) { articles = []; }
+  
+  try { articles = await getPosts(1000); } catch (e) { articles = []; }
   return <Suspense fallback={null}><NewsClient prefetchedArticles={articles} /></Suspense>;
 }

@@ -94,24 +94,7 @@ INTERNAL_PAGES = [
 
 CATEGORY_LOG = "category_log.json"
 USED_IMAGES_LOG = "used_images.json"
-WP_GRAPHQL_URL = "https://cms.crmdaily.co/graphql"
-
-# Categories treated as "evergreen" - preferred when ranking which past
-# articles to surface for internal linking, since these are far more
-# likely to be genuine long-term search performers than time-sensitive
-# news posts. This is a heuristic, NOT real Google Search Console
-# ranking data - there's no live analytics feed wired into this script.
-EVERGREEN_CATEGORIES = {"Tool Comparison", "Explainer", "CRM Fundamentals", "Deep Guide", "Best Tools"}
-
-# Known high-value terms worth checking for when deciding what to search
-# the site for. If any of these appear in today's topic or source news,
-# we search the live site for past articles mentioning the same terms.
-KNOWN_SEARCH_TERMS = [
-    "HubSpot", "Salesforce", "Pipedrive", "Zoho CRM", "Monday CRM", "Freshsales",
-    "Close", "Copper", "Keap", "Insightly", "Nimble", "ActiveCampaign",
-    "RevOps", "GTM", "ARR", "MRR", "NRR", "CAC", "LTV", "ICP", "MEDDIC",
-    "churn", "pipeline", "forecast", "win rate", "lead scoring", "PLG", "ABM",
-]
+PUBLISHED_ARTICLES_LOG = "published_articles.json"
 
 # ── Comparison topics ──
 COMPARISON_TOPICS = [
@@ -463,74 +446,81 @@ def load_news():
     with open("scraped_news.json", "r") as f:
         return json.load(f)
 
-def get_search_keywords_for_topic(category, extra_topic, news_items):
-    """Figure out which known high-value terms are relevant to today's
-    article, so we know what to search the live site for."""
-    text_pool = (extra_topic or "") + " " + " ".join([
-        (n.get("title", "") + " " + n.get("summary", "")) for n in (news_items or [])
-    ])
-    text_lower = text_pool.lower()
-    found = [term for term in KNOWN_SEARCH_TERMS if term.lower() in text_lower]
-    return found[:5]  # cap to keep the number of search calls reasonable
-
-def search_site_for_related_articles(keywords):
-    """Search the LIVE WordPress site (not a local cache) for existing
-    published articles matching today's key terms - e.g. if today's
-    article discusses HubSpot and Salesforce, this finds any past
-    article already covering that comparison, anywhere in site history,
-    not just recently published ones."""
-    if not keywords:
+def load_published_articles():
+    """Fallback only - used if the live site-wide query below fails.
+    Locally-tracked recent articles (title + slug + category), written to
+    by publisher.py after each successful publish."""
+    try:
+        with open(PUBLISHED_ARTICLES_LOG, "r", encoding="utf-8-sig") as f:
+            data = json.load(f)
+            return data if isinstance(data, list) else []
+    except Exception:
         return []
 
-    results = {}
-    query = """
-    query($search: String!) {
-      posts(first: 3, where: {search: $search, status: PUBLISH}) {
-        nodes {
-          title
-          slug
-          categories { nodes { name } }
-        }
-      }
-    }
-    """
-    for kw in keywords:
-        try:
-            resp = requests.post(
-                WP_GRAPHQL_URL,
-                json={"query": query, "variables": {"search": kw}},
-                timeout=8
-            )
-            data = resp.json()
-            nodes = (data.get("data") or {}).get("posts", {}).get("nodes", []) or []
-            for n in nodes:
-                slug = n.get("slug")
-                if slug and slug not in results:
-                    cats = n.get("categories", {}).get("nodes", []) or []
-                    cat_name = cats[0].get("name", "") if cats else ""
-                    results[slug] = {
-                        "title": n.get("title", ""),
-                        "slug": slug,
-                        "category": cat_name,
-                    }
-        except Exception as e:
-            print(f"   Site search error for '{kw}': {e}")
+STOP_WORDS = {
+    "the","a","an","is","are","for","and","or","to","of","in","on","with",
+    "what","how","vs","your","you","best","from","this","that","does",
+    "do","why","guide","complete","explained","every","all","new",
+}
 
-    # Prefer evergreen categories first (best available proxy for "likely
-    # ranks well" without real Search Console data)
-    ranked = sorted(
-        results.values(),
-        key=lambda a: 0 if a.get("category") in EVERGREEN_CATEGORIES else 1
-    )
-    print(f"   Found {len(ranked)} related past article(s) via live site search")
-    return ranked[:8]
+def fetch_all_site_articles():
+    """Live-queries WordPress for EVERY published post's title and slug -
+    the whole site's content, not just what this automation script has
+    published itself. This is what makes internal linking able to reach
+    old manually-written articles, comparisons published months ago,
+    anything - not just the last 60 auto-tracked entries."""
+    try:
+        query = "{ posts(first: 300, where: { status: PUBLISH }) { nodes { title slug } } }"
+        resp = requests.post(
+            "https://cms.crmdaily.co/graphql",
+            headers={"Content-Type": "application/json"},
+            json={"query": query},
+            timeout=15,
+        )
+        data  = resp.json()
+        nodes = data.get("data", {}).get("posts", {}).get("nodes", [])
+        articles = [{"title": n["title"], "slug": n["slug"]} for n in nodes if n.get("title") and n.get("slug")]
+        print(f"   Fetched {len(articles)} existing site articles for link matching")
+        return articles
+    except Exception as e:
+        print(f"   Could not fetch site articles for linking (using local fallback): {e}")
+        return []
 
-def build_related_articles_prompt_block(related):
-    if not related:
+def score_relevance(title, keywords):
+    title_words = set(re.findall(r"[a-z]+", title.lower()))
+    return len(title_words & keywords)
+
+def pick_relevant_past_articles(topic_hint, category, limit=8):
+    """Picks the most topically relevant EXISTING articles anywhere on
+    the site (via simple keyword overlap) as internal link candidates.
+
+    Note: this can't know which pages currently rank best in Google -
+    that needs Search Console/Analytics data this script doesn't have
+    access to. Topical relevance is the best available proxy, and is
+    generally the right thing to optimize for regardless - a precisely
+    relevant link beats a well-ranking but tangential one."""
+    hint_words = set(re.findall(r"[a-z]+", (topic_hint or category).lower())) - STOP_WORDS
+    if not hint_words:
+        return []
+
+    articles = fetch_all_site_articles()
+    if not articles:
+        articles = load_published_articles()
+
+    scored = [(score_relevance(a["title"], hint_words), a) for a in articles if a.get("slug")]
+    scored = [s for s in scored if s[0] > 0]
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [a for _, a in scored[:limit]]
+
+def build_past_articles_prompt_block(topic_hint, category):
+    """Build a short list of real existing articles (from anywhere on the
+    site) the model can optionally link to, if genuinely relevant."""
+    candidates = pick_relevant_past_articles(topic_hint, category)
+    if not candidates:
         return ""
     lines = [
         f'- "{a["title"]}" - https://www.crmdaily.co/article/{a["slug"]}'
-        for a in related if a.get("slug") and a.get("title")
+        for a in candidates
     ]
     return "\n".join(lines)
 
@@ -553,7 +543,7 @@ ARTICLE HTML:
 {content}"""
         msg = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=3800,
+            max_tokens=4500,
             messages=[{"role": "user", "content": edit_prompt}]
         )
         revised = msg.content[0].text.strip()
@@ -584,7 +574,8 @@ def generate_article(news_items):
     # own "current_hour < 10" check for the 8am IST / UTC 2:30 slot) so it
     # publishes every single day, in sequence. The evening run keeps
     # consuming the normal 13-category rotation, once a day instead of
-    # twice - total articles/day stays at 2.
+    # twice - total articles/day stays at 2, no extra API cost from this
+    # part of the change (word count increase below is the real cost add).
     if current_hour < 10:
         forced_category = "CRM Fundamentals"
     else:
@@ -598,12 +589,12 @@ def generate_article(news_items):
 
     extra_instruction, extra_topic = get_extra_context(forced_category)
 
-    # Search the LIVE site (not a local cache) for existing articles
-    # relevant to today's topic, so we can link to genuinely matching
-    # past content - regardless of how long ago it was published.
-    search_keywords = get_search_keywords_for_topic(forced_category, extra_topic, news_items)
-    related_articles = search_site_for_related_articles(search_keywords)
-    related_articles_block = build_related_articles_prompt_block(related_articles)
+    # For news-based categories with no fixed topic list (CRM News, GTM
+    # Strategy, RevOps Intelligence, Sales Tech, AI in Sales), extra_topic
+    # is empty - fall back to the first news item's title as the topic
+    # hint for relevance matching against existing site articles.
+    topic_hint_for_linking = extra_topic or (news_items[0]["title"] if news_items else forced_category)
+    past_articles_block = build_past_articles_prompt_block(topic_hint_for_linking, forced_category)
 
     category_instructions = {
         "CRM News":            "Write a news article about the most significant CRM industry development in the news items. Be factual and neutral.",
@@ -639,12 +630,12 @@ def generate_article(news_items):
     opening_style = random.choice(opening_styles)
     closing_style = random.choice(closing_styles)
 
-    related_articles_section = ""
-    if related_articles_block:
-        related_articles_section = f"""
+    past_articles_section = ""
+    if past_articles_block:
+        past_articles_section = f"""
 
-EXISTING ARTICLES ON THIS SITE THAT MAY BE RELEVANT (found via live site search on today's topic - link to ONE of these ONLY if it's a genuinely strong match, never force it, never fabricate a URL not listed here):
-{related_articles_block}"""
+RECENT ARTICLES ON THIS SITE (link to ONE of these ONLY if genuinely relevant to today's topic - never force it, never fabricate a URL not listed here):
+{past_articles_block}"""
 
     prompt = f"""You are a senior editor at CRM Daily, a leading publication for CRM and GTM professionals.
 Today is {today}. Based on the following news items, write ONE comprehensive, original article for CRM Daily.
@@ -674,9 +665,9 @@ AEO RULES (important - this content also needs to work well when AI answer engin
 - Keep each H2 section focused on one clear sub-question, written so it can be understood on its own if extracted out of context.
 
 INTERNAL LINKS TO INCLUDE:
-Naturally include 5-7 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags.
+Naturally include 6-8 of these internal links within the article content where relevant. Use them as anchor text inside <a> tags.
 Prioritise glossary links where you mention a CRM/GTM concept. For example if you mention ARR, link it to the ARR glossary page.
-{internal_links_text}{related_articles_section}
+{internal_links_text}{past_articles_section}
 
 Example usage:
 - "...the company reported strong <a href="https://www.crmdaily.co/glossary/arr">Annual Recurring Revenue (ARR)</a> growth..."
@@ -703,7 +694,7 @@ IMPORTANT RULES:
 - Always use a simple hyphen (-) instead of an em dash or en dash
 - Write in plain, direct English
 - No em dashes anywhere
-- Include 5-7 internal links naturally - do NOT force them, only add where they make sense
+- Include 6-8 internal links naturally - do NOT force them, only add where they make sense
 - Never describe CRM tools as struggling, failing, under pressure, or in trouble
 - Write objectively and neutrally about all vendors
 
@@ -724,16 +715,16 @@ SEO_TITLE: [SEO title, 50-60 characters, includes focus keyword]
 SEO_META_DESCRIPTION: [meta description, 140-155 characters, includes focus keyword]
 ALT_TEXT: [featured image alt text, 10-15 words]
 CONTENT:
-[Write 1300-1500 words in HTML format using:
+[Write 1500-2000 words in HTML format using:
 - <p> for paragraphs
-- <h2> for section headings (4-6 sections)
+- <h2> for section headings (5-7 sections, given the length)
 - <strong> for key terms
 - <ul><li> for bullet points
 - <blockquote> for a real stat or data point from the news items (not an invented quote)
-- <a href="URL">anchor text</a> for 5-7 internal links - spread throughout the article
+- <a href="URL">anchor text</a> for 6-8 internal links - spread throughout the article
 Requirements:
 - Vary paragraph length - some 1-2 sentences, some 4-5 sentences
-- 4-6 sections with H2 headings
+- 5-7 sections with H2 headings
 - Actionable insights for CRM/RevOps professionals
 - Reference real tools where relevant
 - Confident, specific tone with a clear point of view - avoid hedging every claim
@@ -745,7 +736,7 @@ Requirements:
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=3800,
+        max_tokens=4800,
         messages=[{"role": "user", "content": prompt}]
     )
 

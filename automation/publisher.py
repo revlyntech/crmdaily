@@ -5,6 +5,7 @@ import base64
 
 WP_URL  = "https://cms.crmdaily.co"
 WP_USER = "rishhsoni@gmail.com"
+PUBLISHED_ARTICLES_LOG = "published_articles.json"
 
 def get_auth_header():
     wp_password  = os.environ["WP_APP_PASSWORD"]
@@ -117,6 +118,33 @@ def set_yoast_seo(post_id, article, headers):
     else:
         print(f"   SEO meta save failed: {response.status_code} - {response.text[:100]}")
 
+def save_published_article_index(article):
+    """Append this article (title + slug + category) to a rolling log so
+    future articles can naturally link back to it. Read by writer.py's
+    build_past_articles_prompt_block(). Capped at last 60 entries
+    (~1 month at 2 articles/day)."""
+    try:
+        try:
+            with open(PUBLISHED_ARTICLES_LOG, "r", encoding="utf-8-sig") as f:
+                data = json.load(f)
+                if not isinstance(data, list):
+                    data = []
+        except Exception:
+            data = []
+
+        data.append({
+            "title":    article.get("title", ""),
+            "slug":     article.get("slug", ""),
+            "category": article.get("category", ""),
+        })
+        data = data[-60:]
+
+        with open(PUBLISHED_ARTICLES_LOG, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        print(f"   Indexed for future internal linking ({len(data)} articles tracked)")
+    except Exception as e:
+        print(f"   Could not save published article index: {e}")
+
 def publish_article(article):
     headers          = get_auth_header()
     category_id      = get_or_create_category(article["category"], headers)
@@ -165,6 +193,9 @@ def publish_article(article):
         # Save SEO meta fields
         if post_id:
             set_yoast_seo(post_id, article, headers)
+
+        # Index this article so future articles can link back to it
+        save_published_article_index(article)
 
         return result
     else:

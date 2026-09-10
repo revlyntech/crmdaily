@@ -1,4 +1,4 @@
-﻿name: CRM Daily - Auto Publish Article
+name: CRM Daily - Auto Publish Article
 
 on:
   schedule:
@@ -47,7 +47,7 @@ jobs:
           # Add each log file individually - if git add is given multiple
           # paths in one command and ANY one is missing, it aborts staging
           # of ALL of them. Checking existence per-file avoids that trap.
-          LOG_FILES="automation/published_titles.json automation/category_log.json automation/published_urls.json automation/daily_digest.json automation/used_topics.json automation/used_images.json"
+          LOG_FILES="automation/published_titles.json automation/category_log.json automation/published_urls.json automation/daily_digest.json automation/used_topics.json automation/used_images.json automation/published_articles.json"
           for f in $LOG_FILES; do
             if [ -f "$f" ]; then
               git add -f "$f"

@@ -1,1 +1,12 @@
-{"date": "2026-09-11", "articles": [], "sent": true}
+{
+  "date": "2026-09-12",
+  "articles": [
+    {
+      "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
+      "excerpt": "New to CRM software? Learn what contacts, companies, deals, and activities actually mean - and why getting them right changes how your whole team sells.",
+      "slug": "crm-database-explained-contacts-companies-deals-and-activities",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/7682130/pexels-photo-7682130.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

@@ -183,7 +183,7 @@ export default function Home({ prefetchedArticles = null }) {
             <div className="home-latest-header" style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:48, paddingBottom:24, borderBottom:"1px solid rgba(0,0,0,0.1)" }}>
               <div>
                 <span style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#E85D3A", letterSpacing:"0.2em", display:"block", marginBottom:8 }}>// LATEST ARTICLES</span>
-                <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:42, color:"#0F172A", letterSpacing:"-0.02em" }}>Today's Intelligence</h2>
+                <h2 style={{ fontFamily:"'DM Serif Display',serif", fontSize:42, color:"#0F172A", letterSpacing:"-0.02em" }}>Latest Articles</h2>
               </div>
               <Link href="/news" style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#94A3B8", letterSpacing:"0.1em", textDecoration:"none" }}>VIEW ALL ARTICLES →</Link>
             </div>

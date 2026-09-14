@@ -1,6 +1,5 @@
 ﻿import "./globals.css";
 import Script from "next/script";
-import TopBar from "../components/TopBar";
 import Navbar from "../components/Navbar";
 import Ticker from "../components/Ticker";
 import StockTicker from "../components/StockTicker";
@@ -77,7 +76,6 @@ export default function RootLayout({ children }) {
             }
           ]
         }) }} />
-        <TopBar />
         <Navbar />
         <Ticker />
         <StockTicker />

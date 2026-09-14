@@ -1,1 +1,12 @@
-{"date": "2026-09-13", "articles": [], "sent": true}
+{
+  "date": "2026-09-14",
+  "articles": [
+    {
+      "title": "What Is an Opportunity in CRM? A Complete Guide",
+      "excerpt": "New to CRM software? Learn what a sales opportunity is, why it matters daily, and see a real example of how it works in practice.",
+      "slug": "what-is-an-opportunity-in-crm-a-complete-guide",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/7947709/pexels-photo-7947709.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

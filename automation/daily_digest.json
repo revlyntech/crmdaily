@@ -1,1 +1,12 @@
-{"date": "2026-09-14", "articles": [], "sent": true}
+{
+  "date": "2026-09-15",
+  "articles": [
+    {
+      "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
+      "excerpt": "New to CRM software? Learn what pipeline stages are, why they matter daily, and how to build a sales process that actually reflects how your buyers buy.",
+      "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/7495607/pexels-photo-7495607.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

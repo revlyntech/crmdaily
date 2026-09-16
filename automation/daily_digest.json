@@ -1,19 +1,19 @@
 {
-  "date": "2026-09-14",
+  "date": "2026-09-16",
   "articles": [
     {
-      "title": "What Is an Opportunity in CRM? A Complete Guide",
-      "excerpt": "New to CRM software? Learn what a sales opportunity is, why it matters daily, and see a real example of how it works in practice.",
-      "slug": "what-is-an-opportunity-in-crm-a-complete-guide",
+      "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
+      "excerpt": "Lead scoring helps sales teams focus on prospects most likely to buy. Here's how it works, why it matters, and what a real scoring model looks like in practice.",
+      "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads",
       "category": "CRM Fundamentals",
-      "featured_image_url": "https://images.pexels.com/photos/7947709/pexels-photo-7947709.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "featured_image_url": "https://images.pexels.com/photos/10376016/pexels-photo-10376016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     },
     {
-      "title": "What Is a CRM Pipeline? Stages, Deals and Management Explained",
-      "excerpt": "New to CRM software? A pipeline is how sales teams track every deal from first contact to closed. Here's what it means and why it matters.",
-      "slug": "what-is-a-crm-pipeline-stages-deals-and-management-explained",
+      "title": "What Is Lead Routing? How CRM Systems Assign Leads to Sales Reps",
+      "excerpt": "New to CRM? Learn how lead routing works, why it matters, and how modern CRM tools automatically assign leads to the right sales rep.",
+      "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-sales-reps",
       "category": "CRM Fundamentals",
-      "featured_image_url": "https://images.pexels.com/photos/9034727/pexels-photo-9034727.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "featured_image_url": "https://images.pexels.com/photos/7876739/pexels-photo-7876739.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

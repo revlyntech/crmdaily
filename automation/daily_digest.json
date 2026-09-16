@@ -1,1 +1,12 @@
-{"date": "2026-09-15", "articles": [], "sent": true}
+{
+  "date": "2026-09-16",
+  "articles": [
+    {
+      "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
+      "excerpt": "Lead scoring helps sales teams focus on prospects most likely to buy. Here's how it works, why it matters, and what a real scoring model looks like in practice.",
+      "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/10376016/pexels-photo-10376016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

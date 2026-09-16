@@ -1,4 +1,4 @@
-﻿import "./globals.css";
+import "./globals.css";
 import Script from "next/script";
 import Navbar from "../components/Navbar";
 import Ticker from "../components/Ticker";
@@ -76,10 +76,14 @@ export default function RootLayout({ children }) {
             }
           ]
         }) }} />
-        <Navbar />
-        <Ticker />
-        <StockTicker />
-        {children}
+        <header>
+          <Navbar />
+          <Ticker />
+          <StockTicker />
+        </header>
+        <main>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

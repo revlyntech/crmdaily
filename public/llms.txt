@@ -1,0 +1,24 @@
+# CRM Daily
+
+> CRM Daily is a free daily publication covering CRM, GTM and RevOps intelligence for revenue teams. No vendor bias, no commissions - just reporting and reference material for people building and running revenue systems.
+
+## Docs
+
+- [Glossary](https://www.crmdaily.co/glossary): 200+ CRM, RevOps and GTM terms defined, from ARR to Zero-Click Search
+- [CRM Tools Directory](https://www.crmdaily.co/crm-tools): compare CRM and sales tools by category, pricing and fit
+- [Industries](https://www.crmdaily.co/industries): how CRM applies differently across 24 industries, from manufacturing to wealth management
+- [Guides](https://www.crmdaily.co/guides): in-depth CRM implementation and RevOps guides
+- [Tool Reviews](https://www.crmdaily.co/tools): reviews and comparisons of CRM and sales tools
+- [News](https://www.crmdaily.co/news): daily CRM and GTM industry news
+
+## Interactive tools
+
+- [CRM Matcher](https://www.crmdaily.co/tools/crm-matcher): find a CRM based on team size, budget and use case
+- [Do You Need a CRM](https://www.crmdaily.co/tools/do-you-need-a-crm): a short quiz to determine CRM readiness
+- [ROI Calculator](https://www.crmdaily.co/tools/roi-calculator): estimate the cost of not having a CRM
+- [Stack Recommender](https://www.crmdaily.co/tools/stack-recommender): a 3-question decision tree for CRM selection
+
+## Optional
+
+- [About](https://www.crmdaily.co/about): who CRM Daily is and how it's produced
+- [Newsletter](https://www.crmdaily.co/newsletter): daily CRM and GTM digest

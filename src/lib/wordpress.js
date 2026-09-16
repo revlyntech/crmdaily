@@ -1,4 +1,4 @@
-﻿const WP_GRAPHQL_URL = typeof window === 'undefined'
+const WP_GRAPHQL_URL = typeof window === 'undefined'
   ? 'https://cms.crmdaily.co/graphql'
   : '/api/graphql';
 
@@ -151,7 +151,7 @@ export async function getPosts(first = 100) {
   }
 }
 
-export async function getPostBySlug(slug) {
+export async function getPostBySlug(slug, attempt = 1) {
   if (isCacheValid()) {
     const cached = cache.posts.find(p => p.slug === slug);
     if (cached && cached.content) return cached;
@@ -179,7 +179,23 @@ export async function getPostBySlug(slug) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
+    if (res.status === 429) {
+      // Was warning "retrying..." but never actually retrying - just
+      // waited once then gave up, returning null. That null bubbled up
+      // to the page as a generic fallback title/description, which is
+      // very likely why SEMrush found duplicate titles across many
+      // article pages during a crawl burst. Now genuinely retries with
+      // increasing backoff before giving up.
+      const MAX_ATTEMPTS = 3;
+      if (attempt >= MAX_ATTEMPTS) {
+        console.error(`Rate limited fetching post "${slug}" after ${attempt} attempts, giving up`);
+        return null;
+      }
+      const backoffMs = 1000 * attempt;
+      console.warn(`Rate limited fetching post "${slug}", retrying in ${backoffMs}ms (attempt ${attempt}/${MAX_ATTEMPTS})`);
+      await new Promise(r => setTimeout(r, backoffMs));
+      return getPostBySlug(slug, attempt + 1);
+    }
     const data = await res.json();
     if (data?.errors) {
       console.error('GraphQL errors:', JSON.stringify(data.errors));
@@ -193,7 +209,7 @@ export async function getPostBySlug(slug) {
   }
 }
 
-export async function getPostById(id) {
+export async function getPostById(id, attempt = 1) {
   if (isNaN(id)) return getPostBySlug(id);
 
   if (isCacheValid()) {
@@ -223,7 +239,17 @@ export async function getPostById(id) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (res.status === 429) { console.warn('Rate limited, retrying...'); await new Promise(r => setTimeout(r, 1000)); return null; }
+    if (res.status === 429) {
+      const MAX_ATTEMPTS = 3;
+      if (attempt >= MAX_ATTEMPTS) {
+        console.error(`Rate limited fetching post id "${id}" after ${attempt} attempts, giving up`);
+        return null;
+      }
+      const backoffMs = 1000 * attempt;
+      console.warn(`Rate limited fetching post id "${id}", retrying in ${backoffMs}ms (attempt ${attempt}/${MAX_ATTEMPTS})`);
+      await new Promise(r => setTimeout(r, backoffMs));
+      return getPostById(id, attempt + 1);
+    }
     const data = await res.json();
     const post = data?.data?.post;
     return post ? transformPost(post) : null;
@@ -240,7 +266,7 @@ export async function getTotalPostsCount() {
     let total = 0;
     let hasMore = true;
     let cursor = null;
-    let safetyLimit = 20; 
+    let safetyLimit = 20; // max 20 pages x 100 = 2000 articles
 
     while (hasMore && safetyLimit > 0) {
       safetyLimit--;

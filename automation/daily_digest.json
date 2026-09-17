@@ -1,1 +1,12 @@
-{"date": "2026-09-16", "articles": [], "sent": true}
+{
+  "date": "2026-09-17",
+  "articles": [
+    {
+      "title": "What Is CRM Automation? 15 Processes to Automate Now",
+      "excerpt": "New to CRM software? Learn what CRM automation actually means, why it matters for your team, and 15 specific processes worth automating right away.",
+      "slug": "what-is-crm-automation-15-processes-to-automate-now",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/8296953/pexels-photo-8296953.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

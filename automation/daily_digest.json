@@ -1,1 +1,12 @@
-{"date": "2026-09-17", "articles": [], "sent": true}
+{
+  "date": "2026-09-18",
+  "articles": [
+    {
+      "title": "CRM Data Management: Keep Your Customer Data Clean",
+      "excerpt": "Dirty CRM data costs you deals before you even know it. Here's what clean data actually looks like and how to keep it that way.",
+      "slug": "crm-data-management-keep-your-customer-data-clean",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/8636589/pexels-photo-8636589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

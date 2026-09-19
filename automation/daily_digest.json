@@ -1,1 +1,12 @@
-{"date": "2026-09-18", "articles": [], "sent": true}
+{
+  "date": "2026-09-19",
+  "articles": [
+    {
+      "title": "CRM Data Hygiene: 15 Problems That Destroy Data Quality",
+      "excerpt": "Bad CRM data costs sales teams real deals. Learn the 15 most common data quality problems and how to fix them before they wreck your pipeline.",
+      "slug": "crm-data-hygiene-15-problems-that-destroy-data-quality",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/5915234/pexels-photo-5915234.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

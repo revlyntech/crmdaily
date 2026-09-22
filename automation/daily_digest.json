@@ -1,1 +1,12 @@
-{"date": "2026-09-21", "articles": [], "sent": true}
+{
+  "date": "2026-09-22",
+  "articles": [
+    {
+      "title": "What Is CRM Adoption? Why Employees Stop Using CRMs and How to Fix It",
+      "excerpt": "CRM adoption is the rate at which your team actually uses your CRM day to day. Low adoption is more common than most managers admit - and it's fixable.",
+      "slug": "what-is-crm-adoption-why-employees-stop-using-crms-and-how-to-fix-it",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/8867241/pexels-photo-8867241.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

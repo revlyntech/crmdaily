@@ -248,5 +248,10 @@
     "title": "CRM Best Practices: Build a High-Performing CRM From Scratch",
     "slug": "crm-best-practices-build-a-high-performing-crm-from-scratch",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Salesforce vs Pipedrive: Enterprise vs SMB CRM Compared",
+    "slug": "salesforce-vs-pipedrive-enterprise-vs-smb-crm-compared",
+    "category": "Tool Comparison"
   }
 ]

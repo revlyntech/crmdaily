@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Build a GTM Pipeline That Scales in 2026",
-    "slug": "how-to-build-a-gtm-pipeline-that-scales-in-2026",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "Why AI-Native CRM Is the Bet Everyone's Making Right Now",
     "slug": "why-ai-native-crm-is-the-bet-everyones-making-right-now",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "Types of CRM: Operational, Analytical and Collaborative Explained",
     "slug": "types-of-crm-operational-analytical-and-collaborative-explained",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Salesforce Agentforce Review: Features, Pros and Cons for RevOps",
+    "slug": "salesforce-agentforce-review-features-pros-and-cons-for-revops",
+    "category": "Tool Reviews"
   }
 ]

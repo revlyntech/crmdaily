@@ -1,1 +1,12 @@
-{"date": "2026-09-27", "articles": [], "sent": true}
+{
+  "date": "2026-09-28",
+  "articles": [
+    {
+      "title": "What Are the Core Components of a CRM System?",
+      "excerpt": "New to CRM software? This guide breaks down every core component in plain English, with real examples of how each part works day to day.",
+      "slug": "what-are-the-core-components-of-a-crm-system-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/3184311/pexels-photo-3184311.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

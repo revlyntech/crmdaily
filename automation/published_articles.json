@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
-    "slug": "crm-database-explained-contacts-companies-deals-and-activities",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is a Contact in a CRM? Contacts, Leads and Customers Explained",
     "slug": "what-is-a-contact-in-a-crm-contacts-leads-and-customers-explained",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How Continuous Learning Is Reshaping Revenue Operations in 2026",
     "slug": "how-continuous-learning-is-reshaping-revenue-operations-in-2026",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "The Complete GTM Strategy Guide for 2026",
+    "slug": "the-complete-gtm-strategy-guide-for-2026-2",
+    "category": "Deep Guide"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "Monday CRM vs Pipedrive: Best Pick for Visual Pipeline Teams",
-    "slug": "monday-crm-vs-pipedrive-best-pick-for-visual-pipeline-teams",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
     "slug": "crm-database-explained-contacts-companies-deals-and-activities",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
     "slug": "crm-database-explained-contacts-companies-deals-and-activities-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How Continuous Learning Is Reshaping Revenue Operations in 2026",
+    "slug": "how-continuous-learning-is-reshaping-revenue-operations-in-2026",
+    "category": "RevOps Intelligence"
   }
 ]

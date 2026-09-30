@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is an Ideal Customer Profile (ICP) and Why It Matters",
-    "slug": "what-is-an-ideal-customer-profile-icp-and-why-it-matters",
-    "category": "Explainer"
-  },
-  {
     "title": "Salesforce Enterprise AI Harness Reviewed: Is It Worth It?",
     "slug": "salesforce-enterprise-ai-harness-reviewed-is-it-worth-it",
     "category": "Tool Reviews"
@@ -297,6 +292,11 @@
   {
     "title": "What Is a Contact in a CRM? Contacts, Leads and Customers Explained",
     "slug": "what-is-a-contact-in-a-crm-contacts-leads-and-customers-explained-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is an Account in CRM? Companies, Contacts and Account Hierarchy Explained",
+    "slug": "what-is-an-account-in-crm-companies-contacts-and-account-hierarchy-explained",
     "category": "CRM Fundamentals"
   }
 ]

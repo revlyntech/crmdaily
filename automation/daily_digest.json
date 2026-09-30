@@ -1,1 +1,12 @@
-{"date": "2026-09-29", "articles": [], "sent": true}
+{
+  "date": "2026-09-30",
+  "articles": [
+    {
+      "title": "What Is a Contact in a CRM? Contacts, Leads and Customers Explained",
+      "excerpt": "New to CRM software? Learn what a contact actually is, how it differs from a lead or customer, and why getting this right matters from day one.",
+      "slug": "what-is-a-contact-in-a-crm-contacts-leads-and-customers-explained-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/28077390/pexels-photo-28077390.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

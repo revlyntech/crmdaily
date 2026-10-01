@@ -1,1 +1,12 @@
-{"date": "2026-09-30", "articles": [], "sent": true}
+{
+  "date": "2026-10-01",
+  "articles": [
+    {
+      "title": "What Is a Lead in CRM? Lead Management From Capture to Conversion",
+      "excerpt": "New to CRM software? Learn what a lead is, why it matters daily, and how lead management works from first contact to closed deal.",
+      "slug": "what-is-a-lead-in-crm-lead-management-from-capture-to-conversion",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/9034228/pexels-photo-9034228.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

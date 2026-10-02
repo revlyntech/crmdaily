@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Pipeline vs Sales Funnel: What's the Difference?",
-    "slug": "crm-pipeline-vs-sales-funnel-whats-the-difference",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why Salesforce Is Quietly Killing Its Biggest Brand Bet",
     "slug": "why-salesforce-is-quietly-killing-its-biggest-brand-bet",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
     "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Freshsales vs Pipedrive: Best CRM for Field Sales Teams",
+    "slug": "freshsales-vs-pipedrive-best-crm-for-field-sales-teams-2",
+    "category": "Tool Comparison"
   }
 ]

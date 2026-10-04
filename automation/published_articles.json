@@ -1,10 +1,5 @@
 [
   {
-    "title": "How Apollo Became Salesforce Hunter's Data Backbone",
-    "slug": "how-apollo-became-salesforce-hunters-data-backbone",
-    "category": "CRM News"
-  },
-  {
     "title": "What Is CRM Automation? 15 Processes to Automate Now",
     "slug": "what-is-crm-automation-15-processes-to-automate-now",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why the GTM Engineer Role Is Reshaping Go-to-Market Teams",
     "slug": "why-the-gtm-engineer-role-is-reshaping-go-to-market-teams",
     "category": "CRM News"
+  },
+  {
+    "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
+    "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps",
+    "category": "CRM Fundamentals"
   }
 ]

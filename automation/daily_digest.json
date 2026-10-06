@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-05",
+  "date": "2026-10-06",
   "articles": [
     {
-      "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
-      "excerpt": "New to CRM software? A CRM workflow is an automated sequence of actions triggered by a specific event in your system. Here's how it works in plain English.",
-      "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-2",
+      "title": "CRM Data Management: How to Keep Customer Data Clean",
+      "excerpt": "Dirty CRM data costs more than you think. Learn what CRM data management means, why it matters daily, and how to fix it with practical steps.",
+      "slug": "crm-data-management-how-to-keep-customer-data-clean",
       "category": "CRM Fundamentals",
-      "featured_image_url": "https://images.pexels.com/photos/3184167/pexels-photo-3184167.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "featured_image_url": "https://images.pexels.com/photos/34212896/pexels-photo-34212896.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

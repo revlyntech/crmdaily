@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a GTM Motion? Definition, Examples and How It Works",
-    "slug": "what-is-a-gtm-motion-definition-examples-and-how-it-works",
-    "category": "Explainer"
-  },
-  {
     "title": "CRM Data Management: Keep Your Customer Data Clean",
     "slug": "crm-data-management-keep-your-customer-data-clean",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
     "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Data Management: How to Keep Customer Data Clean",
+    "slug": "crm-data-management-how-to-keep-customer-data-clean",
     "category": "CRM Fundamentals"
   }
 ]

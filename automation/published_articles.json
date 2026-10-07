@@ -1,10 +1,5 @@
 [
   {
-    "title": "Salesforce vs Monday CRM: Best Pick for Enterprise RevOps",
-    "slug": "salesforce-vs-monday-crm-best-pick-for-enterprise-revops",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is LTV? The Metric That Tells You Who's Worth Winning",
     "slug": "what-is-ltv-the-metric-that-tells-you-whos-worth-winning",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "Why AI Workflow Gaps Are Killing Your RevOps Metrics",
     "slug": "why-ai-workflow-gaps-are-killing-your-revops-metrics",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "The B2B Account-Based Marketing Playbook That Actually Works",
+    "slug": "the-b2b-account-based-marketing-playbook-that-actually-works",
+    "category": "Deep Guide"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is LTV? The Metric That Tells You Who's Worth Winning",
-    "slug": "what-is-ltv-the-metric-that-tells-you-whos-worth-winning",
-    "category": "Explainer"
-  },
-  {
     "title": "CRM Reporting Explained: Key Reports Every Sales Team Needs",
     "slug": "crm-reporting-explained-key-reports-every-sales-team-needs",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "The B2B Account-Based Marketing Playbook That Actually Works",
     "slug": "the-b2b-account-based-marketing-playbook-that-actually-works",
     "category": "Deep Guide"
+  },
+  {
+    "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
+    "slug": "crm-reporting-explained-reports-every-sales-team-needs",
+    "category": "CRM Fundamentals"
   }
 ]

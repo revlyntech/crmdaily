@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Dashboards Explained: What Your Sales Dashboard Should Track",
-    "slug": "crm-dashboards-explained-what-your-sales-dashboard-should-track",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How to Evaluate a CRM Tool Before Your Team Commits",
     "slug": "how-to-evaluate-a-crm-tool-before-your-team-commits",
     "category": "Tool Reviews"
@@ -298,5 +293,10 @@
     "title": "How the Sales Tech Stack Is Splitting in Two",
     "slug": "how-the-sales-tech-stack-is-splitting-in-two",
     "category": "Sales Tech"
+  },
+  {
+    "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
+    "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track",
+    "category": "CRM Fundamentals"
   }
 ]

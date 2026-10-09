@@ -1,1 +1,12 @@
-{"date": "2026-10-08", "articles": [], "sent": true}
+{
+  "date": "2026-10-09",
+  "articles": [
+    {
+      "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
+      "excerpt": "New to CRM software? Your sales dashboard is the single screen that tells you whether your team is winning or falling behind. Here's what it should show.",
+      "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/16094043/pexels-photo-16094043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

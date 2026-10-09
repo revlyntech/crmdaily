@@ -1,8 +1,8 @@
 import ROICalculator from "@/components/tools/ROICalculator";
 
 export const metadata = {
-  title: "ROI Calculator",
-  description: "Calculate what disorganization is costing you and whether a CRM would pay for itself.",
+  title: "CRM ROI Calculator: Cost of Skipping a CRM",
+  description: "Enter your sales numbers to estimate what running without a CRM costs you each month, plus a one-year projection of what you could recover.",
 };
 
 export default function Page() {

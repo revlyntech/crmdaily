@@ -64,7 +64,7 @@ export default function News({ prefetchedArticles = null }) {
         }
       `}</style>
       <div className="fade-in">
-        <SEOMeta title={pageTitle} description={pageDesc} url={`https://www.crmdaily.co/news${categoryFilter ? `?category=${categoryFilter}` : ''}`} type="website" />
+        <SEOMeta title={pageTitle} description={pageDesc} url="https://www.crmdaily.co/news" type="website" />
 
         <div className="news-hero" style={{ background:"#0F172A", padding:"64px 32px 48px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }}>

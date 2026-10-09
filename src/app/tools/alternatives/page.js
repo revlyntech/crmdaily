@@ -1,8 +1,8 @@
 import Alternatives from "@/components/tools/Alternatives";
 
 export const metadata = {
-  title: "CRM Alternatives",
-  description: "Considering a move off your current CRM? See common switch paths.",
+  title: "CRM Alternatives: Switching Guides",
+  description: "Thinking of leaving your current CRM? See alternatives and migration guidance for switching from popular platforms, including what to check before you move.",
 };
 
 export default function Page() {

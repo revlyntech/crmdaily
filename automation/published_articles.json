@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Choose a CRM: The Complete Buying Guide",
-    "slug": "how-to-choose-a-crm-the-complete-buying-guide",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why Your Sales AI Stack Is Lying to You About Deals",
     "slug": "why-your-sales-ai-stack-is-lying-to-you-about-deals",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "Apollo Leads PyPI Package: What It Means for GTM Teams",
     "slug": "apollo-leads-pypi-package-what-it-means-for-gtm-teams",
     "category": "CRM News"
+  },
+  {
+    "title": "Salesforce vs HubSpot: Which CRM Wins for RevOps?",
+    "slug": "salesforce-vs-hubspot-which-crm-wins-for-revops",
+    "category": "Tool Comparison"
   }
 ]

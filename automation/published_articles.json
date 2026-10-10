@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Adoption? Why Employees Stop Using CRMs and How to Fix It",
-    "slug": "what-is-crm-adoption-why-employees-stop-using-crms-and-how-to-fix-it",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How to Choose a CRM: The Complete Buying Guide",
     "slug": "how-to-choose-a-crm-the-complete-buying-guide",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Adoption: Why Employees Quit and How to Fix It",
     "slug": "crm-adoption-why-employees-quit-and-how-to-fix-it",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Apollo Leads PyPI Package: What It Means for GTM Teams",
+    "slug": "apollo-leads-pypi-package-what-it-means-for-gtm-teams",
+    "category": "CRM News"
   }
 ]

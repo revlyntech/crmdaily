@@ -1,1 +1,12 @@
-{"date": "2026-10-09", "articles": [], "sent": true}
+{
+  "date": "2026-10-10",
+  "articles": [
+    {
+      "title": "CRM Adoption: Why Employees Quit and How to Fix It",
+      "excerpt": "Most CRM failures aren't about the software. They're about people. Here's why adoption breaks down and what actually fixes it.",
+      "slug": "crm-adoption-why-employees-quit-and-how-to-fix-it",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/8012043/pexels-photo-8012043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

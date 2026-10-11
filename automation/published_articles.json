@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why Your Sales AI Stack Is Lying to You About Deals",
-    "slug": "why-your-sales-ai-stack-is-lying-to-you-about-deals",
-    "category": "Sales Tech"
-  },
-  {
     "title": "Best GTM Tools for B2B SaaS in 2026",
     "slug": "best-gtm-tools-for-b2b-saas-in-2026-2",
     "category": "Best Tools"
@@ -298,5 +293,10 @@
     "title": "Salesforce vs HubSpot: Which CRM Wins for RevOps?",
     "slug": "salesforce-vs-hubspot-which-crm-wins-for-revops",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "How to Choose a CRM: The Complete Buying Guide for Businesses",
+    "slug": "how-to-choose-a-crm-the-complete-buying-guide-for-businesses",
+    "category": "CRM Fundamentals"
   }
 ]

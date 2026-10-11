@@ -1,10 +1,5 @@
 [
   {
-    "title": "Best GTM Tools for B2B SaaS in 2026",
-    "slug": "best-gtm-tools-for-b2b-saas-in-2026-2",
-    "category": "Best Tools"
-  },
-  {
     "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
     "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How to Choose a CRM: The Complete Buying Guide for Businesses",
     "slug": "how-to-choose-a-crm-the-complete-buying-guide-for-businesses",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is a CRM Audit? Definition, Steps, and Real Examples",
+    "slug": "what-is-a-crm-audit-definition-steps-and-real-examples",
+    "category": "Explainer"
   }
 ]

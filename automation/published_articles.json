@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Migration Explained: Move CRMs Without Losing Data",
-    "slug": "crm-migration-explained-move-crms-without-losing-data",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How Agentic AI Is Quietly Rewiring the GTM Stack",
     "slug": "how-agentic-ai-is-quietly-rewiring-the-gtm-stack",
     "category": "AI in Sales"
@@ -298,5 +293,10 @@
     "title": "When Your CRM Vendor Goes Political: A GTM Strategy Guide",
     "slug": "when-your-crm-vendor-goes-political-a-gtm-strategy-guide",
     "category": "GTM Strategy"
+  },
+  {
+    "title": "How to Implement a CRM: Step-by-Step Guide for Beginners",
+    "slug": "how-to-implement-a-crm-step-by-step-guide-for-beginners",
+    "category": "CRM Fundamentals"
   }
 ]

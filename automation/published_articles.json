@@ -1,10 +1,5 @@
 [
   {
-    "title": "How Agentic AI Is Quietly Rewiring the GTM Stack",
-    "slug": "how-agentic-ai-is-quietly-rewiring-the-gtm-stack",
-    "category": "AI in Sales"
-  },
-  {
     "title": "A Security Flaw in Amazon Connect's Salesforce Link",
     "slug": "a-security-flaw-in-amazon-connects-salesforce-link",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "How to Implement a CRM: Step-by-Step Guide for Beginners",
     "slug": "how-to-implement-a-crm-step-by-step-guide-for-beginners",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Why HubSpot CLI Tools Are Changing How RevOps Teams Work",
+    "slug": "why-hubspot-cli-tools-are-changing-how-revops-teams-work",
+    "category": "CRM News"
   }
 ]

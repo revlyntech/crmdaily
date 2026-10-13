@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Customization vs CRM Configuration: What to Change",
-    "slug": "crm-customization-vs-crm-configuration-what-to-change",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Best Practices: Build a High-Performing CRM From Scratch",
     "slug": "crm-best-practices-build-a-high-performing-crm-from-scratch",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Migration Explained: Move CRMs Without Losing Data",
     "slug": "crm-migration-explained-move-crms-without-losing-data-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Zoho CRM vs Insightly: Best Pick for Sales and Projects",
+    "slug": "zoho-crm-vs-insightly-best-pick-for-sales-and-projects",
+    "category": "Tool Comparison"
   }
 ]

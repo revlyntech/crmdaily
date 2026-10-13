@@ -1,10 +1,5 @@
 [
   {
-    "title": "A Security Flaw in Amazon Connect's Salesforce Link",
-    "slug": "a-security-flaw-in-amazon-connects-salesforce-link",
-    "category": "CRM News"
-  },
-  {
     "title": "CRM Customization vs CRM Configuration: What to Change",
     "slug": "crm-customization-vs-crm-configuration-what-to-change",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why HubSpot CLI Tools Are Changing How RevOps Teams Work",
     "slug": "why-hubspot-cli-tools-are-changing-how-revops-teams-work",
     "category": "CRM News"
+  },
+  {
+    "title": "CRM Migration Explained: Move CRMs Without Losing Data",
+    "slug": "crm-migration-explained-move-crms-without-losing-data-2",
+    "category": "CRM Fundamentals"
   }
 ]

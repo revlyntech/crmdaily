@@ -1,1 +1,12 @@
-{"date": "2026-10-12", "articles": [], "sent": true}
+{
+  "date": "2026-10-13",
+  "articles": [
+    {
+      "title": "CRM Migration Explained: Move CRMs Without Losing Data",
+      "excerpt": "Switching CRM platforms doesn't have to mean losing years of customer data. Here's what CRM migration actually involves and how to do it right.",
+      "slug": "crm-migration-explained-move-crms-without-losing-data-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/11783119/pexels-photo-11783119.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

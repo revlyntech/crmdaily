@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM? A Complete Beginner's Guide",
-    "slug": "what-is-crm-a-complete-beginners-guide",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How to Build a GTM Stack That Survives Platform Power Grabs",
     "slug": "how-to-build-a-gtm-stack-that-survives-platform-power-grabs",
     "category": "GTM Strategy"
@@ -298,5 +293,10 @@
     "title": "CRM Best Practices: The Complete Guide to High Performance",
     "slug": "crm-best-practices-the-complete-guide-to-high-performance",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Salesforce Review 2026: Is It Still Worth It for RevOps?",
+    "slug": "salesforce-review-2026-is-it-still-worth-it-for-revops",
+    "category": "Tool Reviews"
   }
 ]

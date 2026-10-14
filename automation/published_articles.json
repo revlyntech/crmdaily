@@ -1,10 +1,5 @@
 [
   {
-    "title": "Salesforce vs Pipedrive: Enterprise vs SMB CRM Compared",
-    "slug": "salesforce-vs-pipedrive-enterprise-vs-smb-crm-compared",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is a Sales Qualified Lead (SQL)? A Plain-English Guide",
     "slug": "what-is-a-sales-qualified-lead-sql-a-plain-english-guide",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "What Is a CRM Audit? Definition, Steps, and Benefits",
     "slug": "what-is-a-crm-audit-definition-steps-and-benefits",
     "category": "Explainer"
+  },
+  {
+    "title": "CRM Customization vs Configuration: What to Actually Change",
+    "slug": "crm-customization-vs-configuration-what-to-actually-change",
+    "category": "CRM Fundamentals"
   }
 ]

@@ -1,1 +1,12 @@
-{"date": "2026-10-13", "articles": [], "sent": true}
+{
+  "date": "2026-10-14",
+  "articles": [
+    {
+      "title": "CRM Customization vs Configuration: What to Actually Change",
+      "excerpt": "New to CRM software? Learn the real difference between configuration and customization, why it matters, and which one you should reach for first.",
+      "slug": "crm-customization-vs-configuration-what-to-actually-change",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/16094042/pexels-photo-16094042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

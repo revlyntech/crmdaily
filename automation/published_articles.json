@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Build a GTM Stack That Survives Platform Power Grabs",
-    "slug": "how-to-build-a-gtm-stack-that-survives-platform-power-grabs",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "Why Marketing Automation Is Being Rebuilt From Scratch in 2026",
     "slug": "why-marketing-automation-is-being-rebuilt-from-scratch-in-2026",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "Salesforce Review 2026: Is It Still Worth It for RevOps?",
     "slug": "salesforce-review-2026-is-it-still-worth-it-for-revops",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "Why LinkedIn Integration Is a RevOps Revenue Problem",
+    "slug": "why-linkedin-integration-is-a-revops-revenue-problem",
+    "category": "RevOps Intelligence"
   }
 ]

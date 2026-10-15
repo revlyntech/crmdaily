@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
-    "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Close vs HubSpot: Which CRM Wins for Inside Sales?",
     "slug": "close-vs-hubspot-which-crm-wins-for-inside-sales",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
     "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-3",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "B2B CRM Implementation Guide: Frameworks That Actually Work",
+    "slug": "b2b-crm-implementation-guide-frameworks-that-actually-work",
+    "category": "Deep Guide"
   }
 ]

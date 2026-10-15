@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why Marketing Automation Is Being Rebuilt From Scratch in 2026",
-    "slug": "why-marketing-automation-is-being-rebuilt-from-scratch-in-2026",
-    "category": "CRM News"
-  },
-  {
     "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
     "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why LinkedIn Integration Is a RevOps Revenue Problem",
     "slug": "why-linkedin-integration-is-a-revops-revenue-problem",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "What Is CRM? A Complete Beginner's Guide to Customer Relationship Management",
+    "slug": "what-is-crm-a-complete-beginners-guide-to-customer-relationship-management-2",
+    "category": "CRM Fundamentals"
   }
 ]

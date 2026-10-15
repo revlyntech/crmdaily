@@ -1,10 +1,5 @@
 [
   {
-    "title": "Close vs HubSpot: Which CRM Wins for Inside Sales?",
-    "slug": "close-vs-hubspot-which-crm-wins-for-inside-sales",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is MEDDIC and Why It Matters for B2B Sales",
     "slug": "what-is-meddic-and-why-it-matters-for-b2b-sales",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "B2B CRM Implementation Guide: Frameworks That Actually Work",
     "slug": "b2b-crm-implementation-guide-frameworks-that-actually-work",
     "category": "Deep Guide"
+  },
+  {
+    "title": "Why Your Sales Tech Stack Has an Agreement Problem",
+    "slug": "why-your-sales-tech-stack-has-an-agreement-problem",
+    "category": "Sales Tech"
   }
 ]

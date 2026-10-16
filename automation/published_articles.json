@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Are the Core Components of a CRM System?",
-    "slug": "what-are-the-core-components-of-a-crm-system-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is CRM Software? Features, Benefits and How It Works",
     "slug": "what-is-crm-software-features-benefits-and-how-it-works-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Best Sales Automation Tools for RevOps in 2026",
     "slug": "best-sales-automation-tools-for-revops-in-2026-2",
     "category": "Best Tools"
+  },
+  {
+    "title": "How AI Billing Models Are Reshaping CRM Budget Decisions",
+    "slug": "how-ai-billing-models-are-reshaping-crm-budget-decisions",
+    "category": "AI in Sales"
   }
 ]

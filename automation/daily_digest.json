@@ -1,1 +1,12 @@
-{"date": "2026-10-15", "articles": [], "sent": true}
+{
+  "date": "2026-10-16",
+  "articles": [
+    {
+      "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
+      "excerpt": "CRM and ERP solve different problems. Here's how to tell them apart and figure out which one your business actually needs first.",
+      "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/34804024/pexels-photo-34804024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

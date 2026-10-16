@@ -1,10 +1,5 @@
 [
   {
-    "title": "Types of CRM: Operational, Analytical and Collaborative Explained",
-    "slug": "types-of-crm-operational-analytical-and-collaborative-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Salesforce Agentforce Review: Features, Pros and Cons for RevOps",
     "slug": "salesforce-agentforce-review-features-pros-and-cons-for-revops",
     "category": "Tool Reviews"
@@ -297,6 +292,11 @@
   {
     "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
     "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Are the Different Types of CRM? A Beginner's Guide",
+    "slug": "what-are-the-different-types-of-crm-a-beginners-guide",
     "category": "CRM Fundamentals"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "Salesforce Agentforce Review: Features, Pros and Cons for RevOps",
-    "slug": "salesforce-agentforce-review-features-pros-and-cons-for-revops",
-    "category": "Tool Reviews"
-  },
-  {
     "title": "What Are the Core Components of a CRM System?",
     "slug": "what-are-the-core-components-of-a-crm-system-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Are the Different Types of CRM? A Beginner's Guide",
     "slug": "what-are-the-different-types-of-crm-a-beginners-guide",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Best Sales Automation Tools for RevOps in 2026",
+    "slug": "best-sales-automation-tools-for-revops-in-2026-2",
+    "category": "Best Tools"
   }
 ]

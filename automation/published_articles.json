@@ -1,10 +1,5 @@
 [
   {
-    "title": "How Continuous Learning Is Reshaping Revenue Operations in 2026",
-    "slug": "how-continuous-learning-is-reshaping-revenue-operations-in-2026",
-    "category": "RevOps Intelligence"
-  },
-  {
     "title": "The Complete GTM Strategy Guide for 2026",
     "slug": "the-complete-gtm-strategy-guide-for-2026-2",
     "category": "Deep Guide"
@@ -298,5 +293,10 @@
     "title": "What Is CRM Software? Features, Benefits and How It Works",
     "slug": "what-is-crm-software-features-benefits-and-how-it-works-3",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How HubSpot Turned 12 Leads a Month Into 108 in Japan",
+    "slug": "how-hubspot-turned-12-leads-a-month-into-108-in-japan",
+    "category": "CRM News"
   }
 ]

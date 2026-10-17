@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Software? Features, Benefits and How It Works",
-    "slug": "what-is-crm-software-features-benefits-and-how-it-works-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
     "slug": "crm-database-explained-contacts-companies-deals-and-activities-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How AI Billing Models Are Reshaping CRM Budget Decisions",
     "slug": "how-ai-billing-models-are-reshaping-crm-budget-decisions",
     "category": "AI in Sales"
+  },
+  {
+    "title": "What Are the Core Components of a CRM System?",
+    "slug": "what-are-the-core-components-of-a-crm-system-3",
+    "category": "CRM Fundamentals"
   }
 ]

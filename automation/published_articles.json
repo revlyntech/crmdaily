@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
-    "slug": "crm-database-explained-contacts-companies-deals-and-activities-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How Continuous Learning Is Reshaping Revenue Operations in 2026",
     "slug": "how-continuous-learning-is-reshaping-revenue-operations-in-2026",
     "category": "RevOps Intelligence"
@@ -297,6 +292,11 @@
   {
     "title": "What Are the Core Components of a CRM System?",
     "slug": "what-are-the-core-components-of-a-crm-system-3",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is CRM Software? Features, Benefits and How It Works",
+    "slug": "what-is-crm-software-features-benefits-and-how-it-works-3",
     "category": "CRM Fundamentals"
   }
 ]

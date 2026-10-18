@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is an Account in CRM? Companies, Contacts and Account Hierarchy Explained",
-    "slug": "what-is-an-account-in-crm-companies-contacts-and-account-hierarchy-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why the Sales Tech Stack Is Getting a Serious Rebuild",
     "slug": "why-the-sales-tech-stack-is-getting-a-serious-rebuild",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "What Is a Contact in a CRM? Leads and Customers Explained",
     "slug": "what-is-a-contact-in-a-crm-leads-and-customers-explained",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "HubSpot vs Salesforce: Best CRM for B2B Sales Teams",
+    "slug": "hubspot-vs-salesforce-best-crm-for-b2b-sales-teams",
+    "category": "Tool Comparison"
   }
 ]

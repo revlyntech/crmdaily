@@ -1,10 +1,5 @@
 [
   {
-    "title": "The Complete GTM Strategy Guide for 2026",
-    "slug": "the-complete-gtm-strategy-guide-for-2026-2",
-    "category": "Deep Guide"
-  },
-  {
     "title": "What Is a Contact in a CRM? Contacts, Leads and Customers Explained",
     "slug": "what-is-a-contact-in-a-crm-contacts-leads-and-customers-explained-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How HubSpot Turned 12 Leads a Month Into 108 in Japan",
     "slug": "how-hubspot-turned-12-leads-a-month-into-108-in-japan",
     "category": "CRM News"
+  },
+  {
+    "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
+    "slug": "crm-database-explained-contacts-companies-deals-and-activities-3",
+    "category": "CRM Fundamentals"
   }
 ]

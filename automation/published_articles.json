@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why the Sales Tech Stack Is Getting a Serious Rebuild",
-    "slug": "why-the-sales-tech-stack-is-getting-a-serious-rebuild",
-    "category": "Sales Tech"
-  },
-  {
     "title": "Best CRM for Real Estate Teams in 2026",
     "slug": "best-crm-for-real-estate-teams-in-2026-2",
     "category": "Best Tools"
@@ -298,5 +293,10 @@
     "title": "HubSpot vs Salesforce: Best CRM for B2B Sales Teams",
     "slug": "hubspot-vs-salesforce-best-crm-for-b2b-sales-teams",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is an Account in CRM? Companies, Contacts and Hierarchy",
+    "slug": "what-is-an-account-in-crm-companies-contacts-and-hierarchy",
+    "category": "CRM Fundamentals"
   }
 ]

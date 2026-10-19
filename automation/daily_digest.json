@@ -1,1 +1,12 @@
-{"date": "2026-10-18", "articles": [], "sent": true}
+{
+  "date": "2026-10-19",
+  "articles": [
+    {
+      "title": "What Is an Account in CRM? Companies, Contacts and Hierarchy",
+      "excerpt": "New to CRM software? Learn what an account actually is, how it differs from a contact, and why account hierarchy changes everything for B2B teams.",
+      "slug": "what-is-an-account-in-crm-companies-contacts-and-hierarchy",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/7648043/pexels-photo-7648043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

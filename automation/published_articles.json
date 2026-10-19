@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a Lead in CRM? Lead Management From Capture to Conversion",
-    "slug": "what-is-a-lead-in-crm-lead-management-from-capture-to-conversion",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is an Opportunity in CRM? A Complete Guide to Sales Opportunities",
     "slug": "what-is-an-opportunity-in-crm-a-complete-guide-to-sales-opportunities",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is a Lead in CRM? From First Touch to Closed Deal",
     "slug": "what-is-a-lead-in-crm-from-first-touch-to-closed-deal",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is RevOps? A Plain-English Guide for GTM Teams",
+    "slug": "what-is-revops-a-plain-english-guide-for-gtm-teams",
+    "category": "Explainer"
   }
 ]

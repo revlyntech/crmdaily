@@ -1,10 +1,5 @@
 [
   {
-    "title": "Best CRM for Real Estate Teams in 2026",
-    "slug": "best-crm-for-real-estate-teams-in-2026-2",
-    "category": "Best Tools"
-  },
-  {
     "title": "What Is a Lead in CRM? Lead Management From Capture to Conversion",
     "slug": "what-is-a-lead-in-crm-lead-management-from-capture-to-conversion",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "What Is an Account in CRM? Companies, Contacts and Hierarchy",
     "slug": "what-is-an-account-in-crm-companies-contacts-and-hierarchy",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is a Lead in CRM? From First Touch to Closed Deal",
+    "slug": "what-is-a-lead-in-crm-from-first-touch-to-closed-deal",
     "category": "CRM Fundamentals"
   }
 ]

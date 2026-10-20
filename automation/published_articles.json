@@ -1,10 +1,5 @@
 [
   {
-    "title": "How AI Is Pressure-Testing Your Sales Pipeline Right Now",
-    "slug": "how-ai-is-pressure-testing-your-sales-pipeline-right-now",
-    "category": "AI in Sales"
-  },
-  {
     "title": "Why RevOps Stack Alignment Is the Real CRM Problem in 2026",
     "slug": "why-revops-stack-alignment-is-the-real-crm-problem-in-2026",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "What Is an Opportunity in CRM? A Complete Guide",
     "slug": "what-is-an-opportunity-in-crm-a-complete-guide-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Why AI Agent Governance Is Now a GTM Strategy Problem",
+    "slug": "why-ai-agent-governance-is-now-a-gtm-strategy-problem",
+    "category": "GTM Strategy"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is an Opportunity in CRM? A Complete Guide to Sales Opportunities",
-    "slug": "what-is-an-opportunity-in-crm-a-complete-guide-to-sales-opportunities",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How AI Is Pressure-Testing Your Sales Pipeline Right Now",
     "slug": "how-ai-is-pressure-testing-your-sales-pipeline-right-now",
     "category": "AI in Sales"
@@ -298,5 +293,10 @@
     "title": "What Is RevOps? A Plain-English Guide for GTM Teams",
     "slug": "what-is-revops-a-plain-english-guide-for-gtm-teams",
     "category": "Explainer"
+  },
+  {
+    "title": "What Is an Opportunity in CRM? A Complete Guide",
+    "slug": "what-is-an-opportunity-in-crm-a-complete-guide-2",
+    "category": "CRM Fundamentals"
   }
 ]

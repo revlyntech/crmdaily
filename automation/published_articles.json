@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a Sales Cycle? Definition, Stages, and Tips",
-    "slug": "what-is-a-sales-cycle-definition-stages-and-tips",
-    "category": "Explainer"
-  },
-  {
     "title": "What Is a Sales Funnel? CRM Pipeline vs Sales Funnel Explained",
     "slug": "what-is-a-sales-funnel-crm-pipeline-vs-sales-funnel-explained",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "HubSpot vs ActiveCampaign: Best for Marketing-First Teams",
     "slug": "hubspot-vs-activecampaign-best-for-marketing-first-teams",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is Product-Led Growth and How Does It Actually Work?",
+    "slug": "what-is-product-led-growth-and-how-does-it-actually-work",
+    "category": "Explainer"
   }
 ]

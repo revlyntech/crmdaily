@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
-    "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Freshsales vs Pipedrive: Best CRM for Field Sales Teams",
     "slug": "freshsales-vs-pipedrive-best-crm-for-field-sales-teams-2",
     "category": "Tool Comparison"
@@ -297,6 +292,11 @@
   {
     "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
     "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
+    "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-3",
     "category": "CRM Fundamentals"
   }
 ]

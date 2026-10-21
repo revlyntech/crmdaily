@@ -1,1 +1,12 @@
-{"date": "2026-10-20", "articles": [], "sent": true}
+{
+  "date": "2026-10-21",
+  "articles": [
+    {
+      "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
+      "excerpt": "New to CRM software? A pipeline is how your sales team tracks every deal from first contact to closed. Here's what it means and why it matters.",
+      "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/9034987/pexels-photo-9034987.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

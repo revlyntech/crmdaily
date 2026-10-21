@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
-    "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
     "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How to Compare AI CRM Software Before You Buy in 2026",
     "slug": "how-to-compare-ai-crm-software-before-you-buy-in-2026",
     "category": "CRM News"
+  },
+  {
+    "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
+    "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-2",
+    "category": "CRM Fundamentals"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Build a GTM Strategy Around Omnichannel CRM Signals",
-    "slug": "how-to-build-a-gtm-strategy-around-omnichannel-crm-signals",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "Why the GTM Engineer Role Is Reshaping Go-to-Market Teams",
     "slug": "why-the-gtm-engineer-role-is-reshaping-go-to-market-teams",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
     "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads-3",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "OpenArt AI for Brand Marketing: A RevOps Team Review",
+    "slug": "openart-ai-for-brand-marketing-a-revops-team-review",
+    "category": "Tool Reviews"
   }
 ]

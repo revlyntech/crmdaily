@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why the GTM Engineer Role Is Reshaping Go-to-Market Teams",
-    "slug": "why-the-gtm-engineer-role-is-reshaping-go-to-market-teams",
-    "category": "CRM News"
-  },
-  {
     "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
     "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "OpenArt AI for Brand Marketing: A RevOps Team Review",
     "slug": "openart-ai-for-brand-marketing-a-revops-team-review",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "How AI Revenue Engines Are Rewriting RevOps Metrics in 2026",
+    "slug": "how-ai-revenue-engines-are-rewriting-revops-metrics-in-2026",
+    "category": "RevOps Intelligence"
   }
 ]

@@ -1,1 +1,12 @@
-{"date": "2026-10-21", "articles": [], "sent": true}
+{
+  "date": "2026-10-22",
+  "articles": [
+    {
+      "title": "CRM Pipeline vs Sales Funnel: What's the Difference?",
+      "excerpt": "New to CRM software? Learn what a sales funnel and CRM pipeline actually are, how they differ, and why both matter for your day-to-day sales process.",
+      "slug": "crm-pipeline-vs-sales-funnel-whats-the-difference-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/6592647/pexels-photo-6592647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

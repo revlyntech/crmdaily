@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a Sales Funnel? CRM Pipeline vs Sales Funnel Explained",
-    "slug": "what-is-a-sales-funnel-crm-pipeline-vs-sales-funnel-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
     "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is Product-Led Growth and How Does It Actually Work?",
     "slug": "what-is-product-led-growth-and-how-does-it-actually-work",
     "category": "Explainer"
+  },
+  {
+    "title": "CRM Pipeline vs Sales Funnel: What's the Difference?",
+    "slug": "crm-pipeline-vs-sales-funnel-whats-the-difference-2",
+    "category": "CRM Fundamentals"
   }
 ]

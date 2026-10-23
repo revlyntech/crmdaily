@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Automation? 15 Processes Every Business Should Automate",
-    "slug": "what-is-crm-automation-15-processes-every-business-should-automate",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Copper vs HubSpot: Best CRM for Google Workspace Teams",
     "slug": "copper-vs-hubspot-best-crm-for-google-workspace-teams",
     "category": "Tool Comparison"
@@ -297,6 +292,11 @@
   {
     "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
     "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is CRM Automation? 15 Processes to Automate Now",
+    "slug": "what-is-crm-automation-15-processes-to-automate-now-2",
     "category": "CRM Fundamentals"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "Copper vs HubSpot: Best CRM for Google Workspace Teams",
-    "slug": "copper-vs-hubspot-best-crm-for-google-workspace-teams",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
     "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is CRM Automation? 15 Processes to Automate Now",
     "slug": "what-is-crm-automation-15-processes-to-automate-now-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How to Forecast Sales Accurately in 2026",
+    "slug": "how-to-forecast-sales-accurately-in-2026-2",
+    "category": "Deep Guide"
   }
 ]

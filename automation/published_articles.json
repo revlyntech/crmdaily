@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
-    "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is CRM Automation? 15 Processes Every Business Should Automate",
     "slug": "what-is-crm-automation-15-processes-every-business-should-automate",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How AI Revenue Engines Are Rewriting RevOps Metrics in 2026",
     "slug": "how-ai-revenue-engines-are-rewriting-revops-metrics-in-2026",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
+    "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps-2",
+    "category": "CRM Fundamentals"
   }
 ]

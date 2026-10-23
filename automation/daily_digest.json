@@ -1,1 +1,12 @@
-{"date": "2026-10-22", "articles": [], "sent": true}
+{
+  "date": "2026-10-23",
+  "articles": [
+    {
+      "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
+      "excerpt": "Lead routing is how your CRM automatically sends new leads to the right sales rep. Here's how it works and why it matters.",
+      "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/7581114/pexels-photo-7581114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

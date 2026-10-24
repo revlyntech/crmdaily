@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is Product-Led Growth and Why Does It Matter?",
-    "slug": "what-is-product-led-growth-and-why-does-it-matter",
-    "category": "Explainer"
-  },
-  {
     "title": "Is Nerdio the Right Cloud CRM Platform for RevOps?",
     "slug": "is-nerdio-the-right-cloud-crm-platform-for-revops",
     "category": "Tool Reviews"
@@ -298,5 +293,10 @@
     "title": "When Your Sales Automation Outgrows Its No-Code Roots",
     "slug": "when-your-sales-automation-outgrows-its-no-code-roots",
     "category": "Sales Tech"
+  },
+  {
+    "title": "Best CRM for Enterprise Sales Teams in 2026",
+    "slug": "best-crm-for-enterprise-sales-teams-in-2026-2",
+    "category": "Best Tools"
   }
 ]

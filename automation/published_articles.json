@@ -1,10 +1,5 @@
 [
   {
-    "title": "Is Nerdio the Right Cloud CRM Platform for RevOps?",
-    "slug": "is-nerdio-the-right-cloud-crm-platform-for-revops",
-    "category": "Tool Reviews"
-  },
-  {
     "title": "What Is CRM Integration? How CRMs Connect With Your Tools",
     "slug": "what-is-crm-integration-how-crms-connect-with-your-tools-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Best CRM for Enterprise Sales Teams in 2026",
     "slug": "best-crm-for-enterprise-sales-teams-in-2026-2",
     "category": "Best Tools"
+  },
+  {
+    "title": "CRM Data Hygiene: 15 Problems That Destroy CRM Data Quality",
+    "slug": "crm-data-hygiene-15-problems-that-destroy-crm-data-quality-2",
+    "category": "CRM Fundamentals"
   }
 ]

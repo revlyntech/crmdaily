@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
-    "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
     "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why Clean CRM Data Is the Real Foundation of AI in Sales",
     "slug": "why-clean-crm-data-is-the-real-foundation-of-ai-in-sales",
     "category": "AI in Sales"
+  },
+  {
+    "title": "Anthropic's IPO and What It Means for Your CRM Stack",
+    "slug": "anthropics-ipo-and-what-it-means-for-your-crm-stack",
+    "category": "CRM News"
   }
 ]

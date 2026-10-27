@@ -5,6 +5,7 @@ import Ticker from "../components/Ticker";
 import StockTicker from "../components/StockTicker";
 import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
+import { siteSchema } from "../lib/schema";
 
 export const metadata = {
   title: { default: 'CRM Daily - Your Daily CRM and GTM Intelligence', template: '%s | CRM Daily' },
@@ -52,30 +53,7 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive"
         />
         <ScrollToTop />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@graph': [
-            {
-              '@type': 'NewsMediaOrganization',
-              '@id': 'https://www.crmdaily.co/#organization',
-              'name': 'CRM Daily',
-              'url': 'https://www.crmdaily.co',
-              'logo': { '@type': 'ImageObject', 'url': 'https://www.crmdaily.co/favicon-192.png' },
-              'description': 'CRM Daily is a free daily publication covering CRM, GTM and RevOps intelligence for revenue teams.',
-              'foundingDate': '2026',
-              'publishingPrinciples': 'https://www.crmdaily.co/about',
-              'sameAs': ['https://www.linkedin.com/company/crmdaily', 'https://www.facebook.com/profile.php?id=61591584532423'],
-            },
-            {
-              '@type': 'WebSite',
-              '@id': 'https://www.crmdaily.co/#website',
-              'url': 'https://www.crmdaily.co',
-              'name': 'CRM Daily',
-              'publisher': { '@id': 'https://www.crmdaily.co/#organization' },
-              'potentialAction': { '@type': 'SearchAction', 'target': 'https://www.crmdaily.co/news?search={search_term_string}', 'query-input': 'required name=search_term_string' },
-            }
-          ]
-        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }} />
         <header>
           <Navbar />
           <Ticker />

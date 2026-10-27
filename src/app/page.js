@@ -6,8 +6,9 @@ export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'CRM Daily — Your Daily CRM & GTM Intelligence',
-  description: 'Daily CRM and GTM news, guides, and tool reviews. HubSpot, Salesforce, Pipedrive, RevOps intelligence and more.',
+  title: 'CRM Daily: CRM, GTM and RevOps News, Guides and Tool Reviews',
+  description: 'CRM Daily is a free daily publication about CRM, GTM and RevOps, powered by Revlyn. News, guides, tool reviews, a CRM glossary and guides for 24 industries.',
+  alternates: { canonical: 'https://www.crmdaily.co' },
 };
 
 export default async function HomePage() {

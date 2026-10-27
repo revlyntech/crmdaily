@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
-    "slug": "crm-reporting-explained-reports-every-sales-team-needs",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How the Sales Tech Stack Is Splitting in Two",
     "slug": "how-the-sales-tech-stack-is-splitting-in-two",
     "category": "Sales Tech"
@@ -297,6 +292,11 @@
   {
     "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
     "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
+    "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-3",
     "category": "CRM Fundamentals"
   }
 ]

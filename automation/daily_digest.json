@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "articles": [
     {
-      "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
-      "excerpt": "New to CRM reporting? Learn which sales reports actually matter, what they measure, and how to use them to hit your targets every quarter.",
-      "slug": "crm-reporting-explained-reports-every-sales-team-needs-2",
+      "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
+      "excerpt": "New to CRM software? Learn what a sales dashboard actually tracks, why it matters daily, and which metrics deserve a spot on your screen.",
+      "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-2",
       "category": "CRM Fundamentals",
-      "featured_image_url": "https://images.pexels.com/photos/7698796/pexels-photo-7698796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      "featured_image_url": "https://images.pexels.com/photos/5831343/pexels-photo-5831343.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     }
   ]
 }

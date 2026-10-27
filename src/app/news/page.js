@@ -4,19 +4,24 @@ import { Suspense } from 'react';
 
 export const revalidate = 300;
 
-export const metadata = {
-  // layout.js adds " | CRM Daily" through its title template, so the title
-  // here must not include it. It was rendering as
-  // "CRM & GTM News | CRM Daily | CRM Daily".
-  title: 'CRM & GTM News: Daily Updates for Revenue Teams',
-  description: 'Daily CRM and GTM news covering HubSpot, Salesforce and Pipedrive updates, plus RevOps and sales technology analysis for revenue teams.',
-  // /news?category=HubSpot and similar filter URLs render through this same
-  // page, so Google was indexing each one as a separate duplicate result.
-  // This points every variant at the one real URL.
-  alternates: {
-    canonical: 'https://www.crmdaily.co/news',
-  },
-};
+const BASE = 'https://www.crmdaily.co/news';
+
+export async function generateMetadata({ searchParams }) {
+  const sp = (await searchParams) || {};
+  const page = Math.max(1, parseInt(sp.page, 10) || 1);
+  const filtered = Boolean(sp.category);
+  const paged = !filtered && page > 1;
+  return {
+    // layout.js adds " | CRM Daily" to the title.
+    title: paged ? `CRM & GTM News, Page ${page}` : 'CRM & GTM News: Daily Updates for Revenue Teams',
+    description: paged
+      ? `Page ${page} of daily CRM and GTM news from CRM Daily: older articles on HubSpot, Salesforce, Pipedrive and RevOps.`
+      : 'Daily CRM and GTM news covering HubSpot, Salesforce and Pipedrive updates, plus RevOps and sales technology analysis for revenue teams.',
+    // Category filters point at /news. Numbered pages point at themselves, so
+    // Google follows them to the older articles instead of ignoring them.
+    alternates: { canonical: paged ? `${BASE}?page=${page}` : BASE },
+  };
+}
 
 export default async function NewsPage() {
   let articles = [];

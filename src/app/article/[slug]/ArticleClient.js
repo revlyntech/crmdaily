@@ -1,9 +1,9 @@
 ﻿'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { getPostBySlug, getPosts } from "../../../lib/wordpress";
 import { subscribeEmail } from "../../../utils/beehiiv";
+import { SITE_URL, ORG_ID, SITE_ID } from "../../../lib/schema";
 
 const fallbackImgs = {
   blue:   "https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200&q=80",
@@ -31,7 +31,7 @@ function injectHeadingIds(html) {
   return html.replace(/<h2([^>]*)>/gi, () => `<h2 id="sec-${i++}"$1>`);
 }
 
-function ArticleSchema({ article, readTime }) {
+function ArticleSchema({ article, readTime, wordCount }) {
   if (!article) return null;
   const image = article.featuredImage || fallbackImgs[article.color] || fallbackImgs.blue;
   const toISO = (d) => { try { return new Date(d).toISOString(); } catch { return null; } };
@@ -43,15 +43,19 @@ function ArticleSchema({ article, readTime }) {
     "image": [image],
     "datePublished": toISO(article.datePublished) || toISO(article.date),
     "dateModified": toISO(article.dateModified) || toISO(article.datePublished) || toISO(article.date),
-    "author": { "@type": "Organization", "name": "CRM Daily", "url": "https://www.crmdaily.co" },
+    // The @id links every article to the same site-wide CRM Daily record.
+    "author": { "@type": "Organization", "@id": ORG_ID, "name": "CRM Daily", "url": SITE_URL },
     "publisher": {
-      "@type": "Organization", "name": "CRM Daily", "url": "https://www.crmdaily.co",
-      "logo": { "@type": "ImageObject", "url": "https://www.crmdaily.co/favicon-192.png" }
+      "@type": "Organization", "@id": ORG_ID, "name": "CRM Daily", "url": SITE_URL,
+      "logo": { "@type": "ImageObject", "url": `${SITE_URL}/favicon-192.png` }
     },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": `https://www.crmdaily.co/article/${article.slug}` },
+    "isPartOf": { "@id": SITE_ID },
+    "inLanguage": "en",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": `${SITE_URL}/article/${article.slug}` },
     "articleSection": article.category,
+    "wordCount": wordCount,
     "timeRequired": `PT${readTime}M`,
-    "url": `https://www.crmdaily.co/article/${article.slug}`
+    "url": `${SITE_URL}/article/${article.slug}`
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
@@ -69,10 +73,12 @@ function ProgressBar() {
   return <div style={{ position:'fixed', top:0, left:0, zIndex:999, width:`${progress}%`, height:3, background:'#E85D3A', transition:'width 0.1s linear' }} />;
 }
 
-function RelatedArticles({ currentArticle }) {
-  const [related, setRelated] = useState([]);
-  const router = useRouter();
+// `initial` comes from the server, so the links are already in the page's HTML.
+// If it is empty the list is fetched in the browser, as before.
+function RelatedArticles({ currentArticle, initial }) {
+  const [related, setRelated] = useState(initial || []);
   useEffect(() => {
+    if (initial && initial.length) return;
     getPosts(50).then(posts => {
       const filtered = posts.filter(p => p.slug !== currentArticle.slug && p.category === currentArticle.category).slice(0, 3);
       if (filtered.length < 3) {
@@ -80,7 +86,7 @@ function RelatedArticles({ currentArticle }) {
         setRelated([...filtered, ...rest]);
       } else setRelated(filtered);
     });
-  }, [currentArticle.slug]);
+  }, [currentArticle.slug, initial]);
   if (related.length === 0) return null;
   return (
     <div style={{ borderTop:'1px solid rgba(0,0,0,0.1)', paddingTop:48, marginTop:48 }}>
@@ -89,14 +95,12 @@ function RelatedArticles({ currentArticle }) {
         {related.map(a => {
           const img = a.featuredImage || fallbackImgs[a.color] || fallbackImgs.blue;
           return (
-            <div key={a.id} onClick={() => { router.push(`/article/${a.slug}`); window.scrollTo(0,0); }}
-              style={{ cursor:'pointer', borderTop:'2px solid rgba(0,0,0,0.08)', paddingTop:16 }}
-              onMouseEnter={e => e.currentTarget.querySelector('h3').style.color='#E85D3A'}
-              onMouseLeave={e => e.currentTarget.querySelector('h3').style.color='#0F172A'}>
+            <Link key={a.id} href={`/article/${a.slug}`} className="rel-card"
+              style={{ display:'block', textDecoration:'none', borderTop:'2px solid rgba(0,0,0,0.08)', paddingTop:16 }}>
               <img src={img} alt={a.title} style={{ width:'100%', height:140, objectFit:'cover', marginBottom:12, filter:'brightness(0.85)' }} />
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#E85D3A', letterSpacing:'0.14em', marginBottom:6 }}>{a.category.toUpperCase()}</p>
-              <h3 style={{ fontFamily:"'DM Serif Display',serif", fontSize:16, color:'#0F172A', lineHeight:1.35, transition:'color 0.2s' }}>{a.title}</h3>
-            </div>
+              <h3 style={{ fontFamily:"'DM Serif Display',serif", fontSize:16, color:'#0F172A', lineHeight:1.35 }}>{a.title}</h3>
+            </Link>
           );
         })}
       </div>
@@ -139,41 +143,52 @@ function SidebarNewsletter() {
   );
 }
 
-function SidebarPopular() {
-  const router = useRouter();
-  const [posts, setPosts] = useState([]);
-  useEffect(() => { getPosts(5).then(setPosts); }, []);
+function SidebarPopular({ initial }) {
+  const [posts, setPosts] = useState(initial || []);
+  useEffect(() => {
+    if (initial && initial.length) return;
+    getPosts(5).then(setPosts);
+  }, [initial]);
   return (
     <div style={{ background:'#FAFBFC', border:'1px solid rgba(0,0,0,0.1)', padding:24, marginBottom:2 }}>
       <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#E85D3A', letterSpacing:'0.18em', marginBottom:16 }}>// POPULAR TODAY</p>
       {posts.slice(0, 5).map((a, i) => (
-        <div key={a.id} onClick={() => { router.push(`/article/${a.slug}`); window.scrollTo(0, 0); }}
-          style={{ display:'flex', gap:12, padding:'12px 0', borderBottom:i<4?'1px solid rgba(0,0,0,0.07)':'none', cursor:'pointer' }}
-          onMouseEnter={e => e.currentTarget.querySelector('.pop-title').style.color='#E85D3A'}
-          onMouseLeave={e => e.currentTarget.querySelector('.pop-title').style.color='#0F172A'}>
+        <Link key={a.id} href={`/article/${a.slug}`} className="pop-row"
+          style={{ display:'flex', gap:12, padding:'12px 0', borderBottom:i<4?'1px solid rgba(0,0,0,0.07)':'none', textDecoration:'none' }}>
           <span style={{ fontFamily:"'DM Serif Display',serif", fontSize:22, color:'rgba(0,0,0,0.12)', flexShrink:0, lineHeight:1, marginTop:2 }}>{String(i+1).padStart(2,'0')}</span>
           <div>
             <p style={{ fontFamily:"'Space Mono',monospace", fontSize:7, color:'#E85D3A', letterSpacing:'0.12em', marginBottom:4 }}>{a.category.toUpperCase()}</p>
-            <p className="pop-title" style={{ fontFamily:"'DM Serif Display',serif", fontSize:13, color:'#0F172A', lineHeight:1.35, transition:'color 0.2s' }}>{a.title}</p>
+            <p className="pop-title" style={{ fontFamily:"'DM Serif Display',serif", fontSize:13, color:'#0F172A', lineHeight:1.35 }}>{a.title}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
 }
 
+// These chips looked clickable but did nothing. They now go to the same
+// pages as the matching links in the site footer.
+const TOPICS = [
+  ['CRM News', '/news'],
+  ['HubSpot', '/news?category=HubSpot'],
+  ['Salesforce', '/news?category=Salesforce'],
+  ['RevOps', '/guides?category=RevOps'],
+  ['GTM Strategy', '/guides?category=GTM%20Strategy'],
+  ['Tool Reviews', '/tools'],
+  ['AI & Automation', '/news?category=AI'],
+  ['Pipedrive', '/tools?category=Pipedrive'],
+];
+
 function SidebarTopics() {
-  const topics = ['CRM News','HubSpot','Salesforce','RevOps','GTM Strategy','Tool Reviews','AI & Automation','Pipedrive'];
   return (
     <div style={{ background:'#FAFBFC', border:'1px solid rgba(0,0,0,0.1)', padding:24 }}>
       <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#E85D3A', letterSpacing:'0.18em', marginBottom:14 }}>// BROWSE TOPICS</p>
       <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
-        {topics.map(t => (
-          <span key={t} style={{ fontFamily:"'Space Mono',monospace", fontSize:8, padding:'5px 9px', border:'1px solid rgba(0,0,0,0.15)', color:'#64748B', letterSpacing:'0.08em', cursor:'pointer', transition:'all 0.2s' }}
-            onMouseEnter={e => { e.target.style.borderColor='#E85D3A'; e.target.style.color='#E85D3A'; }}
-            onMouseLeave={e => { e.target.style.borderColor='rgba(0,0,0,0.15)'; e.target.style.color='#64748B'; }}>
-            {t.toUpperCase()}
-          </span>
+        {TOPICS.map(([label, href]) => (
+          <Link key={label} href={href} className="topic-chip"
+            style={{ fontFamily:"'Space Mono',monospace", fontSize:8, padding:'5px 9px', border:'1px solid rgba(0,0,0,0.15)', color:'#64748B', letterSpacing:'0.08em', textDecoration:'none', display:'inline-block' }}>
+            {label.toUpperCase()}
+          </Link>
         ))}
       </div>
     </div>
@@ -181,22 +196,19 @@ function SidebarTopics() {
 }
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
-export default function ArticleClient({ initialArticle, slug }) {
+export default function ArticleClient({ initialArticle, slug, related, latest }) {
   // If server pre-fetched the article, use it immediately (no flash)
   const [article, setArticle] = useState(initialArticle ? {...initialArticle, title: initialArticle.title.replace(/\s*-?\s*category:?\s*$/i, '').trim()} : null);
   const [loading, setLoading] = useState(!initialArticle);
-  const [headings, setHeadings] = useState([]);
-  const [processedContent, setProcessedContent] = useState('');
   const [subEmail, setSubEmail] = useState('');
   const [subStatus, setSubStatus] = useState('idle');
 
-  useEffect(() => {
-    // Process content from initialArticle on mount
-    if (initialArticle?.content) {
-      setHeadings(extractHeadings(initialArticle.content));
-      setProcessedContent(injectHeadingIds(initialArticle.content));
-    }
-  }, [initialArticle]);
+  // Headings and the processed body are worked out while rendering, not in an
+  // effect. Effects do not run on the server, so doing it in an effect sent
+  // search engines and AI crawlers an empty article body.
+  const content = article?.content || '';
+  const headings = useMemo(() => extractHeadings(content), [content]);
+  const processedContent = useMemo(() => injectHeadingIds(content), [content]);
 
   useEffect(() => {
     // Only fetch client-side if server didn't provide the article
@@ -206,10 +218,6 @@ export default function ArticleClient({ initialArticle, slug }) {
     setLoading(true);
     getPostBySlug(slug).then(a => {
       setArticle(a);
-      if (a?.content) {
-        setHeadings(extractHeadings(a.content));
-        setProcessedContent(injectHeadingIds(a.content));
-      }
       setLoading(false);
     }).catch(() => setLoading(false));
 
@@ -247,11 +255,12 @@ export default function ArticleClient({ initialArticle, slug }) {
 
   const wordCount = article.content ? article.content.replace(/<[^>]+>/g, '').split(/\s+/).length : 0;
   const readTime = Math.max(1, Math.ceil(wordCount / 220));
+  const shareUrl = `${SITE_URL}/article/${article.slug}`;
 
   return (
     <>
       <ProgressBar />
-      <ArticleSchema article={article} readTime={readTime} />
+      <ArticleSchema article={article} readTime={readTime} wordCount={wordCount} />
 
       {/* Breadcrumb */}
       <div style={{ background:'#FAFBFC', borderBottom:'1px solid rgba(0,0,0,0.1)', padding:'10px 16px' }}>
@@ -279,9 +288,9 @@ export default function ArticleClient({ initialArticle, slug }) {
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:8, color:'#94A3B8', letterSpacing:'0.14em', marginBottom:10 }}>SHARE</p>
               <div style={{ display:'flex', gap:8 }}>
                 {[
-                  { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
-                  { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
-                  { label:'↗', url:`https://crmdaily.co/article/${article.slug}` },
+                  { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(shareUrl)}` },
+                  { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
+                  { label:'↗', url:shareUrl },
                 ].map(s => (
                   <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
                     style={{ width:36, height:36, border:'1px solid rgba(0,0,0,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Space Mono',monospace", fontSize:10, color:'#0F172A', textDecoration:'none', transition:'all 0.2s', flexShrink:0 }}
@@ -314,8 +323,8 @@ export default function ArticleClient({ initialArticle, slug }) {
               <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:'#94A3B8', letterSpacing:'0.1em' }}>{readTime} MIN READ</span>
               <div style={{ display:'flex', gap:6, marginLeft:'auto' }}>
                 {[
-                  { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
-                  { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://crmdaily.co/article/${article.slug}`)}` },
+                  { label:'X', url:`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(shareUrl)}` },
+                  { label:'in', url:`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
                 ].map(s => (
                   <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
                     style={{ width:30, height:30, border:'1px solid rgba(0,0,0,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Space Mono',monospace", fontSize:9, color:'#0F172A', textDecoration:'none' }}>
@@ -345,13 +354,13 @@ export default function ArticleClient({ initialArticle, slug }) {
               <SidebarNewsletter />
             </div>
 
-            <RelatedArticles currentArticle={article} />
+            <RelatedArticles currentArticle={article} initial={related} />
           </article>
 
           {/* RIGHT SIDEBAR */}
           <aside className="article-right-rail" style={{ position:'sticky', top:24 }}>
             <SidebarNewsletter />
-            <SidebarPopular />
+            <SidebarPopular initial={latest} />
             <SidebarTopics />
           </aside>
         </div>
@@ -383,6 +392,12 @@ export default function ArticleClient({ initialArticle, slug }) {
       </div>
 
       <style>{`
+        .rel-card h3 { transition: color 0.2s; }
+        .rel-card:hover h3 { color: #E85D3A !important; }
+        .pop-title { transition: color 0.2s; }
+        .pop-row:hover .pop-title { color: #E85D3A !important; }
+        .topic-chip { transition: all 0.2s; }
+        .topic-chip:hover { border-color: #E85D3A !important; color: #E85D3A !important; }
         .article-mobile-meta { display: none; }
         .article-mobile-newsletter { display: none; }
         .article-reader-body { font-family: 'Inter', sans-serif; font-size: 18px; color: #0F172A; line-height: 1.78; }

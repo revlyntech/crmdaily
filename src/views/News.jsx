@@ -1,5 +1,6 @@
 ﻿'use client';
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePosts } from "../lib/usePosts";
@@ -8,16 +9,20 @@ import Sidebar from "../components/Sidebar";
 import SEOMeta from "../components/SEOMeta";
 
 const ARTICLES_PER_PAGE = 12;
+const NEWS_URL = "https://www.crmdaily.co/news";
 
 export default function News({ prefetchedArticles = null }) {
   const searchParams = useSearchParams();
   const params = searchParams;
   const categoryFilter = searchParams.get('category') || '';
+  // The page number now lives in the address (/news?page=2), so every page of
+  // results has its own URL that search engines can visit.
+  const pageFromUrl = Math.max(1, parseInt(searchParams.get('page') || '1', 10) || 1);
   const { articles: fetched, loading: fetchLoading } = usePosts(prefetchedArticles ? 0 : 1000);
   const all = (prefetchedArticles != null && prefetchedArticles.length > 0) ? prefetchedArticles : fetched;
   const isLoading = (prefetchedArticles != null && prefetchedArticles.length > 0) ? false : fetchLoading;
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const [searchPage, setSearchPage] = useState(1);
 
   const filtered = all.filter(a => {
     const matchCat = !categoryFilter || a.category.toLowerCase().includes(categoryFilter.toLowerCase()) || a.title.toLowerCase().includes(categoryFilter.toLowerCase());
@@ -29,18 +34,42 @@ export default function News({ prefetchedArticles = null }) {
   });
 
   const totalPages = Math.ceil(filtered.length / ARTICLES_PER_PAGE);
+  // While someone is typing in the search box, paging stays in the browser as
+  // before. Otherwise the numbered pages are links.
+  const usingLinks = !search;
+  const page = Math.min(usingLinks ? pageFromUrl : searchPage, Math.max(1, totalPages));
   const paginated = filtered.slice((page - 1) * ARTICLES_PER_PAGE, page * ARTICLES_PER_PAGE);
+
+  function hrefFor(p) {
+    const qs = new URLSearchParams();
+    if (categoryFilter) qs.set('category', categoryFilter);
+    if (p > 1) qs.set('page', String(p));
+    const s = qs.toString();
+    return '/news' + (s ? '?' + s : '');
+  }
 
   // Reset to page 1 when search changes
   function handleSearch(val) {
     setSearch(val);
-    setPage(1);
+    setSearchPage(1);
   }
 
   const pageTitle = categoryFilter ? `${categoryFilter} News` : 'CRM & GTM News';
   const pageDesc = categoryFilter
     ? `All ${categoryFilter} articles, news and updates from CRM Daily.`
-    : 'Daily CRM and GTM news — HubSpot, Salesforce, Pipedrive updates, RevOps intelligence and more.';
+    : 'Daily CRM and GTM news - HubSpot, Salesforce, Pipedrive updates, RevOps intelligence and more.';
+  const numbered = !categoryFilter && page > 1;
+  const metaTitle = numbered ? `${pageTitle}, Page ${page}` : pageTitle;
+  const canonicalUrl = numbered ? `${NEWS_URL}?page=${page}` : NEWS_URL;
+
+  // 1, the last page, and the pages either side of the current one, with "..." between gaps
+  const pageItems = Array.from({ length: totalPages }, (_, i) => i + 1)
+    .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
+    .reduce((acc, p, idx, arr) => {
+      if (idx > 0 && p - arr[idx-1] > 1) acc.push('...');
+      acc.push(p);
+      return acc;
+    }, []);
 
   return (
     <>
@@ -49,9 +78,11 @@ export default function News({ prefetchedArticles = null }) {
         .news-articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 48px; flex-wrap: wrap; }
         .page-btn { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; padding: 8px 14px; border: 1px solid rgba(0,0,0,0.15); background: transparent; color: #64748B; cursor: pointer; transition: all 0.2s; }
+        a.page-btn { display: inline-block; text-decoration: none; }
         .page-btn:hover { background: #E85D3A; color: #fff; border-color: #E85D3A; }
-        .page-btn.active { background: #0F172A; color: #FAFBFC; border-color: #0F172A; }
-        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-btn.active { background: #0F172A; color: #FAFBFC; border-color: #0F172A; cursor: default; }
+        .page-btn.active:hover { background: #0F172A; border-color: #0F172A; }
+        .page-btn:disabled, .page-btn[aria-disabled="true"] { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
         .page-btn:disabled:hover { background: transparent; color: #64748B; border-color: rgba(0,0,0,0.15); }
         @media (max-width: 768px) {
           .news-page-layout { grid-template-columns: 1fr !important; }
@@ -64,7 +95,7 @@ export default function News({ prefetchedArticles = null }) {
         }
       `}</style>
       <div className="fade-in">
-        <SEOMeta title={pageTitle} description={pageDesc} url="https://www.crmdaily.co/news" type="website" />
+        <SEOMeta title={metaTitle} description={pageDesc} url={canonicalUrl} type="website" />
 
         <div className="news-hero" style={{ background:"#0F172A", padding:"64px 32px 48px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }}>
@@ -76,7 +107,7 @@ export default function News({ prefetchedArticles = null }) {
               <p style={{ fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.45)", marginBottom:32 }}>{pageDesc}</p>
               <div className="news-search" style={{ position:"relative", maxWidth:520 }}>
                 <span style={{ position:"absolute", left:16, top:"50%", transform:"translateY(-50%)", fontFamily:"'Space Mono',monospace", fontSize:12, color:"rgba(242,237,228,0.3)", pointerEvents:"none" }}></span>
-                <input type="text" placeholder="Search articles — HubSpot, RevOps, GTM..." value={search} onChange={e => handleSearch(e.target.value)}
+                <input type="text" placeholder="Search articles - HubSpot, RevOps, GTM..." value={search} onChange={e => handleSearch(e.target.value)}
                   style={{ width:"100%", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", color:"#FAFBFC", fontFamily:"'Space Mono',monospace", fontSize:11, padding:"14px 20px 14px 44px", outline:"none", boxSizing:"border-box", letterSpacing:"0.04em", transition:"border-color 0.2s" }}
                   onFocus={e => e.target.style.borderColor="#E85D3A"} onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />
                 {search && <button onClick={() => handleSearch("")} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:"rgba(242,237,228,0.4)", cursor:"pointer", fontSize:16, lineHeight:1 }}>×</button>}
@@ -114,31 +145,39 @@ export default function News({ prefetchedArticles = null }) {
                   ) : paginated.map((a,i) => <ArticleCard key={a.id} article={a} index={i} />)}
                 </div>
 
-                {/* Pagination */}
+                {/* Pagination: numbered pages are links, so search engines can reach older articles */}
                 {!isLoading && totalPages > 1 && (
-                  <div className="pagination">
-                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>← PREV</button>
+                  <nav className="pagination" aria-label="Pagination">
+                    {usingLinks ? (
+                      page === 1
+                        ? <span className="page-btn" aria-disabled="true">← PREV</span>
+                        : <Link className="page-btn" href={hrefFor(page - 1)} rel="prev">← PREV</Link>
+                    ) : (
+                      <button className="page-btn" onClick={() => setSearchPage(p => Math.max(1, p-1))} disabled={page === 1}>← PREV</button>
+                    )}
 
-                    {Array.from({ length: totalPages }, (_, i) => i + 1)
-                      .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
-                      .reduce((acc, p, idx, arr) => {
-                        if (idx > 0 && p - arr[idx-1] > 1) acc.push('...');
-                        acc.push(p);
-                        return acc;
-                      }, [])
-                      .map((p, idx) =>
-                        p === '...'
-                          ? <span key={`ellipsis-${idx}`} style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#94A3B8", padding:"0 4px" }}>...</span>
-                          : <button key={p} className={`page-btn${page === p ? ' active' : ''}`} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{p}</button>
-                      )
-                    }
+                    {pageItems.map((p, idx) => {
+                      if (p === '...') return <span key={`ellipsis-${idx}`} style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#94A3B8", padding:"0 4px" }}>...</span>;
+                      if (usingLinks) {
+                        return page === p
+                          ? <span key={p} className="page-btn active" aria-current="page">{p}</span>
+                          : <Link key={p} className="page-btn" href={hrefFor(p)}>{p}</Link>;
+                      }
+                      return <button key={p} className={`page-btn${page === p ? ' active' : ''}`} onClick={() => { setSearchPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{p}</button>;
+                    })}
 
-                    <button className="page-btn" onClick={() => { setPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT →</button>
+                    {usingLinks ? (
+                      page === totalPages
+                        ? <span className="page-btn" aria-disabled="true">NEXT →</span>
+                        : <Link className="page-btn" href={hrefFor(page + 1)} rel="next">NEXT →</Link>
+                    ) : (
+                      <button className="page-btn" onClick={() => { setSearchPage(p => Math.min(totalPages, p+1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={page === totalPages}>NEXT →</button>
+                    )}
 
                     <span style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#94A3B8", letterSpacing:"0.08em", marginLeft:8 }}>
                       PAGE {page} OF {totalPages} · {filtered.length} ARTICLES
                     </span>
-                  </div>
+                  </nav>
                 )}
               </div>
               <div className="news-sidebar-col"><Sidebar /></div>

@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
-    "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Best Pipeline Management Tools in 2026",
     "slug": "best-pipeline-management-tools-in-2026-2",
     "category": "Best Tools"
@@ -298,5 +293,10 @@
     "title": "Anthropic's IPO and What It Means for Your CRM Stack",
     "slug": "anthropics-ipo-and-what-it-means-for-your-crm-stack",
     "category": "CRM News"
+  },
+  {
+    "title": "What Is CRM Adoption? Why Employees Stop Using CRMs",
+    "slug": "what-is-crm-adoption-why-employees-stop-using-crms",
+    "category": "CRM Fundamentals"
   }
 ]

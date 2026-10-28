@@ -1,1 +1,12 @@
-{"date": "2026-10-27", "articles": [], "sent": true}
+{
+  "date": "2026-10-28",
+  "articles": [
+    {
+      "title": "What Is CRM Adoption? Why Employees Stop Using CRMs",
+      "excerpt": "CRM adoption is the rate at which employees actually use your CRM system. Low adoption silently kills your data quality and sales results.",
+      "slug": "what-is-crm-adoption-why-employees-stop-using-crms",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/12662899/pexels-photo-12662899.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

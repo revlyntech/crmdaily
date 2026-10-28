@@ -1,10 +1,5 @@
 [
   {
-    "title": "How AI Agents Are Rewriting the Rules of CRM in 2026",
-    "slug": "how-ai-agents-are-rewriting-the-rules-of-crm-in-2026",
-    "category": "AI in Sales"
-  },
-  {
     "title": "CRM Adoption: Why Employees Quit and How to Fix It",
     "slug": "crm-adoption-why-employees-quit-and-how-to-fix-it",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How to Choose a CRM: The Complete Buying Guide",
     "slug": "how-to-choose-a-crm-the-complete-buying-guide-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Keap vs HubSpot: Best CRM for Service-Based Small Businesses",
+    "slug": "keap-vs-hubspot-best-crm-for-service-based-small-businesses",
+    "category": "Tool Comparison"
   }
 ]

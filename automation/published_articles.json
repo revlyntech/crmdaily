@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Adoption: Why Employees Quit and How to Fix It",
-    "slug": "crm-adoption-why-employees-quit-and-how-to-fix-it",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Apollo Leads PyPI Package: What It Means for GTM Teams",
     "slug": "apollo-leads-pypi-package-what-it-means-for-gtm-teams",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "Keap vs HubSpot: Best CRM for Service-Based Small Businesses",
     "slug": "keap-vs-hubspot-best-crm-for-service-based-small-businesses",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is Account-Based Marketing and Why Does It Work?",
+    "slug": "what-is-account-based-marketing-and-why-does-it-work-3",
+    "category": "Explainer"
   }
 ]

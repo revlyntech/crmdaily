@@ -1,10 +1,5 @@
 [
   {
-    "title": "Best Pipeline Management Tools in 2026",
-    "slug": "best-pipeline-management-tools-in-2026-2",
-    "category": "Best Tools"
-  },
-  {
     "title": "How AI Agents Are Rewriting the Rules of CRM in 2026",
     "slug": "how-ai-agents-are-rewriting-the-rules-of-crm-in-2026",
     "category": "AI in Sales"
@@ -297,6 +292,11 @@
   {
     "title": "What Is CRM Adoption? Why Employees Stop Using CRMs",
     "slug": "what-is-crm-adoption-why-employees-stop-using-crms",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How to Choose a CRM: The Complete Buying Guide",
+    "slug": "how-to-choose-a-crm-the-complete-buying-guide-2",
     "category": "CRM Fundamentals"
   }
 ]

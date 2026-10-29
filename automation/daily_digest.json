@@ -1,1 +1,12 @@
-{"date": "2026-10-28", "articles": [], "sent": true}
+{
+  "date": "2026-10-29",
+  "articles": [
+    {
+      "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
+      "excerpt": "New to CRM software? This beginner-friendly guide walks you through every stage of CRM implementation, from data setup to GDPR compliance, with practical examples.",
+      "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide-2",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/574073/pexels-photo-574073.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

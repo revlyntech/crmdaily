@@ -1,10 +1,5 @@
 [
   {
-    "title": "Apollo Leads PyPI Package: What It Means for GTM Teams",
-    "slug": "apollo-leads-pypi-package-what-it-means-for-gtm-teams",
-    "category": "CRM News"
-  },
-  {
     "title": "Salesforce vs HubSpot: Which CRM Wins for RevOps?",
     "slug": "salesforce-vs-hubspot-which-crm-wins-for-revops",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "What Is Account-Based Marketing and Why Does It Work?",
     "slug": "what-is-account-based-marketing-and-why-does-it-work-3",
     "category": "Explainer"
+  },
+  {
+    "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
+    "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide-2",
+    "category": "CRM Fundamentals"
   }
 ]

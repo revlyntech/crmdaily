@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Choose a CRM: The Complete Buying Guide for Businesses",
-    "slug": "how-to-choose-a-crm-the-complete-buying-guide-for-businesses",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is a CRM Audit? Definition, Steps, and Real Examples",
     "slug": "what-is-a-crm-audit-definition-steps-and-real-examples",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
     "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How to Build a GTM Strategy When the Tech Stack Shifts Under You",
+    "slug": "how-to-build-a-gtm-strategy-when-the-tech-stack-shifts-under-you",
+    "category": "GTM Strategy"
   }
 ]

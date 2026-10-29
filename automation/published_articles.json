@@ -1,10 +1,5 @@
 [
   {
-    "title": "Salesforce vs HubSpot: Which CRM Wins for RevOps?",
-    "slug": "salesforce-vs-hubspot-which-crm-wins-for-revops",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "How to Choose a CRM: The Complete Buying Guide for Businesses",
     "slug": "how-to-choose-a-crm-the-complete-buying-guide-for-businesses",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
     "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide-2",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
+    "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data",
     "category": "CRM Fundamentals"
   }
 ]

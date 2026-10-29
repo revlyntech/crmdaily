@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a CRM Audit? Definition, Steps, and Real Examples",
-    "slug": "what-is-a-crm-audit-definition-steps-and-real-examples",
-    "category": "Explainer"
-  },
-  {
     "title": "When Your CRM Vendor Goes Political: A GTM Strategy Guide",
     "slug": "when-your-crm-vendor-goes-political-a-gtm-strategy-guide",
     "category": "GTM Strategy"
@@ -298,5 +293,10 @@
     "title": "How to Build a GTM Strategy When the Tech Stack Shifts Under You",
     "slug": "how-to-build-a-gtm-strategy-when-the-tech-stack-shifts-under-you",
     "category": "GTM Strategy"
+  },
+  {
+    "title": "Why the CRO Role Is the Last GTM Job AI Can't Replace",
+    "slug": "why-the-cro-role-is-the-last-gtm-job-ai-cant-replace",
+    "category": "CRM News"
   }
 ]

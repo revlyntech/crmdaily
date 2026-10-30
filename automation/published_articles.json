@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why HubSpot CLI Tools Are Changing How RevOps Teams Work",
-    "slug": "why-hubspot-cli-tools-are-changing-how-revops-teams-work",
-    "category": "CRM News"
-  },
-  {
     "title": "CRM Migration Explained: Move CRMs Without Losing Data",
     "slug": "crm-migration-explained-move-crms-without-losing-data-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Best Practices: Build a High-Performing CRM System",
     "slug": "crm-best-practices-build-a-high-performing-crm-system",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Zoho CRM vs Insightly: For Teams Mixing Projects and Sales",
+    "slug": "zoho-crm-vs-insightly-for-teams-mixing-projects-and-sales",
+    "category": "Tool Comparison"
   }
 ]

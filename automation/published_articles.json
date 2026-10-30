@@ -1,10 +1,5 @@
 [
   {
-    "title": "When Your CRM Vendor Goes Political: A GTM Strategy Guide",
-    "slug": "when-your-crm-vendor-goes-political-a-gtm-strategy-guide",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "How to Implement a CRM: Step-by-Step Guide for Beginners",
     "slug": "how-to-implement-a-crm-step-by-step-guide-for-beginners",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why the CRO Role Is the Last GTM Job AI Can't Replace",
     "slug": "why-the-cro-role-is-the-last-gtm-job-ai-cant-replace",
     "category": "CRM News"
+  },
+  {
+    "title": "CRM Customization vs Configuration: What Should You Change?",
+    "slug": "crm-customization-vs-configuration-what-should-you-change",
+    "category": "CRM Fundamentals"
   }
 ]

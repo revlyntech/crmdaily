@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Implement a CRM: Step-by-Step Guide for Beginners",
-    "slug": "how-to-implement-a-crm-step-by-step-guide-for-beginners",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why HubSpot CLI Tools Are Changing How RevOps Teams Work",
     "slug": "why-hubspot-cli-tools-are-changing-how-revops-teams-work",
     "category": "CRM News"
@@ -297,6 +292,11 @@
   {
     "title": "CRM Customization vs Configuration: What Should You Change?",
     "slug": "crm-customization-vs-configuration-what-should-you-change",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Best Practices: Build a High-Performing CRM System",
+    "slug": "crm-best-practices-build-a-high-performing-crm-system",
     "category": "CRM Fundamentals"
   }
 ]

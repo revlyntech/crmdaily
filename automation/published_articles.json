@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a CRM Audit? Definition, Steps, and Benefits",
-    "slug": "what-is-a-crm-audit-definition-steps-and-benefits",
-    "category": "Explainer"
-  },
-  {
     "title": "CRM Customization vs Configuration: What to Actually Change",
     "slug": "crm-customization-vs-configuration-what-to-actually-change",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "What Is CRM? A Complete Beginner's Guide to Customer Relationship Management",
     "slug": "what-is-crm-a-complete-beginners-guide-to-customer-relationship-management-3",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
+    "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-4",
     "category": "CRM Fundamentals"
   }
 ]

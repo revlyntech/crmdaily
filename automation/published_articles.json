@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Customization vs Configuration: What to Actually Change",
-    "slug": "crm-customization-vs-configuration-what-to-actually-change",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Best Practices: The Complete Guide to High Performance",
     "slug": "crm-best-practices-the-complete-guide-to-high-performance",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
     "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-4",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "HubSpot AEO Review 2026: Is It Worth It for RevOps Teams?",
+    "slug": "hubspot-aeo-review-2026-is-it-worth-it-for-revops-teams",
+    "category": "Tool Reviews"
   }
 ]

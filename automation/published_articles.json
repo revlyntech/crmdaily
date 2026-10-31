@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Best Practices: The Complete Guide to High Performance",
-    "slug": "crm-best-practices-the-complete-guide-to-high-performance",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Salesforce Review 2026: Is It Still Worth It for RevOps?",
     "slug": "salesforce-review-2026-is-it-still-worth-it-for-revops",
     "category": "Tool Reviews"
@@ -298,5 +293,10 @@
     "title": "HubSpot AEO Review 2026: Is It Worth It for RevOps Teams?",
     "slug": "hubspot-aeo-review-2026-is-it-worth-it-for-revops-teams",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "Why RevOps Metrics Are Broken - And How to Fix Them",
+    "slug": "why-revops-metrics-are-broken-and-how-to-fix-them",
+    "category": "RevOps Intelligence"
   }
 ]

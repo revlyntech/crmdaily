@@ -1,1 +1,12 @@
-{"date": "2026-11-01", "articles": [], "sent": true}
+{
+  "date": "2026-11-02",
+  "articles": [
+    {
+      "title": "Operational, Analytical and Collaborative CRM Explained",
+      "excerpt": "New to CRM software? Learn the three core types of CRM, what each one does, and which might suit your business best.",
+      "slug": "operational-analytical-and-collaborative-crm-explained",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/29284266/pexels-photo-29284266.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

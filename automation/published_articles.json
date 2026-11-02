@@ -1,10 +1,5 @@
 [
   {
-    "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
-    "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-3",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "B2B CRM Implementation Guide: Frameworks That Actually Work",
     "slug": "b2b-crm-implementation-guide-frameworks-that-actually-work",
     "category": "Deep Guide"
@@ -298,5 +293,10 @@
     "title": "Operational, Analytical and Collaborative CRM Explained",
     "slug": "operational-analytical-and-collaborative-crm-explained",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How B2B Data Enrichment Pipelines Are Reshaping Sales Tech",
+    "slug": "how-b2b-data-enrichment-pipelines-are-reshaping-sales-tech",
+    "category": "Sales Tech"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "B2B CRM Implementation Guide: Frameworks That Actually Work",
-    "slug": "b2b-crm-implementation-guide-frameworks-that-actually-work",
-    "category": "Deep Guide"
-  },
-  {
     "title": "Why Your Sales Tech Stack Has an Agreement Problem",
     "slug": "why-your-sales-tech-stack-has-an-agreement-problem",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "How B2B Data Enrichment Pipelines Are Reshaping Sales Tech",
     "slug": "how-b2b-data-enrichment-pipelines-are-reshaping-sales-tech",
     "category": "Sales Tech"
+  },
+  {
+    "title": "Best GTM Tools for B2B SaaS in 2026",
+    "slug": "best-gtm-tools-for-b2b-saas-in-2026-3",
+    "category": "Best Tools"
   }
 ]

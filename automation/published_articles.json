@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Are the Different Types of CRM? A Beginner's Guide",
-    "slug": "what-are-the-different-types-of-crm-a-beginners-guide",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Best Sales Automation Tools for RevOps in 2026",
     "slug": "best-sales-automation-tools-for-revops-in-2026-2",
     "category": "Best Tools"
@@ -298,5 +293,10 @@
     "title": "How AI Agents Are Quietly Rewiring CRM Automation",
     "slug": "how-ai-agents-are-quietly-rewiring-crm-automation",
     "category": "AI in Sales"
+  },
+  {
+    "title": "Why Human Outbound Is Losing the Battle to AI",
+    "slug": "why-human-outbound-is-losing-the-battle-to-ai",
+    "category": "CRM News"
   }
 ]

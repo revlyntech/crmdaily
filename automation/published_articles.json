@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why Your Sales Tech Stack Has an Agreement Problem",
-    "slug": "why-your-sales-tech-stack-has-an-agreement-problem",
-    "category": "Sales Tech"
-  },
-  {
     "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
     "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Best GTM Tools for B2B SaaS in 2026",
     "slug": "best-gtm-tools-for-b2b-saas-in-2026-3",
     "category": "Best Tools"
+  },
+  {
+    "title": "What Are the Core Components of a CRM System?",
+    "slug": "what-are-the-core-components-of-a-crm-system-4",
+    "category": "CRM Fundamentals"
   }
 ]

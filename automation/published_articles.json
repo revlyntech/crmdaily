@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
-    "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Are the Different Types of CRM? A Beginner's Guide",
     "slug": "what-are-the-different-types-of-crm-a-beginners-guide",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Are the Core Components of a CRM System?",
     "slug": "what-are-the-core-components-of-a-crm-system-4",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How AI Agents Are Quietly Rewiring CRM Automation",
+    "slug": "how-ai-agents-are-quietly-rewiring-crm-automation",
+    "category": "AI in Sales"
   }
 ]

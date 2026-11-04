@@ -1,1 +1,12 @@
-{"date": "2026-11-03", "articles": [], "sent": true}
+{
+  "date": "2026-11-04",
+  "articles": [
+    {
+      "title": "What Is CRM Software? Features, Benefits and How It Works",
+      "excerpt": "New to CRM? This plain-English guide explains what CRM software does, why it matters, and how it works in practice.",
+      "slug": "what-is-crm-software-features-benefits-and-how-it-works-4",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/6248959/pexels-photo-6248959.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

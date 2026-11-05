@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Software? Features, Benefits and How It Works",
-    "slug": "what-is-crm-software-features-benefits-and-how-it-works-3",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How HubSpot Turned 12 Leads a Month Into 108 in Japan",
     "slug": "how-hubspot-turned-12-leads-a-month-into-108-in-japan",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "Freshsales vs Pipedrive: Which Fits Field Sales Teams?",
     "slug": "freshsales-vs-pipedrive-which-fits-field-sales-teams",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is a Contact in a CRM? Leads and Customers Explained",
+    "slug": "what-is-a-contact-in-a-crm-leads-and-customers-explained-2",
+    "category": "CRM Fundamentals"
   }
 ]

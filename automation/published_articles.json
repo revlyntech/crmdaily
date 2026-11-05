@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a Contact in a CRM? Leads and Customers Explained",
-    "slug": "what-is-a-contact-in-a-crm-leads-and-customers-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "HubSpot vs Salesforce: Best CRM for B2B Sales Teams",
     "slug": "hubspot-vs-salesforce-best-crm-for-b2b-sales-teams",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "What Is ARR? The SaaS Metric That Drives Every Big Decision",
     "slug": "what-is-arr-the-saas-metric-that-drives-every-big-decision",
     "category": "Explainer"
+  },
+  {
+    "title": "How to Build a GTM Tech Stack That Actually Feeds Your Pipeline",
+    "slug": "how-to-build-a-gtm-tech-stack-that-actually-feeds-your-pipeline",
+    "category": "GTM Strategy"
   }
 ]

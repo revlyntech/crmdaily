@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why AI Agent Governance Is Now a GTM Strategy Problem",
-    "slug": "why-ai-agent-governance-is-now-a-gtm-strategy-problem",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "How to Compare AI CRM Software Before You Buy in 2026",
     "slug": "how-to-compare-ai-crm-software-before-you-buy-in-2026",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
     "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-4",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Pipedrive vs HubSpot: Which CRM Fits SMBs Best?",
+    "slug": "pipedrive-vs-hubspot-which-crm-fits-smbs-best-2",
+    "category": "Tool Comparison"
   }
 ]

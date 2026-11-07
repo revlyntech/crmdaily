@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is an Opportunity in CRM? A Complete Guide",
-    "slug": "what-is-an-opportunity-in-crm-a-complete-guide-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why AI Agent Governance Is Now a GTM Strategy Problem",
     "slug": "why-ai-agent-governance-is-now-a-gtm-strategy-problem",
     "category": "GTM Strategy"
@@ -297,6 +292,11 @@
   {
     "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
     "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-3",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
+    "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-4",
     "category": "CRM Fundamentals"
   }
 ]

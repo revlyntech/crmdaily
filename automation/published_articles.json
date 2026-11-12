@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
-    "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-3",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "HubSpot vs ActiveCampaign: Best for Marketing-First Teams",
     "slug": "hubspot-vs-activecampaign-best-for-marketing-first-teams",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "What Is LTV? The Metric That Should Drive Every Sales Decision",
     "slug": "what-is-ltv-the-metric-that-should-drive-every-sales-decision",
     "category": "Explainer"
+  },
+  {
+    "title": "Rox AI Sales Tool Review: Can It Challenge Salesforce?",
+    "slug": "rox-ai-sales-tool-review-can-it-challenge-salesforce",
+    "category": "Tool Reviews"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
-    "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Pipeline Stages: How to Build the Right Sales Process",
     "slug": "crm-pipeline-stages-how-to-build-the-right-sales-process-3",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is a Sales Funnel? CRM Pipeline vs Sales Funnel Explained",
     "slug": "what-is-a-sales-funnel-crm-pipeline-vs-sales-funnel-explained-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is LTV? The Metric That Should Drive Every Sales Decision",
+    "slug": "what-is-ltv-the-metric-that-should-drive-every-sales-decision",
+    "category": "Explainer"
   }
 ]

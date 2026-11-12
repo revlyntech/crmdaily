@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Compare AI CRM Software Before You Buy in 2026",
-    "slug": "how-to-compare-ai-crm-software-before-you-buy-in-2026",
-    "category": "CRM News"
-  },
-  {
     "title": "What Is a CRM Pipeline? Stages, Deals and Pipeline Management Explained",
     "slug": "what-is-a-crm-pipeline-stages-deals-and-pipeline-management-explained-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Pipedrive vs HubSpot: Which CRM Fits SMBs Best?",
     "slug": "pipedrive-vs-hubspot-which-crm-fits-smbs-best-2",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is a Sales Funnel? CRM Pipeline vs Sales Funnel Explained",
+    "slug": "what-is-a-sales-funnel-crm-pipeline-vs-sales-funnel-explained-2",
+    "category": "CRM Fundamentals"
   }
 ]

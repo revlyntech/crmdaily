@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Pipeline vs Sales Funnel: What's the Difference?",
-    "slug": "crm-pipeline-vs-sales-funnel-whats-the-difference-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
     "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads-3",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Why Dirty Salesforce Data Is a RevOps Revenue Problem",
     "slug": "why-dirty-salesforce-data-is-a-revops-revenue-problem",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "How to Build a Sales Pipeline That Actually Converts",
+    "slug": "how-to-build-a-sales-pipeline-that-actually-converts-2",
+    "category": "Deep Guide"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "HubSpot vs ActiveCampaign: Best for Marketing-First Teams",
-    "slug": "hubspot-vs-activecampaign-best-for-marketing-first-teams",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is Product-Led Growth and How Does It Actually Work?",
     "slug": "what-is-product-led-growth-and-how-does-it-actually-work",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "Rox AI Sales Tool Review: Can It Challenge Salesforce?",
     "slug": "rox-ai-sales-tool-review-can-it-challenge-salesforce",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "What Is Lead Scoring? How CRM Teams Prioritize the Right Leads",
+    "slug": "what-is-lead-scoring-how-crm-teams-prioritize-the-right-leads-4",
+    "category": "CRM Fundamentals"
   }
 ]

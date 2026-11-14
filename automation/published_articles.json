@@ -1,10 +1,5 @@
 [
   {
-    "title": "OpenArt AI for Brand Marketing: A RevOps Team Review",
-    "slug": "openart-ai-for-brand-marketing-a-revops-team-review",
-    "category": "Tool Reviews"
-  },
-  {
     "title": "How AI Revenue Engines Are Rewriting RevOps Metrics in 2026",
     "slug": "how-ai-revenue-engines-are-rewriting-revops-metrics-in-2026",
     "category": "RevOps Intelligence"
@@ -297,6 +292,11 @@
   {
     "title": "What Is Lead Routing? How CRM Systems Assign Leads to Reps",
     "slug": "what-is-lead-routing-how-crm-systems-assign-leads-to-reps-3",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is CRM Automation? 15 Processes to Automate",
+    "slug": "what-is-crm-automation-15-processes-to-automate",
     "category": "CRM Fundamentals"
   }
 ]

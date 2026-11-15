@@ -1,1 +1,12 @@
-{"date": "2026-11-14", "articles": [], "sent": true}
+{
+  "date": "2026-11-15",
+  "articles": [
+    {
+      "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
+      "excerpt": "New to CRM software? Learn what a CRM workflow is, how triggers and actions work, and why automation saves your team hours every week.",
+      "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-4",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/16094044/pexels-photo-16094044.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

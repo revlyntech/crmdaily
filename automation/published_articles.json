@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Forecast Sales Accurately in 2026",
-    "slug": "how-to-forecast-sales-accurately-in-2026-2",
-    "category": "Deep Guide"
-  },
-  {
     "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
     "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-3",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "What Is a CRM Workflow? Triggers, Actions and Automation Explained",
     "slug": "what-is-a-crm-workflow-triggers-actions-and-automation-explained-4",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "CRM Data Management: How to Keep Your Customer Data Clean",
+    "slug": "crm-data-management-how-to-keep-your-customer-data-clean-2",
     "category": "CRM Fundamentals"
   }
 ]

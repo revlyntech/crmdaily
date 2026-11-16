@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Data Management: How to Keep Your Customer Data Clean",
-    "slug": "crm-data-management-how-to-keep-your-customer-data-clean",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "When Your Sales Automation Outgrows Its No-Code Roots",
     "slug": "when-your-sales-automation-outgrows-its-no-code-roots",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "Why Your Sales Forecast Is Built on Opinion, Not Data",
     "slug": "why-your-sales-forecast-is-built-on-opinion-not-data",
     "category": "AI in Sales"
+  },
+  {
+    "title": "CRM Data Hygiene: 15 Problems That Destroy CRM Data Quality",
+    "slug": "crm-data-hygiene-15-problems-that-destroy-crm-data-quality-3",
+    "category": "CRM Fundamentals"
   }
 ]

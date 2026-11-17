@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
-    "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
     "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-3",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How Clean CRM Data Builds a Stronger GTM Pipeline",
     "slug": "how-clean-crm-data-builds-a-stronger-gtm-pipeline",
     "category": "GTM Strategy"
+  },
+  {
+    "title": "DreamTeam's $53M Bet on AI-Native CRM Explained",
+    "slug": "dreamteams-53m-bet-on-ai-native-crm-explained",
+    "category": "CRM News"
   }
 ]

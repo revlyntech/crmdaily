@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
-    "slug": "crm-reporting-explained-reports-every-sales-team-needs-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
     "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is a GTM Motion? Definition, Types, and Examples",
     "slug": "what-is-a-gtm-motion-definition-types-and-examples",
     "category": "Explainer"
+  },
+  {
+    "title": "How Clean CRM Data Builds a Stronger GTM Pipeline",
+    "slug": "how-clean-crm-data-builds-a-stronger-gtm-pipeline",
+    "category": "GTM Strategy"
   }
 ]

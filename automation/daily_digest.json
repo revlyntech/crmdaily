@@ -1,1 +1,12 @@
-{"date": "2026-11-16", "articles": [], "sent": true}
+{
+  "date": "2026-11-17",
+  "articles": [
+    {
+      "title": "What Is CRM Integration? How CRMs Connect With Your Tools",
+      "excerpt": "New to CRM software? Learn what CRM integration means, why it matters, and how it works in practice with email, marketing, and more.",
+      "slug": "what-is-crm-integration-how-crms-connect-with-your-tools-4",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/40857965/pexels-photo-40857965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

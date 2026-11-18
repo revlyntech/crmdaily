@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Adoption? Why Employees Stop Using CRMs",
-    "slug": "what-is-crm-adoption-why-employees-stop-using-crms",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How to Choose a CRM: The Complete Buying Guide",
     "slug": "how-to-choose-a-crm-the-complete-buying-guide-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is MRR? The Metric Every SaaS Revenue Team Needs",
     "slug": "what-is-mrr-the-metric-every-saas-revenue-team-needs",
     "category": "Explainer"
+  },
+  {
+    "title": "Spara Scout AI Review: What RevOps Teams Need to Know",
+    "slug": "spara-scout-ai-review-what-revops-teams-need-to-know",
+    "category": "Tool Reviews"
   }
 ]

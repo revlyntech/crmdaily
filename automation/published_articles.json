@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
-    "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-3",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Why Clean CRM Data Is the Real Foundation of AI in Sales",
     "slug": "why-clean-crm-data-is-the-real-foundation-of-ai-in-sales",
     "category": "AI in Sales"
@@ -298,5 +293,10 @@
     "title": "DreamTeam's $53M Bet on AI-Native CRM Explained",
     "slug": "dreamteams-53m-bet-on-ai-native-crm-explained",
     "category": "CRM News"
+  },
+  {
+    "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
+    "slug": "crm-reporting-explained-reports-every-sales-team-needs-3",
+    "category": "CRM Fundamentals"
   }
 ]

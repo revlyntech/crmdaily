@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why Clean CRM Data Is the Real Foundation of AI in Sales",
-    "slug": "why-clean-crm-data-is-the-real-foundation-of-ai-in-sales",
-    "category": "AI in Sales"
-  },
-  {
     "title": "Anthropic's IPO and What It Means for Your CRM Stack",
     "slug": "anthropics-ipo-and-what-it-means-for-your-crm-stack",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "CRM Reporting Explained: Reports Every Sales Team Needs",
     "slug": "crm-reporting-explained-reports-every-sales-team-needs-3",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Close vs HubSpot: Best CRM for High-Volume Inside Sales",
+    "slug": "close-vs-hubspot-best-crm-for-high-volume-inside-sales",
+    "category": "Tool Comparison"
   }
 ]

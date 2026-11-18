@@ -1,10 +1,5 @@
 [
   {
-    "title": "Anthropic's IPO and What It Means for Your CRM Stack",
-    "slug": "anthropics-ipo-and-what-it-means-for-your-crm-stack",
-    "category": "CRM News"
-  },
-  {
     "title": "What Is CRM Adoption? Why Employees Stop Using CRMs",
     "slug": "what-is-crm-adoption-why-employees-stop-using-crms",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "Close vs HubSpot: Best CRM for High-Volume Inside Sales",
     "slug": "close-vs-hubspot-best-crm-for-high-volume-inside-sales",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is MRR? The Metric Every SaaS Revenue Team Needs",
+    "slug": "what-is-mrr-the-metric-every-saas-revenue-team-needs",
+    "category": "Explainer"
   }
 ]

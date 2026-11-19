@@ -1,10 +1,5 @@
 [
   {
-    "title": "Keap vs HubSpot: Best CRM for Service-Based Small Businesses",
-    "slug": "keap-vs-hubspot-best-crm-for-service-based-small-businesses",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is Account-Based Marketing and Why Does It Work?",
     "slug": "what-is-account-based-marketing-and-why-does-it-work-3",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "What Salesforce's Layoffs Tell RevOps Teams About Efficiency",
     "slug": "what-salesforces-layoffs-tell-revops-teams-about-efficiency",
     "category": "RevOps Intelligence"
+  },
+  {
+    "title": "How to Reduce Churn Rate for SaaS Teams: A Real Framework",
+    "slug": "how-to-reduce-churn-rate-for-saas-teams-a-real-framework",
+    "category": "Deep Guide"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Choose a CRM: The Complete Buying Guide",
-    "slug": "how-to-choose-a-crm-the-complete-buying-guide-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Keap vs HubSpot: Best CRM for Service-Based Small Businesses",
     "slug": "keap-vs-hubspot-best-crm-for-service-based-small-businesses",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "Spara Scout AI Review: What RevOps Teams Need to Know",
     "slug": "spara-scout-ai-review-what-revops-teams-need-to-know",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "What Salesforce's Layoffs Tell RevOps Teams About Efficiency",
+    "slug": "what-salesforces-layoffs-tell-revops-teams-about-efficiency",
+    "category": "RevOps Intelligence"
   }
 ]

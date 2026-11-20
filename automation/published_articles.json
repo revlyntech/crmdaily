@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
-    "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide-2",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
     "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
     "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-3",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "Why Your Sales Tech Stack Has a Hidden Security Problem",
+    "slug": "why-your-sales-tech-stack-has-a-hidden-security-problem",
+    "category": "Sales Tech"
   }
 ]

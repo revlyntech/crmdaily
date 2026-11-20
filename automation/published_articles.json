@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
-    "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How to Build a GTM Strategy When the Tech Stack Shifts Under You",
     "slug": "how-to-build-a-gtm-strategy-when-the-tech-stack-shifts-under-you",
     "category": "GTM Strategy"
@@ -298,5 +293,10 @@
     "title": "Why Your Sales Tech Stack Has a Hidden Security Problem",
     "slug": "why-your-sales-tech-stack-has-a-hidden-security-problem",
     "category": "Sales Tech"
+  },
+  {
+    "title": "Best Sales Automation Tools for RevOps in 2026",
+    "slug": "best-sales-automation-tools-for-revops-in-2026-3",
+    "category": "Best Tools"
   }
 ]

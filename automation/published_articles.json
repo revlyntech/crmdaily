@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is Account-Based Marketing and Why Does It Work?",
-    "slug": "what-is-account-based-marketing-and-why-does-it-work-3",
-    "category": "Explainer"
-  },
-  {
     "title": "How to Implement a CRM: Step-by-Step CRM Implementation Guide",
     "slug": "how-to-implement-a-crm-step-by-step-crm-implementation-guide-2",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How to Reduce Churn Rate for SaaS Teams: A Real Framework",
     "slug": "how-to-reduce-churn-rate-for-saas-teams-a-real-framework",
     "category": "Deep Guide"
+  },
+  {
+    "title": "CRM Dashboards Explained: What Should Your Sales Dashboard Track?",
+    "slug": "crm-dashboards-explained-what-should-your-sales-dashboard-track-3",
+    "category": "CRM Fundamentals"
   }
 ]

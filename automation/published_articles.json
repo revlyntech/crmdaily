@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Customization vs Configuration: What Should You Change?",
-    "slug": "crm-customization-vs-configuration-what-should-you-change",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Best Practices: Build a High-Performing CRM System",
     "slug": "crm-best-practices-build-a-high-performing-crm-system",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "What Is CRM Adoption? Why Employees Avoid CRMs and How to Fix It",
     "slug": "what-is-crm-adoption-why-employees-avoid-crms-and-how-to-fix-it",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How Agentic AI Is Rewiring B2B GTM Execution in 2026",
+    "slug": "how-agentic-ai-is-rewiring-b2b-gtm-execution-in-2026",
+    "category": "AI in Sales"
   }
 ]

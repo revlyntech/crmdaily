@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why the CRO Role Is the Last GTM Job AI Can't Replace",
-    "slug": "why-the-cro-role-is-the-last-gtm-job-ai-cant-replace",
-    "category": "CRM News"
-  },
-  {
     "title": "CRM Customization vs Configuration: What Should You Change?",
     "slug": "crm-customization-vs-configuration-what-should-you-change",
     "category": "CRM Fundamentals"
@@ -297,6 +292,11 @@
   {
     "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
     "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-4",
+    "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is CRM Adoption? Why Employees Avoid CRMs and How to Fix It",
+    "slug": "what-is-crm-adoption-why-employees-avoid-crms-and-how-to-fix-it",
     "category": "CRM Fundamentals"
   }
 ]

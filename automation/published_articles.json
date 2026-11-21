@@ -1,10 +1,5 @@
 [
   {
-    "title": "CRM Best Practices: Build a High-Performing CRM System",
-    "slug": "crm-best-practices-build-a-high-performing-crm-system",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "Zoho CRM vs Insightly: For Teams Mixing Projects and Sales",
     "slug": "zoho-crm-vs-insightly-for-teams-mixing-projects-and-sales",
     "category": "Tool Comparison"
@@ -298,5 +293,10 @@
     "title": "How Agentic AI Is Rewiring B2B GTM Execution in 2026",
     "slug": "how-agentic-ai-is-rewiring-b2b-gtm-execution-in-2026",
     "category": "AI in Sales"
+  },
+  {
+    "title": "What the CRM Platform Shakeout of 2026 Really Means",
+    "slug": "what-the-crm-platform-shakeout-of-2026-really-means",
+    "category": "CRM News"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "How to Build a GTM Strategy When the Tech Stack Shifts Under You",
-    "slug": "how-to-build-a-gtm-strategy-when-the-tech-stack-shifts-under-you",
-    "category": "GTM Strategy"
-  },
-  {
     "title": "Why the CRO Role Is the Last GTM Job AI Can't Replace",
     "slug": "why-the-cro-role-is-the-last-gtm-job-ai-cant-replace",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "Best Sales Automation Tools for RevOps in 2026",
     "slug": "best-sales-automation-tools-for-revops-in-2026-3",
     "category": "Best Tools"
+  },
+  {
+    "title": "CRM Metrics and KPIs: 25 Numbers Every Revenue Team Should Track",
+    "slug": "crm-metrics-and-kpis-25-numbers-every-revenue-team-should-track-4",
+    "category": "CRM Fundamentals"
   }
 ]

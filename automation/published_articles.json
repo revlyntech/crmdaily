@@ -1,10 +1,5 @@
 [
   {
-    "title": "Zoho CRM vs Insightly: For Teams Mixing Projects and Sales",
-    "slug": "zoho-crm-vs-insightly-for-teams-mixing-projects-and-sales",
-    "category": "Tool Comparison"
-  },
-  {
     "title": "What Is Pipeline Coverage and Why Does It Matter?",
     "slug": "what-is-pipeline-coverage-and-why-does-it-matter-4",
     "category": "Explainer"
@@ -298,5 +293,10 @@
     "title": "What the CRM Platform Shakeout of 2026 Really Means",
     "slug": "what-the-crm-platform-shakeout-of-2026-really-means",
     "category": "CRM News"
+  },
+  {
+    "title": "How to Choose a CRM: The Complete CRM Buying Guide",
+    "slug": "how-to-choose-a-crm-the-complete-crm-buying-guide",
+    "category": "CRM Fundamentals"
   }
 ]

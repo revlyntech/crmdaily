@@ -1,1 +1,12 @@
-{"date": "2026-11-21", "articles": [], "sent": true}
+{
+  "date": "2026-11-22",
+  "articles": [
+    {
+      "title": "How to Choose a CRM: The Complete CRM Buying Guide",
+      "excerpt": "New to CRM software? This plain-English buying guide explains what a CRM does, why it matters, and exactly how to pick the right one for your business.",
+      "slug": "how-to-choose-a-crm-the-complete-crm-buying-guide",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/1181418/pexels-photo-1181418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

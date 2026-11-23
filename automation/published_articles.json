@@ -1,10 +1,5 @@
 [
   {
-    "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
-    "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-4",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "HubSpot AEO Review 2026: Is It Worth It for RevOps Teams?",
     "slug": "hubspot-aeo-review-2026-is-it-worth-it-for-revops-teams",
     "category": "Tool Reviews"
@@ -298,5 +293,10 @@
     "title": "Salesforce vs Pipedrive: Enterprise or SMB - Which Wins?",
     "slug": "salesforce-vs-pipedrive-enterprise-or-smb-which-wins",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
+    "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data-2",
+    "category": "CRM Fundamentals"
   }
 ]

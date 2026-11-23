@@ -1,10 +1,5 @@
 [
   {
-    "title": "HubSpot AEO Review 2026: Is It Worth It for RevOps Teams?",
-    "slug": "hubspot-aeo-review-2026-is-it-worth-it-for-revops-teams",
-    "category": "Tool Reviews"
-  },
-  {
     "title": "Why RevOps Metrics Are Broken - And How to Fix Them",
     "slug": "why-revops-metrics-are-broken-and-how-to-fix-them",
     "category": "RevOps Intelligence"
@@ -298,5 +293,10 @@
     "title": "CRM Migration Explained: Move to a New CRM Without Losing Data",
     "slug": "crm-migration-explained-move-to-a-new-crm-without-losing-data-2",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "What Is a Sales Cycle and Why Does It Matter?",
+    "slug": "what-is-a-sales-cycle-and-why-does-it-matter-2",
+    "category": "Explainer"
   }
 ]

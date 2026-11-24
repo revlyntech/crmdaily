@@ -1,10 +1,5 @@
 [
   {
-    "title": "The RevOps Tech Stack Guide for 2026",
-    "slug": "the-revops-tech-stack-guide-for-2026-2",
-    "category": "Deep Guide"
-  },
-  {
     "title": "Operational, Analytical and Collaborative CRM Explained",
     "slug": "operational-analytical-and-collaborative-crm-explained",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "CRM Best Practices: The Complete Guide to High-Performing CRMs",
     "slug": "crm-best-practices-the-complete-guide-to-high-performing-crms",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "5 Ways AI Pricing Models Are Reshaping Your GTM Strategy",
+    "slug": "5-ways-ai-pricing-models-are-reshaping-your-gtm-strategy",
+    "category": "GTM Strategy"
   }
 ]

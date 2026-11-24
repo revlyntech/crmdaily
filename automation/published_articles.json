@@ -1,10 +1,5 @@
 [
   {
-    "title": "Operational, Analytical and Collaborative CRM Explained",
-    "slug": "operational-analytical-and-collaborative-crm-explained",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How B2B Data Enrichment Pipelines Are Reshaping Sales Tech",
     "slug": "how-b2b-data-enrichment-pipelines-are-reshaping-sales-tech",
     "category": "Sales Tech"
@@ -298,5 +293,10 @@
     "title": "5 Ways AI Pricing Models Are Reshaping Your GTM Strategy",
     "slug": "5-ways-ai-pricing-models-are-reshaping-your-gtm-strategy",
     "category": "GTM Strategy"
+  },
+  {
+    "title": "Why Sierra's $30B Valuation Is a Signal You Can't Ignore",
+    "slug": "why-sierras-30b-valuation-is-a-signal-you-cant-ignore",
+    "category": "CRM News"
   }
 ]

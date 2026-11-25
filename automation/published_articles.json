@@ -1,10 +1,5 @@
 [
   {
-    "title": "How B2B Data Enrichment Pipelines Are Reshaping Sales Tech",
-    "slug": "how-b2b-data-enrichment-pipelines-are-reshaping-sales-tech",
-    "category": "Sales Tech"
-  },
-  {
     "title": "Best GTM Tools for B2B SaaS in 2026",
     "slug": "best-gtm-tools-for-b2b-saas-in-2026-3",
     "category": "Best Tools"
@@ -298,5 +293,10 @@
     "title": "Why Sierra's $30B Valuation Is a Signal You Can't Ignore",
     "slug": "why-sierras-30b-valuation-is-a-signal-you-cant-ignore",
     "category": "CRM News"
+  },
+  {
+    "title": "What Is CRM? A Complete Beginner's Guide",
+    "slug": "what-is-crm-a-complete-beginners-guide-2",
+    "category": "CRM Fundamentals"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Are the Core Components of a CRM System?",
-    "slug": "what-are-the-core-components-of-a-crm-system-4",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "How AI Agents Are Quietly Rewiring CRM Automation",
     "slug": "how-ai-agents-are-quietly-rewiring-crm-automation",
     "category": "AI in Sales"
@@ -298,5 +293,10 @@
     "title": "Monday CRM vs Zoho CRM: Best for Project-Driven Sales Teams",
     "slug": "monday-crm-vs-zoho-crm-best-for-project-driven-sales-teams",
     "category": "Tool Comparison"
+  },
+  {
+    "title": "What Is Win Rate and Why It Matters for Sales Teams",
+    "slug": "what-is-win-rate-and-why-it-matters-for-sales-teams",
+    "category": "Explainer"
   }
 ]

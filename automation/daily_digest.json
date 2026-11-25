@@ -1,12 +1,1 @@
-{
-  "date": "2026-11-25",
-  "articles": [
-    {
-      "title": "What Is CRM? A Complete Beginner's Guide",
-      "excerpt": "New to CRM software? This plain-English guide explains what customer relationship management actually is, why it matters, and how it works in practice.",
-      "slug": "what-is-crm-a-complete-beginners-guide-2",
-      "category": "CRM Fundamentals",
-      "featured_image_url": "https://images.pexels.com/photos/7652185/pexels-photo-7652185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
-  ]
-}
+{"date": "2026-11-25", "articles": [], "sent": true}

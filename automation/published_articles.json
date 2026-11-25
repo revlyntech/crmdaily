@@ -1,10 +1,5 @@
 [
   {
-    "title": "How AI Agents Are Quietly Rewiring CRM Automation",
-    "slug": "how-ai-agents-are-quietly-rewiring-crm-automation",
-    "category": "AI in Sales"
-  },
-  {
     "title": "Why Human Outbound Is Losing the Battle to AI",
     "slug": "why-human-outbound-is-losing-the-battle-to-ai",
     "category": "CRM News"
@@ -298,5 +293,10 @@
     "title": "What Is Win Rate and Why It Matters for Sales Teams",
     "slug": "what-is-win-rate-and-why-it-matters-for-sales-teams",
     "category": "Explainer"
+  },
+  {
+    "title": "HubSpot CRM Review 2026: Is It Right for RevOps Teams?",
+    "slug": "hubspot-crm-review-2026-is-it-right-for-revops-teams",
+    "category": "Tool Reviews"
   }
 ]

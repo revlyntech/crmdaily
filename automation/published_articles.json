@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is CRM Software? Features, Benefits and How It Works",
-    "slug": "what-is-crm-software-features-benefits-and-how-it-works-4",
-    "category": "CRM Fundamentals"
-  },
-  {
     "title": "CRM Database Explained: Contacts, Companies, Deals and Activities",
     "slug": "crm-database-explained-contacts-companies-deals-and-activities-4",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
     "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-5",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How AI Leadership Is Redefining RevOps Metrics in 2026",
+    "slug": "how-ai-leadership-is-redefining-revops-metrics-in-2026",
+    "category": "RevOps Intelligence"
   }
 ]

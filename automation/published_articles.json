@@ -1,10 +1,5 @@
 [
   {
-    "title": "Why Human Outbound Is Losing the Battle to AI",
-    "slug": "why-human-outbound-is-losing-the-battle-to-ai",
-    "category": "CRM News"
-  },
-  {
     "title": "What Is CRM Software? Features, Benefits and How It Works",
     "slug": "what-is-crm-software-features-benefits-and-how-it-works-4",
     "category": "CRM Fundamentals"
@@ -298,5 +293,10 @@
     "title": "HubSpot CRM Review 2026: Is It Right for RevOps Teams?",
     "slug": "hubspot-crm-review-2026-is-it-right-for-revops-teams",
     "category": "Tool Reviews"
+  },
+  {
+    "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
+    "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-5",
+    "category": "CRM Fundamentals"
   }
 ]

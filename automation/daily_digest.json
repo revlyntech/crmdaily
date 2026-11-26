@@ -1,1 +1,12 @@
-{"date": "2026-11-25", "articles": [], "sent": true}
+{
+  "date": "2026-11-26",
+  "articles": [
+    {
+      "title": "How Does a CRM Work? The Complete CRM Workflow Explained",
+      "excerpt": "New to CRM software? This guide breaks down exactly how a CRM works, step by step, with a real example to make it click.",
+      "slug": "how-does-a-crm-work-the-complete-crm-workflow-explained-5",
+      "category": "CRM Fundamentals",
+      "featured_image_url": "https://images.pexels.com/photos/3867850/pexels-photo-3867850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  ]
+}

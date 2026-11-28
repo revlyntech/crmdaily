@@ -1,10 +1,5 @@
 [
   {
-    "title": "What Is ARR? The SaaS Metric That Drives Every Big Decision",
-    "slug": "what-is-arr-the-saas-metric-that-drives-every-big-decision",
-    "category": "Explainer"
-  },
-  {
     "title": "How to Build a GTM Tech Stack That Actually Feeds Your Pipeline",
     "slug": "how-to-build-a-gtm-tech-stack-that-actually-feeds-your-pipeline",
     "category": "GTM Strategy"
@@ -298,5 +293,10 @@
     "title": "CRM vs ERP: What's the Difference and Which Do You Need?",
     "slug": "crm-vs-erp-whats-the-difference-and-which-do-you-need-4",
     "category": "CRM Fundamentals"
+  },
+  {
+    "title": "How AI Agents Are Rewriting B2B Lead Generation in 2026",
+    "slug": "how-ai-agents-are-rewriting-b2b-lead-generation-in-2026",
+    "category": "AI in Sales"
   }
 ]
